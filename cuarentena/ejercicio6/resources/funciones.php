@@ -44,65 +44,103 @@
     function validaLongitud($coordFila,$coordColumna,$lengthCapital,$sentido,$longitudTablero) {
         switch ($sentido) {
             case 0: //fila--
-                echo "Fila: ".$coordFila." ";
+                /* echo "Fila: ".$coordFila." ";
                 echo "Longitud capital: ".$lengthCapital." ";
                 echo "Longitud array: ".$longitudTablero." ";
                 echo "Sentido: Vertical abajo-arriba";
-                echo "<br/>";
+                echo "<br/>"; */
                 return ($coordFila-$lengthCapital>=0);
             case 1: //fila--, columna++
-                echo "Fila: ".$coordFila." ";
+                /* echo "Fila: ".$coordFila." ";
                 echo "Columna: ".$coordColumna." ";
                 echo "Longitud capital: ".$lengthCapital." ";
                 echo "Longitud array: ".$longitudTablero." ";
                 echo "Sentido: Diagonal izq-der, abajo-arriba";
-                echo "<br/>";
+                echo "<br/>"; */
                 return ($coordFila-$lengthCapital>=0 && $coordColumna+$lengthCapital<=$longitudTablero-1);
             case 2: //columna++
-                echo "Columna: ".$coordColumna." ";
+                /* echo "Columna: ".$coordColumna." ";
                 echo "Longitud capital: ".$lengthCapital." ";
                 echo "Longitud array: ".$longitudTablero." ";
                 echo "Sentido: Horizontal izq-der";
-                echo "<br/>";
+                echo "<br/>"; */
                 return ($coordColumna+$lengthCapital<=$longitudTablero-1);
             case 3: //fila++, columna++
-                echo "Fila: ".$coordFila." ";
+                /* echo "Fila: ".$coordFila." ";
                 echo "Columna: ".$coordColumna." ";
                 echo "Longitud capital: ".$lengthCapital." ";
                 echo "Longitud array: ".$longitudTablero." ";
                 echo "Sentido: Diagonal izq-der, arriba-abajo";
-                echo "<br/>";
+                echo "<br/>"; */
                 return ($coordFila+$lengthCapital<=$longitudTablero-1 && $coordColumna+$lengthCapital<=$longitudTablero-1);
             case 4: //fila++
-                echo "Fila: ".$coordFila." ";
+                /* echo "Fila: ".$coordFila." ";
                 echo "Longitud capital: ".$lengthCapital." ";
                 echo "Longitud array: ".$longitudTablero." ";
                 echo "Sentido: Vertical arriba-abajo";
-                echo "<br/>";
+                echo "<br/>"; */
                 return ($coordFila+$lengthCapital<=$longitudTablero-1);
             case 5: //fila++, columna--
-                echo "Fila: ".$coordFila." ";
+                /* echo "Fila: ".$coordFila." ";
                 echo "Columna: ".$coordColumna." ";
                 echo "Longitud capital: ".$lengthCapital." ";
                 echo "Longitud array: ".$longitudTablero." ";
                 echo "Sentido: Diagonal der-izq, arriba-abajo";
-                echo "<br/>";
+                echo "<br/>"; */
                 return ($coordFila+$lengthCapital<=$longitudTablero-1 && $coordColumna-$lengthCapital>=0);
             case 6: //columna--
-                echo "Columna: ".$coordColumna." ";
+                /* echo "Columna: ".$coordColumna." ";
                 echo "Longitud capital: ".$lengthCapital." ";
                 echo "Longitud array: ".$longitudTablero." ";
                 echo "Sentido: Horizontal der-izq";
-                echo "<br/>";
+                echo "<br/>"; */
                 return ($coordColumna-$lengthCapital>=0);
             case 7: //fila--, columna--
-                echo "Fila: ".$coordFila." ";
+                /* echo "Fila: ".$coordFila." ";
                 echo "Columna: ".$coordColumna." ";
                 echo "Longitud capital: ".$lengthCapital." ";
                 echo "Longitud array: ".$longitudTablero." ";
                 echo "Sentido: Diagonal der-izq, abajo-arriba";
-                echo "<br/>";
+                echo "<br/>"; */
                 return ($coordFila-$lengthCapital>=0 && $coordColumna-$lengthCapital>=0);
+        }
+    }
+
+    function validarPosicionLetras($tablero,$coordFila,$coordColumna,$nombreCapital,$incrementoFil,$incrementoCol) {
+        $coordFilaFinal = $coordFila+strlen($nombreCapital)*$incrementoFil;
+        $coordColumnaFinal = $coordColumna+strlen($nombreCapital)*$incrementoCol;
+        $indiceCapital = 0;
+        while (!($coordFila==$coordFilaFinal && $coordColumna==$coordColumnaFinal)) {
+            //Si la posición de tablero no es una cadena vacía o no coincide las letras con la letra de la capital a insertar 
+            if (!($tablero[$coordFila][$coordColumna]== "" || 
+            $tablero[$coordFila][$coordColumna] == substr($nombreCapital, $indiceCapital, 1)))
+                return false;
+            
+            $coordFila += $incrementoFil;
+            $coordColumna += $incrementoCol;
+            $indiceCapital++;
+        }
+        return true;
+    }
+
+    function validaUbicacion($tablero,$coordFila,$coordColumna,$nombreCapital,$sentido) {
+        switch ($sentido) {
+            case 0: //fila--
+                return ValidarPosicionLetras($tablero,$coordFila,$coordColumna,$nombreCapital,-1,0);
+            case 1: //fila--, columna++
+                return ValidarPosicionLetras($tablero,$coordFila,$coordColumna,$nombreCapital,-1,1);
+            case 2: //columna++
+                return ValidarPosicionLetras($tablero,$coordFila,$coordColumna,$nombreCapital,0,1);
+            case 3: //fila++, columna++
+                return ValidarPosicionLetras($tablero,$coordFila,$coordColumna,$nombreCapital,1,1);
+            case 4: //fila++
+                return ValidarPosicionLetras($tablero,$coordFila,$coordColumna,$nombreCapital,1,0);
+            case 5: //fila++, columna--
+                return ValidarPosicionLetras($tablero,$coordFila,$coordColumna,$nombreCapital,1,-1);
+            case 6: //columna--
+                return ValidarPosicionLetras($tablero,$coordFila,$coordColumna,$nombreCapital,0,-1);
+            case 7: //fila--, columna--
+                return ValidarPosicionLetras($tablero,$coordFila,$coordColumna,$nombreCapital,-1,-1);
         }
     }
 
@@ -121,31 +159,31 @@
         return $tablero;
     }
 
-    function insertaCapital($tablero,$coordFila,$coordColumna,$capital,$sentido) {
+    function insertaCapital($tablero,$coordFila,$coordColumna,$nombreCapital,$sentido) {
         switch ($sentido) {
             case 0: //fila--
-                $tablero = insertar($tablero,$coordFila,$coordColumna,$capital,-1,0);
+                $tablero = insertar($tablero,$coordFila,$coordColumna,$nombreCapital,-1,0);
                 return $tablero;
             case 1: //fila--, columna++
-                $tablero = insertar($tablero,$coordFila,$coordColumna,$capital,-1,1);
+                $tablero = insertar($tablero,$coordFila,$coordColumna,$nombreCapital,-1,1);
                 return $tablero;
             case 2: //columna++
-                $tablero = insertar($tablero,$coordFila,$coordColumna,$capital,0,1);
+                $tablero = insertar($tablero,$coordFila,$coordColumna,$nombreCapital,0,1);
                 return $tablero;
             case 3: //fila++, columna++
-                $tablero = insertar($tablero,$coordFila,$coordColumna,$capital,1,1);
+                $tablero = insertar($tablero,$coordFila,$coordColumna,$nombreCapital,1,1);
                 return $tablero;
             case 4: //fila++
-                $tablero = insertar($tablero,$coordFila,$coordColumna,$capital,1,0);
+                $tablero = insertar($tablero,$coordFila,$coordColumna,$nombreCapital,1,0);
                 return $tablero;
             case 5: //fila++, columna--
-                $tablero = insertar($tablero,$coordFila,$coordColumna,$capital,1,-1);
+                $tablero = insertar($tablero,$coordFila,$coordColumna,$nombreCapital,1,-1);
                 return $tablero;
             case 6: //columna--
-                $tablero = insertar($tablero,$coordFila,$coordColumna,$capital,0,-1);
+                $tablero = insertar($tablero,$coordFila,$coordColumna,$nombreCapital,0,-1);
                 return $tablero;
             case 7: //fila--, columna--
-                $tablero = insertar($tablero,$coordFila,$coordColumna,$capital,-1,-1);
+                $tablero = insertar($tablero,$coordFila,$coordColumna,$nombreCapital,-1,-1);
                 return $tablero;
         }
     }
@@ -169,29 +207,18 @@
      */
     function colocaCapitales($tablero) {
         $capitalesSeleccionadas = array();
-        for ($i=0; $i<5; $i++) { 
+        for ($i=0; $i<15; $i++) { 
             array_push($capitalesSeleccionadas, seleccionaCapital($capitalesSeleccionadas));
 
             $sentido = rand(0,7);
 
-            /* Empieza el DO-WHILE */
             do {
-                echo "Palabra elegida: ".CAPITALES[$capitalesSeleccionadas[$i]]."<br/>";
                 $coordFila = rand(0,sizeof($tablero[0])-1);
                 $coordColumna = rand(0,sizeof($tablero[0])-1);
-            } while (!validaLongitud($coordFila,$coordColumna,strlen(CAPITALES[$capitalesSeleccionadas[$i]]),$sentido,sizeof($tablero[0])));
+            } while (!(validaLongitud($coordFila,$coordColumna,strlen(CAPITALES[$capitalesSeleccionadas[$i]]),$sentido,sizeof($tablero[0]))
+                        && validaUbicacion($tablero,$coordFila,$coordColumna,CAPITALES[$capitalesSeleccionadas[$i]],$sentido)));
             
-
-            //Aquí comprobamos que la ubicación sea válida (que las letras ocupen casillas vacías o, en su defecto, que coincidan letras)
-            //validaUbicación();
-            /* Termina el DO-WHILE */
-
             $tablero = insertaCapital($tablero,$coordFila,$coordColumna,CAPITALES[$capitalesSeleccionadas[$i]],$sentido);
-
-            /* for ($j=0; $j<strlen(CAPITALES[$capitalesSeleccionadas[$i]]); $j++) { 
-                echo substr(CAPITALES[$capitalesSeleccionadas[$i]], $j, 1)." ";
-            }
-            echo "<br/>"; */
         }
         
         return $tablero;
@@ -207,8 +234,7 @@
     function generaSopaLetras() {
         $tablero = generaTablero(20);
         $tablero = colocaCapitales($tablero);
-        //colocaCapitales($tablero);
-        //$tablero = rellena($tablero);
+        $tablero = rellena($tablero);
         return $tablero;
     }
 
