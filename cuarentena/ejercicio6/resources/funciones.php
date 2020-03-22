@@ -4,6 +4,9 @@
      */
     include "resources/datos.php";
 
+    /**
+     * Genera un tablero cuadrado del tamaño que se le pase como parámetro
+     */
     function generaTablero($tamanno) {
         $tablero = array();
         for ($i=0; $i<$tamanno; $i++) { 
@@ -44,64 +47,20 @@
     function validaLongitud($coordFila,$coordColumna,$lengthCapital,$sentido,$longitudTablero) {
         switch ($sentido) {
             case 0: //fila--
-                /* echo "Fila: ".$coordFila." ";
-                echo "Longitud capital: ".$lengthCapital." ";
-                echo "Longitud array: ".$longitudTablero." ";
-                echo "Sentido: Vertical abajo-arriba";
-                echo "<br/>"; */
                 return ($coordFila-$lengthCapital>=0);
             case 1: //fila--, columna++
-                /* echo "Fila: ".$coordFila." ";
-                echo "Columna: ".$coordColumna." ";
-                echo "Longitud capital: ".$lengthCapital." ";
-                echo "Longitud array: ".$longitudTablero." ";
-                echo "Sentido: Diagonal izq-der, abajo-arriba";
-                echo "<br/>"; */
                 return ($coordFila-$lengthCapital>=0 && $coordColumna+$lengthCapital<=$longitudTablero-1);
             case 2: //columna++
-                /* echo "Columna: ".$coordColumna." ";
-                echo "Longitud capital: ".$lengthCapital." ";
-                echo "Longitud array: ".$longitudTablero." ";
-                echo "Sentido: Horizontal izq-der";
-                echo "<br/>"; */
                 return ($coordColumna+$lengthCapital<=$longitudTablero-1);
             case 3: //fila++, columna++
-                /* echo "Fila: ".$coordFila." ";
-                echo "Columna: ".$coordColumna." ";
-                echo "Longitud capital: ".$lengthCapital." ";
-                echo "Longitud array: ".$longitudTablero." ";
-                echo "Sentido: Diagonal izq-der, arriba-abajo";
-                echo "<br/>"; */
                 return ($coordFila+$lengthCapital<=$longitudTablero-1 && $coordColumna+$lengthCapital<=$longitudTablero-1);
             case 4: //fila++
-                /* echo "Fila: ".$coordFila." ";
-                echo "Longitud capital: ".$lengthCapital." ";
-                echo "Longitud array: ".$longitudTablero." ";
-                echo "Sentido: Vertical arriba-abajo";
-                echo "<br/>"; */
                 return ($coordFila+$lengthCapital<=$longitudTablero-1);
             case 5: //fila++, columna--
-                /* echo "Fila: ".$coordFila." ";
-                echo "Columna: ".$coordColumna." ";
-                echo "Longitud capital: ".$lengthCapital." ";
-                echo "Longitud array: ".$longitudTablero." ";
-                echo "Sentido: Diagonal der-izq, arriba-abajo";
-                echo "<br/>"; */
                 return ($coordFila+$lengthCapital<=$longitudTablero-1 && $coordColumna-$lengthCapital>=0);
             case 6: //columna--
-                /* echo "Columna: ".$coordColumna." ";
-                echo "Longitud capital: ".$lengthCapital." ";
-                echo "Longitud array: ".$longitudTablero." ";
-                echo "Sentido: Horizontal der-izq";
-                echo "<br/>"; */
                 return ($coordColumna-$lengthCapital>=0);
             case 7: //fila--, columna--
-                /* echo "Fila: ".$coordFila." ";
-                echo "Columna: ".$coordColumna." ";
-                echo "Longitud capital: ".$lengthCapital." ";
-                echo "Longitud array: ".$longitudTablero." ";
-                echo "Sentido: Diagonal der-izq, abajo-arriba";
-                echo "<br/>"; */
                 return ($coordFila-$lengthCapital>=0 && $coordColumna-$lengthCapital>=0);
         }
     }
