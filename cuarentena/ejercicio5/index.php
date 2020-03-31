@@ -15,6 +15,9 @@
 
         $tablero = generaTablero();
         imprimeTablero($tablero);
+
+        echo "<br/><a href="."verCodigo.php?src=".str_replace("&bsol;","",__FILE__)." target='_blank'><button>Ver código index</button></a>";
+        echo "<br/><a href="."verCodigo.php?src=".str_replace("&bsol;","","resources/funciones.php")." target='_blank'><button>Ver código funciones.php</button></a>";
     ?>
 </body>
 </html>

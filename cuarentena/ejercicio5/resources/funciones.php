@@ -66,8 +66,6 @@
             echo "<tr>";
             for ($j=0; $j<sizeof($tablero); $j++)
                 echo "<td>".CASILLAS_SVG[$tablero[$i][$j]]."</td>";
-                //echo "<td class="."c".$tablero[$i][$j]."></td>";
-                //echo "<td class="."c".$tablero[$i][$j].">".$tablero[$i][$j]."</td>";
             echo "</tr>";
         }
         echo "</table>";

@@ -12,6 +12,8 @@
         include "resources/funciones.php";
 
         imprimeTabla(RESULTADOS);
+        
+        echo "<br/><a href="."verCodigo.php?src=".str_replace("&bsol;","",__FILE__)."><button>Ver código</button></a>";
     ?>
 </body>
 </html>
