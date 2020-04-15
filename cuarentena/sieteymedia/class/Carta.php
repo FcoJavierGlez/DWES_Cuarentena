@@ -92,13 +92,19 @@
             return $this->getFigura()." de ".$this->getNombrePalo();
         }
 
+        /**
+         * Devuelve la url del recurso de la carta
+         * 
+         * @return {String} URL de la imagen de la carta
+         */
         public function getUrlImg() {
             return ($this->_oculta) ? "img/0.jpg" : "img/".$this->getNombrePalo()."/".$this->getNumero().".jpg";
         }
 
-
         /**
          * Asigna a una carta la propiedad de estar o no oculta (bocaabajo)
+         * 
+         * @param {Boolean} True o false en función de si queremos ocultar o desocultar la carta
          */
         public function setOculta($boolean) {
             $this->_oculta = $boolean;
