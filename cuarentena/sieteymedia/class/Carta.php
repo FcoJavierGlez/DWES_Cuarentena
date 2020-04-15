@@ -89,7 +89,7 @@
          * @return {String} Nombre de la carta
          */
         public function getNombreCarta() {
-            return $this->getFigura()." de ".$this->getNombrePalo();
+            return $this->getFigura()."_de_".$this->getNombrePalo();
         }
 
         /**
