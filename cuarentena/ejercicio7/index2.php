@@ -16,11 +16,14 @@
         if (!isset($_POST['enviar'])) {
             imprFormTablas();
         } elseif (isset($_POST['enviar'])) {
-            $multiplos = $_POST['tablas'];
+            $multiplicandos = $_POST['tablas'];
+
+            $multiplicadores = getMultiplicadores(sizeof($multiplicandos),5);
 
             echo "<form action='procesa.php' method='post'>";
-            tablasMultiplicar($multiplos);
-            echo "<input type='hidden' name='multiplos' value=".implode(",",$multiplos).">";
+            tablasMultiplicar($multiplicandos,$multiplicadores);
+            echo "<input type='hidden' name='multiplicandos' value=".implode(",",$multiplicandos).">";
+            echo "<input type='hidden' name='multiplicadores' value=".implode(",",$multiplicadores).">";
             echo "<input type='submit' name='procesar'>";
             echo "</form>";
         }

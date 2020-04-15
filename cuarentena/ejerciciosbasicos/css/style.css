@@ -1,0 +1,7 @@
+.correcto {
+    background-color: rgba(0, 253, 0, 0.5);
+}
+
+.incorrecto {
+    background-color: rgba(253, 0, 0, 0.5);
+}

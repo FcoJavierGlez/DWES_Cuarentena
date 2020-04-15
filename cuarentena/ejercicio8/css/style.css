@@ -1,0 +1,20 @@
+table tr td{
+    text-align: center;
+    border: 1px solid black;
+}
+
+table tr:nth-child(odd) {
+    background-color: rgb(50, 50, 50);
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: rgb(190, 190, 190);
+    color: black;
+}
+
+.doble_col {
+    display: grid;
+    grid-template-columns: repeat(2,auto);
+    justify-content: left;
+}

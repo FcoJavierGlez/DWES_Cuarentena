@@ -9,11 +9,14 @@
     class Tablero {
 
         private $_tablero = array();
+        private $_tableroVisible = array();
         private $_listaBarcos = array();
 
         public function __construct() {
-            for ($i=0; $i<10; $i++) 
+            for ($i=0; $i<10; $i++) {
                 array_push($this->_tablero, array(0,0,0,0,0,0,0,0,0,0));
+                array_push($this->_tableroVisible, array(0,0,0,0,0,0,0,0,0,0));
+            }
         }
 
         /**
@@ -114,8 +117,21 @@
             array_push($this->_listaBarcos, new Barco($fila,$columna,$tipo,$direccion));
         }
 
+        /**
+         * 
+         */
         public function getValor($fila,$columna) {
             return $this->_tablero[$fila-1][$columna-1];
+        }
+
+        /**
+         * 
+         */
+        public function impacto($fila,$columna) {
+            if ($this->_tableroVisible[$fila][$columna]!=0) return;
+            else {
+                $this->_tableroVisible[$fila][$columna] = ($this->_tablero[$fila][$columna]==0) ? 4 : 1;
+            }
         }
 
         /**
@@ -138,6 +154,22 @@
                 echo "<tr>";
                 for ($j=0; $j<sizeof($this->_tablero); $j++)
                     echo "<td>".CASILLAS_SVG[$this->_tablero[$i][$j]]."</td>";
+                echo "</tr>";
+            }
+            echo "</table>";
+        }
+
+        /**
+         * 
+         */
+        public function imprTabVis() {
+            echo "<table>";
+            for ($i=0; $i<sizeof($this->_tableroVisible); $i++) { 
+                echo "<tr>";
+                for ($j=0; $j<sizeof($this->_tableroVisible); $j++)
+                    echo ($this->_tableroVisible[$i][$j]!=0) ?  
+                    "<td>".CASILLAS_SVG[$this->_tableroVisible[$i][$j]]."</td>" :
+                    "<td><a href=".$_SERVER['PHP_SELF']."?fila=".$i."&columna=".$j.">".CASILLAS_SVG[$this->_tableroVisible[$i][$j]]."</a></td>";
                 echo "</tr>";
             }
             echo "</table>";
