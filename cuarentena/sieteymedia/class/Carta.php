@@ -29,6 +29,15 @@
         }
 
         /**
+         * Devuelve si la carta es visible o si está oculta (bocaabajo)
+         * 
+         * @return {Boolean} True si está oculta, false si es visible
+         */
+        public function getOculta() {
+            return $this->_oculta;
+        }
+
+        /**
          * Devuelve el valor en puntos de la carta seleccionada
          * 
          * @return {Double} Valor en puntos 1-7 || 0.5
@@ -89,7 +98,7 @@
          * @return {String} Nombre de la carta
          */
         public function getNombreCarta() {
-            return $this->getFigura()."_de_".$this->getNombrePalo();
+            return ($this->_oculta) ? "Oculta" : $this->getFigura()."_de_".$this->getNombrePalo();
         }
 
         /**
@@ -106,8 +115,8 @@
          * 
          * @param {Boolean} True o false en función de si queremos ocultar o desocultar la carta
          */
-        public function setOculta($boolean) {
-            $this->_oculta = $boolean;
+        public function setOculta($valor) {
+            $this->_oculta = $valor;
         }
     }
 ?>
