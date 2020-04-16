@@ -51,6 +51,28 @@ main {
     text-align: center;
 }
 
+.mensaje {
+    position: absolute;
+    top: 50%;
+    left: 15%;
+    height: 75px;
+    width: 250px;
+    border-radius: 20px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+.perdido {
+    border: 2px solid red;
+    background-color: rgba(255, 0, 0, 0.3);
+}
+
+.ganado {
+    border: 2px solid rgb(0, 255, 0);
+    background-color: rgba(0, 255, 0, 0.3);
+}
+
 footer h4 {
     color: white;
     text-align: center;

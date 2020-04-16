@@ -7,35 +7,41 @@
     include "class/Baraja.php";
     include "class/Jugador.php";
     include "class/IA.php";
+    include "resources/funciones.php";
 
 
     session_start();    //Iniciamos sesión
     
     //Destruimos la sesión:
     if (isset($_POST['nuevapartida']) || isset($_POST['rendirse'])) {
-        session_unset();
-        session_destroy();
-        session_start();
-        session_regenerate_id();
-        header('Location:index.php');
+        cerrarSesion();
     }
 
+    //Si la variable de sesión de baraja no existe la creamos junto al resto de variables necesarias para la partida
     if (!isset($_SESSION['baraja'])) {
         $_SESSION['baraja'] = new Baraja();
         $_SESSION['jugador'] = new Jugador();
         $_SESSION['banca'] = new IA();
         $_SESSION['banca']->reparteCartas();
+        $_SESSION['jugadorPierde'] = false;
+        $_SESSION['jugadorGana'] = false;
     }
 
+    //Si el jugador pide carta llamamos a la función de pedir carta del jugador
     if (isset($_POST['carta'])) {
         $_SESSION['jugador']->pideCarta();
         if ($_SESSION['jugador']->getPuntos()>7.5) $_SESSION['jugador']->setEstadoJuego(-1);
     }
 
+    //Si el jugador se ha plantado ponemos su estado a "0" (plantado), juega la IA y determinamos el ganador
     if (isset($_POST['plantarse'])) {
         $_SESSION['jugador']->setEstadoJuego(0);
         $_SESSION['banca']->jugar();
-        /* if () */
+        $_SESSION['jugadorPierde'] = ($_SESSION['jugador']->getEstadoJuego() == 0 
+            && $_SESSION['banca']->getPuntos() >= $_SESSION['jugador']->getPuntos() 
+            && !($_SESSION['banca']->getPuntos()>7.5));
+        $_SESSION['jugadorGana'] = $_SESSION['jugador']->getEstadoJuego() == 0 
+            && $_SESSION['banca']->getPuntos() > 7.5;
     }
 ?>
 <!DOCTYPE html>
@@ -54,22 +60,28 @@
     </header>
     <main>
         <div class="github">
-            <b>El siguiente botón le mostrará el código fuente subido a GitHub:</b>
+            <b>El siguiente botón conduce al código fuente en GitHub:</b>
             <a href="https://github.com/FcoJavierGlez/DWES_Cuarentena/tree/sieteymedia/cuarentena/sieteymedia" target="_blank">
                 <button>Ver código</button>
             </a>
         </div>
+        <?php
+            mensajeFinPartida();    //En caso de haberse finalizado la partida se muestra el mensaje final
+        ?>
         <div class="contenedor">
             <div class="juego">
                 <?php
-                    echo "Mano de la banca: <br/>";
+                    //Mostramos mano de la banca y la puntuación de sus cartas visibles
+                    echo "<b>Mano de la banca:</b><br/>";
                     $_SESSION['banca']->mostrarMano()."<br/>";
-                    echo "<br/>Puntos: ".$_SESSION['banca']->getPuntos()."<br/>";
+                    echo "<br/>Puntos: ".$_SESSION['banca']->getPuntos()."<br/><br/>";
 
-                    echo "Mano del jugador: <br/>";
+                    //Mostramos mano del jugador y su puntuación
+                    echo "<b>Mano del jugador:</b><br/>";
                     $_SESSION['jugador']->mostrarMano()."<br/>";
                     echo "<br/>Puntos: ".$_SESSION['jugador']->getPuntos();
 
+                    //Imprimimos la botonera con las opciones de juego
                     echo "<div class='opciones'>";
                         echo "<form action=".$_SERVER['PHP_SELF']." method='post'>";
                         if ($_SESSION['jugador']->getEstadoJuego() == 1) 
