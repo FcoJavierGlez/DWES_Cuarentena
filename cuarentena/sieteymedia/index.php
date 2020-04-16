@@ -54,6 +54,7 @@
     </header>
     <main>
         <div class="github">
+            <b>El siguiente botón le mostrará el código fuente subido a GitHub:</b>
             <a href="https://github.com/FcoJavierGlez/DWES_Cuarentena/tree/sieteymedia/cuarentena/sieteymedia" target="_blank">
                 <button>Ver código</button>
             </a>
