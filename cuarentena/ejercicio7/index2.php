@@ -7,6 +7,12 @@
     <title>Formulario tablas multiplicar</title>
 </head>
 <body>
+    <div class="codigo">
+        <b>El siguiente botón conduce al código fuente en GitHub:</b>
+        <a href="https://github.com/FcoJavierGlez/DWES_Cuarentena/tree/master/cuarentena/ejercicio7" target="_blank">
+            <button>Ver código</button>
+        </a>
+    </div>
     <?php
         /**
          * 
