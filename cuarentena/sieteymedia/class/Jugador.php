@@ -2,7 +2,7 @@
     
     class Jugador {
 
-        private $_mano;
+        protected $_mano;
         private $_estadoJuego;
 
         public function __construct() {
@@ -68,7 +68,7 @@
         /**
          * El jugador puede ocultar una carta
          */
-        public function ocultarCarta($num,$valor) {
+        public function ocultarCarta($num,$valor) {     //Actualmente no usado
             $this->_mano[$num]->setOculta($valor);
         }
     }
