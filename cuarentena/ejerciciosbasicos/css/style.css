@@ -1,3 +1,38 @@
+:root {
+    --php_color: rgb(127, 102, 151);
+}
+
+body {
+    margin: 0;
+}
+
+header, footer {
+    height: 10vh;
+    background-color: var(--php_color);
+}
+
+header {
+    display: grid;
+    align-items: center;
+}
+
+h1, h2 {
+    margin: 0;
+    color: white;
+    text-align: center;
+}
+
+main {
+    height: 80vh;
+    padding: 0 10px;
+    /* display: grid;
+    grid-template-rows: max-content auto; */
+}
+
+.codigo {
+    text-align: right;
+}
+
 .correcto {
     background-color: rgba(0, 253, 0, 0.5);
 }
