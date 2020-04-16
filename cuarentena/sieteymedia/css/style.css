@@ -25,18 +25,30 @@ h1, h2 {
 main {
     height: 80vh;
     display: grid;
+    grid-template-rows: max-content auto;
+}
+
+.github {
+    text-align: right;
+}
+
+.contenedor {
+    display: grid;
     justify-content: center;
     align-items: center;
 }
 
 .juego {
-    
     border: 1px solid grey;
     border-radius: 20px;
     background-color: rgba(245, 245, 220, 0.2);
     width: max-content;
     height: max-content;
     padding: 15px;
+}
+
+.opciones {
+    text-align: center;
 }
 
 footer h4 {

@@ -53,24 +53,34 @@
         <h2>Powered by PHP Sessions</h2>
     </header>
     <main>
-        <div class="juego">
-            <?php
-                echo "Mano de la banca: <br/>";
-                $_SESSION['banca']->mostrarMano()."<br/>";
-                echo "<br/>Puntos: ".$_SESSION['banca']->getPuntos()."<br/>";
-
-                echo "Mano del jugador: <br/>";
-                $_SESSION['jugador']->mostrarMano()."<br/>";
-                echo "<br/>Puntos: ".$_SESSION['jugador']->getPuntos();
-
-                echo "<form action=".$_SERVER['PHP_SELF']." method='post'>";
-                if ($_SESSION['jugador']->getEstadoJuego() == 1) 
-                    echo "<input type='submit' name='carta' value='Pide carta'><input type='submit' name='plantarse' value='Plantarse'>";
-                elseif ($_SESSION['jugador']->getEstadoJuego() == 0 || $_SESSION['jugador']->getEstadoJuego() == -1) 
-                    echo "<input type='submit' name='nuevapartida' value='Nueva Partida'>";
-                echo "</form>";
-            ?>
+        <div class="github">
+            <a href="https://github.com/FcoJavierGlez/DWES_Cuarentena/tree/sieteymedia/cuarentena/sieteymedia" target="_blank">
+                <button>Ver código</button>
+            </a>
         </div>
+        <div class="contenedor">
+            <div class="juego">
+                <?php
+                    echo "Mano de la banca: <br/>";
+                    $_SESSION['banca']->mostrarMano()."<br/>";
+                    echo "<br/>Puntos: ".$_SESSION['banca']->getPuntos()."<br/>";
+
+                    echo "Mano del jugador: <br/>";
+                    $_SESSION['jugador']->mostrarMano()."<br/>";
+                    echo "<br/>Puntos: ".$_SESSION['jugador']->getPuntos();
+
+                    echo "<div class='opciones'>";
+                        echo "<form action=".$_SERVER['PHP_SELF']." method='post'>";
+                        if ($_SESSION['jugador']->getEstadoJuego() == 1) 
+                            echo "<input type='submit' name='carta' value='Pide carta'><input type='submit' name='plantarse' value='Plantarse'>";
+                        elseif ($_SESSION['jugador']->getEstadoJuego() == 0 || $_SESSION['jugador']->getEstadoJuego() == -1) 
+                            echo "<input type='submit' name='nuevapartida' value='Nueva Partida'>";
+                        echo "</form>";
+                    echo "</div>";
+                ?>
+            </div>
+        </div>
+        
     </main>
     <footer>
         <h4>RRSS del autor:</h4>
