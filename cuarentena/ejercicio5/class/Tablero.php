@@ -2,8 +2,6 @@
     /**
      * 
      */
-
-    include "resources/datos.php";
     include "class/Barco.php";
 
     class Tablero {
@@ -149,11 +147,12 @@
          * 
          */
         public function imprimir() {
+            include_once "resources/datos.php";
             echo "<table>";
             for ($i=0; $i<sizeof($this->_tablero); $i++) { 
                 echo "<tr>";
                 for ($j=0; $j<sizeof($this->_tablero); $j++)
-                    echo "<td>".CASILLAS_SVG[$this->_tablero[$i][$j]]."</td>";
+                    echo "<td>".$svg[$this->_tablero[$i][$j]]."</td>";
                 echo "</tr>";
             }
             echo "</table>";
@@ -163,13 +162,14 @@
          * 
          */
         public function imprTabVis() {
+            include_once "resources/datos.php";
             echo "<table>";
             for ($i=0; $i<sizeof($this->_tableroVisible); $i++) { 
                 echo "<tr>";
                 for ($j=0; $j<sizeof($this->_tableroVisible); $j++)
                     echo ($this->_tableroVisible[$i][$j]!=0) ?  
-                    "<td>".CASILLAS_SVG[$this->_tableroVisible[$i][$j]]."</td>" :
-                    "<td><a href=".$_SERVER['PHP_SELF']."?fila=".$i."&columna=".$j.">".CASILLAS_SVG[$this->_tableroVisible[$i][$j]]."</a></td>";
+                    "<td>".$svg[$this->_tableroVisible[$i][$j]]."</td>" :
+                    "<td><a href=".$_SERVER['PHP_SELF']."?fila=".$i."&columna=".$j.">".$svg[$this->_tableroVisible[$i][$j]]."</a></td>";
                 echo "</tr>";
             }
             echo "</table>";

@@ -2,20 +2,8 @@
     /**
      * 
      */
-    const LONGITUD_BARCOS = array(
-        4,
-        3,
-        3,
-        2,
-        2,
-        2,
-        1,
-        1,
-        1,
-        1
-    );
 
-    const CASILLAS_SVG = array(
+    $svg = array(
         "<svg width='60' height='60'>
         <rect width='60' height='60' fill='white' stroke-width='1' stroke='black' rx='10' />
         </svg>",

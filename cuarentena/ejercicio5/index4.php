@@ -10,7 +10,7 @@
     if (!isset($_SESSION['tablero'])) {
         $_SESSION['tablero'] = new Tablero();   //Creamos el objeto tablero
 
-        for ($i=0; $i<sizeof(LONGITUD_BARCOS); $i++) { //Añadimos los barcos en posiciones válidas
+        for ($i=1; $i<11; $i++) { //Añadimos los barcos en posiciones válidas
             do {
                 $fila = rand(0,9);
                 $columna = rand(0,9);
@@ -18,7 +18,7 @@
                 $sentido = rand(0,3);
                 
                 try {
-                    $_SESSION['tablero']->addBarco($fila,$columna,LONGITUD_BARCOS[$i],$sentido);
+                    $_SESSION['tablero']->addBarco($fila,$columna,longitudBarco($i),$sentido);
                     $ubicarBarco = false;
                 } catch (Exception $e) {
                     $ubicarBarco = true;
