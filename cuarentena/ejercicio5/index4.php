@@ -43,28 +43,29 @@
     <title>Barcos formulario</title>
 </head>
 <body>
-<h1>Hundir la flota</h1>
-    <!-- <form action="procesa.php" method="post">
-        <label for="fila">Fila: <input type="text" name="fila" id="fila"></label>
-        <label for="columna">Columna: <input type="text" name="columna" id="columna"></label>
-        <input type="submit" name="enviar">
-    </form> -->
-    <a href=""></a>
-    <?php
+    <header>
+        <h1>Hundir la flota</h1>
+    </header>
+    <main>
+        <?php
+            //impresión tablero vacío
 
-        //impresión tablero vacío
+            $_SESSION['tablero']->imprTabVis();
+            //$_SESSION['tablero']->imprimir();
 
-        $_SESSION['tablero']->imprTabVis();
-        //$_SESSION['tablero']->imprimir();
+            echo "<form action='index4.php' method='post'>";
+            echo "<input type='submit' name='borrar' value='Nueva partida'>";
+            echo "</form>";
 
-        echo "<form action='index4.php' method='post'>";
-        echo "<input type='submit' name='borrar' value='Nueva partida'>";
-        echo "</form>";
+            echo "<br/><a href="."verCodigo.php?src=".str_replace("&bsol;","",__FILE__)." target='_blank'><button>Ver código index</button></a>";
+            echo "<br/><a href="."verCodigo.php?src=".str_replace("&bsol;","","class/Tablero.php")." target='_blank'><button>Ver código Tablero.php</button></a>";
+            echo "<br/><a href="."verCodigo.php?src=".str_replace("&bsol;","","class/Barco.php")." target='_blank'><button>Ver código Barco.php</button></a>";    
+            echo "<br/><a href="."verCodigo.php?src=".str_replace("&bsol;","","procesa.php")." target='_blank'><button>Ver código procesa.php</button></a>";    
+        ?>
+    </main>
+    <footer>
 
-        echo "<br/><a href="."verCodigo.php?src=".str_replace("&bsol;","",__FILE__)." target='_blank'><button>Ver código index</button></a>";
-        echo "<br/><a href="."verCodigo.php?src=".str_replace("&bsol;","","class/Tablero.php")." target='_blank'><button>Ver código Tablero.php</button></a>";
-        echo "<br/><a href="."verCodigo.php?src=".str_replace("&bsol;","","class/Barco.php")." target='_blank'><button>Ver código Barco.php</button></a>";    
-        echo "<br/><a href="."verCodigo.php?src=".str_replace("&bsol;","","procesa.php")." target='_blank'><button>Ver código procesa.php</button></a>";    
-    ?>
+    </footer>
+    
 </body>
 </html>
