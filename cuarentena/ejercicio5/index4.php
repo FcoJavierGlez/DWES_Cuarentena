@@ -9,8 +9,12 @@
 
     if (!isset($_SESSION['tablero'])) {
         $_SESSION['tablero'] = new Tablero();   //Creamos el objeto tablero
-
-        for ($i=1; $i<11; $i++) { //Añadimos los barcos en posiciones válidas
+        $_SESSION['mensajes'] = "";             //Mensaje de barcos hundidos;
+        $_SESSION['submarinosHundidos'] = 0;    //Mensaje de barcos hundidos;
+        $_SESSION['acorazadosHundidos'] = 0;    //Mensaje de barcos hundidos;
+        $_SESSION['destructoresHundidos'] = 0;  //Mensaje de barcos hundidos;
+        $_SESSION['portaavionesHundidos'] = 0;  //Mensaje de barcos hundidos;
+        for ($i=1; $i<11; $i++) {               //Añadimos los barcos en posiciones válidas
             do {
                 $fila = rand(0,9);
                 $columna = rand(0,9);
@@ -55,21 +59,37 @@
                 <button>Ver código</button>
             </a>
         </div>
-        <?php
-            //impresión tablero vacío
+        <div class="juego">
+            <div class="tablero">
+                <?php
+                    //Tablero de juego
+                    $_SESSION['tablero']->imprTabVis($_SESSION['tablero']->finDePartida());
+                    //$_SESSION['tablero']->imprimir();
 
-            $_SESSION['tablero']->imprTabVis();
-            //$_SESSION['tablero']->imprimir();
-
-            echo "<form action='index4.php' method='post'>";
-            echo "<input type='submit' name='borrar' value='Nueva partida'>";
-            echo "</form>";
-
-            /* echo "<br/><a href="."verCodigo.php?src=".str_replace("&bsol;","",__FILE__)." target='_blank'><button>Ver código index</button></a>";
-            echo "<br/><a href="."verCodigo.php?src=".str_replace("&bsol;","","class/Tablero.php")." target='_blank'><button>Ver código Tablero.php</button></a>";
-            echo "<br/><a href="."verCodigo.php?src=".str_replace("&bsol;","","class/Barco.php")." target='_blank'><button>Ver código Barco.php</button></a>";    
-            echo "<br/><a href="."verCodigo.php?src=".str_replace("&bsol;","","procesa.php")." target='_blank'><button>Ver código procesa.php</button></a>";     */
-        ?>
+                    echo "<form action='index4.php' method='post'>";
+                    echo "<input type='submit' name='borrar' value='Nueva partida'>";
+                    echo "</form>";
+                ?>
+            </div>
+            <div class="informacion">
+                <div class="mensaje">
+                    <h4>Mensaje:</h4>
+                    <?php echo $_SESSION['mensajes']; ?>
+                </div>
+                <div class="barcos_hundidos">
+                    <h4>Total barcos hundidos:</h4>
+                    <?php 
+                        echo "<table>";
+                        echo "<tr><td>Submarinos</td><td>x".$_SESSION['submarinosHundidos']."</td></tr>";
+                        echo "<tr><td>Acorazados</td><td>x".$_SESSION['acorazadosHundidos']."</td></tr>";
+                        echo "<tr><td>Destructures</td><td>x".$_SESSION['destructoresHundidos']."</td></tr>";
+                        echo "<tr><td>Portaaviones</td><td>x".$_SESSION['portaavionesHundidos']."</td></tr>";
+                        echo "</table>";
+                    ?>
+                </div>
+            </div>
+        </div>
+        
     </main>
     <footer>
         <h4>RRSS del autor:</h4>
