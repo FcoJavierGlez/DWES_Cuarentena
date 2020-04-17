@@ -1,22 +1,50 @@
-table tr td {
-    border: 1px solid black;
+:root {
+    --php_color: rgb(127, 102, 151);
+}
+
+body {
+    margin: 0;
+}
+
+header, footer {
+    height: 10vh;
+    background-color: var(--php_color);
+}
+
+header {
+    display: grid;
+    align-items: center;
+}
+
+h1, h2 {
+    margin: 0;
+    color: white;
     text-align: center;
-    width: 30px;
-    height: 30px;
 }
 
-.c4 {
-    background-color: rgb(114, 114, 255);
+main {
+    height: 80vh;
+    padding: 0 15px;
+    /* display: grid;
+    grid-template-rows: max-content auto; */
 }
 
-.c3 {
-    background-color: orange;
+.github {
+    text-align: right;
 }
 
-.c2{
-    background-color: green;
+footer h4 {
+    color: white;
+    text-align: center;
+    margin: 1px;
 }
 
-.c1{
-    background-color: red;
+footer img {
+    height: 50px;
+}
+
+footer {
+    display: grid;
+    align-items: center;
+    justify-content: center;
 }

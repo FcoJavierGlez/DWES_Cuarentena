@@ -49,6 +49,12 @@
         <h1>Hundir la flota</h1>
     </header>
     <main>
+        <div class="github">
+            <b>El siguiente botón conduce al repositorio de GitHub:</b>
+            <a href="https://github.com/FcoJavierGlez/DWES_Cuarentena/tree/ejerciciosbasicos/cuarentena/ejerciciosbasicos" target="_blank">
+                <button>Ver código</button>
+            </a>
+        </div>
         <?php
             //impresión tablero vacío
 
@@ -59,10 +65,10 @@
             echo "<input type='submit' name='borrar' value='Nueva partida'>";
             echo "</form>";
 
-            echo "<br/><a href="."verCodigo.php?src=".str_replace("&bsol;","",__FILE__)." target='_blank'><button>Ver código index</button></a>";
+            /* echo "<br/><a href="."verCodigo.php?src=".str_replace("&bsol;","",__FILE__)." target='_blank'><button>Ver código index</button></a>";
             echo "<br/><a href="."verCodigo.php?src=".str_replace("&bsol;","","class/Tablero.php")." target='_blank'><button>Ver código Tablero.php</button></a>";
             echo "<br/><a href="."verCodigo.php?src=".str_replace("&bsol;","","class/Barco.php")." target='_blank'><button>Ver código Barco.php</button></a>";    
-            echo "<br/><a href="."verCodigo.php?src=".str_replace("&bsol;","","procesa.php")." target='_blank'><button>Ver código procesa.php</button></a>";    
+            echo "<br/><a href="."verCodigo.php?src=".str_replace("&bsol;","","procesa.php")." target='_blank'><button>Ver código procesa.php</button></a>";     */
         ?>
     </main>
     <footer>
