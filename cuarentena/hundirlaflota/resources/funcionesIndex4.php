@@ -4,7 +4,7 @@
         session_destroy();
         session_start();
         session_regenerate_id();
-        header('Location:index4.php');
+        header('Location:index.php');
     }
 
     function longitudBarco($i) {
