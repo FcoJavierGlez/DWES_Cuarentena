@@ -25,12 +25,28 @@ h1, h2 {
 main {
     height: 80vh;
     padding: 0 15px;
-    /* display: grid;
-    grid-template-rows: max-content auto; */
 }
 
 .github {
     text-align: right;
+}
+
+.juego {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    column-gap: 20px;
+}
+
+.tablero {
+    display: grid;
+    justify-items: end;
+}
+
+.informacion {
+    display: grid;
+    grid-template-rows: 20% 40%;
+    align-content: center;
+    *width: 100%;
 }
 
 footer h4 {
