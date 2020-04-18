@@ -3,7 +3,7 @@
      * 
      */
     include "class/Tablero.php";
-    include "resources/funcionesIndex4.php";
+    include "resources/funciones.php";
 
     session_start();
 
@@ -66,7 +66,7 @@
                     $_SESSION['tablero']->imprTabVis($_SESSION['tablero']->finDePartida());
                     //$_SESSION['tablero']->imprimir();
 
-                    echo "<form action='index4.php' method='post'>";
+                    echo "<form action='index.php' method='post'>";
                     echo "<input type='submit' name='borrar' value='Nueva partida'>";
                     echo "</form>";
                 ?>
