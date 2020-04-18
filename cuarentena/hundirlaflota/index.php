@@ -60,16 +60,41 @@
             </a>
         </div>
         <div class="juego">
+            <div class="informacion rival">
+                <div class="mensaje">
+                    <h4>Mensaje:</h4>
+                    <?php /* echo $_SESSION['mensajes']; */ ?>
+                </div>
+                <div class="barcos_hundidos">
+                    <h4>Barcos hundidos por Skynet:</h4>
+                    <?php 
+                        echo "<table>";
+                        echo "<tr><td>Submarinos</td><td>x".$_SESSION['submarinosHundidos']."</td></tr>";
+                        echo "<tr><td>Acorazados</td><td>x".$_SESSION['acorazadosHundidos']."</td></tr>";
+                        echo "<tr><td>Destructures</td><td>x".$_SESSION['destructoresHundidos']."</td></tr>";
+                        echo "<tr><td>Portaaviones</td><td>x".$_SESSION['portaavionesHundidos']."</td></tr>";
+                        echo "</table>";
+                    ?>
+                </div>
+            </div>
             <div class="tablero">
-                <?php
-                    //Tablero de juego
-                    $_SESSION['tablero']->imprTabVis($_SESSION['tablero']->finDePartida());
-                    //$_SESSION['tablero']->imprimir();
+                <div>
+                    <?php
+                        echo "<h4>Tablero propio</h4>";
+                        $_SESSION['tablero']->imprimir();
+                    ?>
+                </div>
+                <div>
+                    <?php
+                        //Tablero de juego
+                        echo "<h4>Tablero enemigo</h4>";
+                        $_SESSION['tablero']->imprTabVis($_SESSION['tablero']->finDePartida());
 
-                    echo "<form action='index.php' method='post'>";
-                    echo "<input type='submit' name='borrar' value='Nueva partida'>";
-                    echo "</form>";
-                ?>
+                        echo "<form action='index.php' method='post'>";
+                        echo "<input type='submit' name='borrar' value='Nueva partida'>";
+                        echo "</form>";
+                    ?>
+                </div>                
             </div>
             <div class="informacion">
                 <div class="mensaje">
@@ -77,7 +102,7 @@
                     <?php echo $_SESSION['mensajes']; ?>
                 </div>
                 <div class="barcos_hundidos">
-                    <h4>Total barcos hundidos:</h4>
+                    <h4>Barcos hundidos por ti:</h4>
                     <?php 
                         echo "<table>";
                         echo "<tr><td>Submarinos</td><td>x".$_SESSION['submarinosHundidos']."</td></tr>";

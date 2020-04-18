@@ -10,6 +10,24 @@
         private $_tableroVisible = array();
         private $_listaBarcos = array();
 
+        private $_svg = array(
+            "<svg width='45' height='45'>
+            <rect width='45' height='45' fill='white' stroke-width='1' stroke='black' rx='10' />
+            </svg>",
+            "<svg width='45' height='45'>
+            <rect width='45' height='45' fill='red' stroke-width='1' stroke='black' rx='10' />
+            </svg>",
+            "<svg width='45' height='45'>
+            <rect width='45' height='45' fill='grey' stroke-width='1' stroke='black' rx='10' />
+            </svg>",
+            "<svg width='45' height='45'>
+            <rect width='45' height='45' fill='orange' stroke-width='1' stroke='black' rx='10' />
+            </svg>",
+            "<svg width='45' height='45'>
+            <rect width='45' height='45' fill='dodgerblue' stroke-width='1' stroke='black' rx='10' />
+            </svg>"
+        );
+
         public function __construct() {
             for ($i=0; $i<10; $i++) {
                 array_push($this->_tablero, array(0,0,0,0,0,0,0,0,0,0));
@@ -110,7 +128,8 @@
             $columnaFinal = $columna+$tipo*$incrementoCol;
 
             while (!($fila==$filaFinal && $columna==$columnaFinal)) {
-                $this->_tablero[$fila][$columna] = $tipo;
+                //$this->_tablero[$fila][$columna] = $tipo;
+                $this->_tablero[$fila][$columna] = 2;
                 
                 $fila += $incrementoFil;
                 $columna += $incrementoCol;
@@ -232,12 +251,12 @@
          * Imprime el tablero con la ubicación de los barcos
          */
         public function imprimir() {
-            include_once "resources/datos.php";
+            //include_once "resources/datos.php";
             echo "<table>";
             for ($i=0; $i<sizeof($this->_tablero); $i++) { 
                 echo "<tr>";
                 for ($j=0; $j<sizeof($this->_tablero); $j++)
-                    echo "<td>".$svg[$this->_tablero[$i][$j]]."</td>";
+                    echo "<td>".$this->_svg[$this->_tablero[$i][$j]]."</td>";
                 echo "</tr>";
             }
             echo "</table>";
@@ -250,17 +269,17 @@
          * @param {$finPartida} Booleano, true si la partida ha finalizado.
          */
         public function imprTabVis($finPartida) {
-            include_once "resources/datos.php";
+            //include_once "resources/datos.php";
             echo "<table>";
             for ($i=0; $i<sizeof($this->_tableroVisible); $i++) { 
                 echo "<tr>";
                 for ($j=0; $j<sizeof($this->_tableroVisible); $j++) {
                     if ($finPartida)
-                        echo "<td>".$svg[$this->_tableroVisible[$i][$j]]."</td>";
+                        echo "<td>".$this->_svg[$this->_tableroVisible[$i][$j]]."</td>";
                     else
                         echo ($this->_tableroVisible[$i][$j]!=0) ?  
-                        "<td>".$svg[$this->_tableroVisible[$i][$j]]."</td>" :
-                        "<td><a href=".$_SERVER['PHP_SELF']."?fila=".$i."&columna=".$j.">".$svg[$this->_tableroVisible[$i][$j]]."</a></td>";
+                        "<td>".$this->_svg[$this->_tableroVisible[$i][$j]]."</td>" :
+                        "<td><a href=".$_SERVER['PHP_SELF']."?fila=".$i."&columna=".$j.">".$this->_svg[$this->_tableroVisible[$i][$j]]."</a></td>";
                 }
                 echo "</tr>";
             }

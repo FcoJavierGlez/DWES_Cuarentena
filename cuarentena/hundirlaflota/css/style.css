@@ -33,13 +33,21 @@ main {
 
 .juego {
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(3,1fr);
+    height: 75vh;
+    align-content: center;
     column-gap: 20px;
 }
 
 .tablero {
     display: grid;
-    justify-items: end;
+    grid-template-columns: repeat(2,1fr);
+    column-gap: 40px;
+    *justify-items: end;
+}
+
+.tablero h4 {
+    text-align: center;
 }
 
 .informacion {
@@ -47,6 +55,15 @@ main {
     grid-template-rows: 20% 40%;
     align-content: center;
     *width: 100%;
+}
+
+.rival table {
+    display: grid;
+    justify-items: end;
+}
+
+.rival {
+    text-align: right;
 }
 
 footer h4 {
