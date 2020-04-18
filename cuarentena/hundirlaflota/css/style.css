@@ -25,10 +25,15 @@ h1, h2 {
 main {
     height: 80vh;
     padding: 0 15px;
+    background-image: url("../img/fondo/1.jpg");
+    background-size: cover;
+    background-position: center;
 }
 
 .github {
     text-align: right;
+    *background-color: rgba(255, 255, 255, 0.5);
+    color: white;
 }
 
 .juego {
@@ -42,7 +47,9 @@ main {
 .tablero {
     display: grid;
     grid-template-columns: repeat(2,1fr);
-    column-gap: 40px;
+    column-gap: 30px;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 0 10px;
     *justify-items: end;
 }
 
@@ -54,6 +61,9 @@ main {
     display: grid;
     grid-template-rows: 20% 40%;
     align-content: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+    padding: 0 15px;
     *width: 100%;
 }
 
@@ -64,6 +74,13 @@ main {
 
 .rival {
     text-align: right;
+}
+
+.mensaje, .barcos_hundidos {
+    background-color: black;
+    padding: 0 15px;
+    color: rgb(0, 190, 0);
+    font-size: bold;
 }
 
 footer h4 {

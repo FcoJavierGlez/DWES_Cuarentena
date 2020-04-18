@@ -7,7 +7,7 @@
     class Tablero {
 
         private $_tablero = array();
-        private $_tableroVisible = array();
+        private $_tableroJuego = array();
         private $_listaBarcos = array();
 
         private $_svg = array(
@@ -18,7 +18,7 @@
             <rect width='45' height='45' fill='red' stroke-width='1' stroke='black' rx='10' />
             </svg>",
             "<svg width='45' height='45'>
-            <rect width='45' height='45' fill='grey' stroke-width='1' stroke='black' rx='10' />
+            <rect width='45' height='45' fill='green' stroke-width='1' stroke='black' rx='10' />
             </svg>",
             "<svg width='45' height='45'>
             <rect width='45' height='45' fill='orange' stroke-width='1' stroke='black' rx='10' />
@@ -31,9 +31,62 @@
         public function __construct() {
             for ($i=0; $i<10; $i++) {
                 array_push($this->_tablero, array(0,0,0,0,0,0,0,0,0,0));
-                array_push($this->_tableroVisible, array(0,0,0,0,0,0,0,0,0,0));
+                array_push($this->_tableroJuego, array(0,0,0,0,0,0,0,0,0,0));
             }
         }
+
+        /*** GETTERS ***/
+
+        /**
+         * Devuelve el valor contenido en el tablero para las coordenadas pasadas como parámetro
+         * 
+         * @param {$fila}       Fila pasada por parámetro
+         * @param {$columna}    Columna pasada por parámetro
+         * 
+         * @return {int}        Valor contenido en el tablero para la posición [$fila][$columna]
+         */
+        public function getValorTablero($fila,$columna) {
+            return $this->_tablero[$fila][$columna];
+        }
+
+        /**
+         * Devuelve el valor contenido en el tablero de juego para las coordenadas pasadas como parámetro
+         * 
+         * @param {$fila}       Fila pasada por parámetro
+         * @param {$columna}    Columna pasada por parámetro
+         * 
+         * @return {int}        Valor contenido en el tablero para la posición [$fila][$columna]
+         */
+        public function getValorTableroJuego($fila,$columna) {
+            return $this->_tableroJuego[$fila][$columna];
+        }
+
+        /**
+         * Devuelve el conjunto de barcos (objetos de la clase Barco) almacenados en este tablero
+         * 
+         * @return {Array}      Total de objetos de la clase barco almacenados en este tablero.
+         */
+        public function getListaBarcos() {
+            return $this->_listaBarcos;
+        }
+
+
+        /*** SETTERS ***/
+
+        public function setValorTablero($fila,$columna,$valor) {
+            $this->_tablero[$fila][$columna] = $valor;
+        }
+
+        public function setValorTableroJuego($fila,$columna,$valor) {
+            $this->_tableroJuego[$fila][$columna] = $valor;
+        }
+
+        public function setHundirBarco($i) {
+            array_splice($this->_listaBarcos,$i,1);
+        }
+
+
+        /*** MÉTODOS DE VALIDACIÓN E INSERCIÓN DE BARCOS ***/
 
         /**
          * Valida que el barco no se saldrá del tablero.
@@ -176,12 +229,14 @@
             array_push($this->_listaBarcos, new Barco($fila,$columna,$tipo,$direccion));
         }
 
+        
+
         /**
          * Incrementa el total de barcos hundidos de cada tipo.
          * 
          * @param {$tipo} Longitud del barco que acaba de hundirse
          */
-        private function incrementaListaHundidos($tipo) {
+        private function incrementaListaHundidos($tipo) {   //Este método pasará a clase Jugador
             switch ($tipo) {
                 case 1:
                     $_SESSION['submarinosHundidos']++;
@@ -201,38 +256,38 @@
         /**
          * Se recibe las coordenadas del impacto
          */
-        public function impacto($fila,$columna) {
-            if ($this->_tableroVisible[$fila][$columna]!=0) return;
-            else {
-                if (!$this->_tablero[$fila][$columna]==0) {
-                    for ($i=0; $i<sizeof($this->_listaBarcos); $i++) { 
-                        if ($this->_listaBarcos[$i]->comprobarImpacto($fila,$columna)) {    //comprobar cuál es el barco impactado
-                            $this->_listaBarcos[$i]->destruirModulo($fila,$columna);
-                            if ($this->_listaBarcos[$i]->getHundido()) {                    //determinar si el barco se ha hundido
-                                $_SESSION['mensajes'] = $this->_listaBarcos[$i]->getMensajeHundido();
-                                $this->incrementaListaHundidos($this->_listaBarcos[$i]->getTipo());
-                                array_splice($this->_listaBarcos,$i,1);
-                            } 
-                            else 
-                                $_SESSION['mensajes'] = "";
-                            break;
-                        }
+        /* public function impacto($fila,$columna) {   //Este método pasará a clase Jugador y debe ser limpiado
+            if ($this->_tableroJuego[$fila][$columna]!=0) return;
+            if (!$this->_tablero[$fila][$columna]==0) {
+                for ($i=0; $i<sizeof($this->getListaBarcos()); $i++) { 
+                    if ($this->getListaBarcos()[$i]->comprobarImpacto($fila,$columna)) {    //comprobar cuál es el barco impactado
+                        $this->getListaBarcos()[$i]->destruirModulo($fila,$columna);
+                        if ($this->getListaBarcos()[$i]->getHundido()) {                    //determinar si el barco se ha hundido
+                            $_SESSION['mensajes'] = $this->getListaBarcos()[$i]->getMensajeHundido();
+                            $this->incrementaListaHundidos($this->getListaBarcos()[$i]->getTipo());
+                            $this->setHundirBarco($i);
+                        } 
+                        else 
+                            $_SESSION['mensajes'] = "";
+                        break;
                     }
-                    $this->_tableroVisible[$fila][$columna] = 1;
                 }
-                else {
-                    $this->_tableroVisible[$fila][$columna] = 4;
-                    $_SESSION['mensajes'] = "";
-                }
+                $this->_tableroJuego[$fila][$columna] = 1;
+                $this->setValorTablero($fila,$columna,1);
             }
-        }
+            else {
+                $this->_tableroJuego[$fila][$columna] = 4;
+                $this->setValorTablero($fila,$columna,4);
+                $_SESSION['mensajes'] = "";
+            }
+        } */
 
         /**
          * Devuelve un booleano con el estado de la partida
          * 
          * @return {Boolean} True si la partida ha finalizado, false si no.
          */
-        public function finDePartida() {
+        public function finDePartida() {    //Este método pasará a clase Jugador
             return sizeof($this->_listaBarcos) == 0;
         }
 
@@ -251,7 +306,6 @@
          * Imprime el tablero con la ubicación de los barcos
          */
         public function imprimir() {
-            //include_once "resources/datos.php";
             echo "<table>";
             for ($i=0; $i<sizeof($this->_tablero); $i++) { 
                 echo "<tr>";
@@ -269,17 +323,16 @@
          * @param {$finPartida} Booleano, true si la partida ha finalizado.
          */
         public function imprTabVis($finPartida) {
-            //include_once "resources/datos.php";
             echo "<table>";
-            for ($i=0; $i<sizeof($this->_tableroVisible); $i++) { 
+            for ($i=0; $i<sizeof($this->_tableroJuego); $i++) { 
                 echo "<tr>";
-                for ($j=0; $j<sizeof($this->_tableroVisible); $j++) {
+                for ($j=0; $j<sizeof($this->_tableroJuego); $j++) {
                     if ($finPartida)
-                        echo "<td>".$this->_svg[$this->_tableroVisible[$i][$j]]."</td>";
+                        echo "<td>".$this->_svg[$this->_tableroJuego[$i][$j]]."</td>";
                     else
-                        echo ($this->_tableroVisible[$i][$j]!=0) ?  
-                        "<td>".$this->_svg[$this->_tableroVisible[$i][$j]]."</td>" :
-                        "<td><a href=".$_SERVER['PHP_SELF']."?fila=".$i."&columna=".$j.">".$this->_svg[$this->_tableroVisible[$i][$j]]."</a></td>";
+                        echo ($this->_tableroJuego[$i][$j]!=0) ?  
+                        "<td>".$this->_svg[$this->_tableroJuego[$i][$j]]."</td>" :
+                        "<td><a href=".$_SERVER['PHP_SELF']."?fila=".$i."&columna=".$j.">".$this->_svg[$this->_tableroJuego[$i][$j]]."</a></td>";
                 }
                 echo "</tr>";
             }
