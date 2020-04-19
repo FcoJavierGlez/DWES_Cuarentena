@@ -44,7 +44,7 @@ main {
 .juego {
     display: grid;
     grid-template-columns: repeat(3,1fr);
-    height: 70vh;
+    height: 75vh;
     align-content: center;
     column-gap: 20px;
 }
@@ -104,8 +104,12 @@ main {
 }
 
 .contenedorFinPartida {
+    position: absolute;
     display: grid;
     justify-items: center;
+    align-items: center;
+    width: 98.5%;
+    height: 74vh;
 }
 
 .contenedorFinPartida h4 {

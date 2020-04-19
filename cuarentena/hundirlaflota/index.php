@@ -57,6 +57,18 @@
                 <button>Ver código</button>
             </a>
         </div>
+        <?php 
+                if ($_SESSION['finPartida']) {
+                    echo "<div class='contenedorFinPartida'>";
+                        echo "<div class=".(($_SESSION['jugador2']->getDerrotado()) ? "victoria" : "derrota").">";
+                            echo "<h4>".(($_SESSION['jugador2']->getDerrotado()) ? "¡Felicidades, has ganado!" : "¡Lo siento, has perdido!")."</h4>";
+                            echo "<form action='index.php' method='post'>";
+                                echo "<input type='submit' name='borrar' value='Nueva partida'>";
+                            echo "</form>";
+                        echo "</div>";
+                    echo "</div>";
+                }
+            ?>
         <div class="juego">
             <div class="informacion rival">
                 <div class="mensaje">
@@ -103,7 +115,7 @@
                     ?>
                 </div>
                 <?php 
-                    if ($_SESSION['finPartida']) {
+                    /* if ($_SESSION['finPartida']) {
                         echo "<div class='contenedorFinPartida'>";
                             echo "<div class=".(($_SESSION['jugador2']->getDerrotado()) ? "victoria" : "derrota").">";
                                 echo "<h4>".(($_SESSION['jugador2']->getDerrotado()) ? "¡Felicidades, has ganado!" : "¡Has perdido!")."</h4>";
@@ -112,7 +124,7 @@
                                 echo "</form>";
                             echo "</div>";
                         echo "</div>";
-                    }
+                    } */
                 ?>
             </div>
         </div>
