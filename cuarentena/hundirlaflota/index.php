@@ -9,7 +9,6 @@
     session_start();
 
     if (!isset($_SESSION['jugador1'])) {     //!isset($_SESSION['tablero'])
-        //$_SESSION['tablero'] = new Tablero();   //Creamos el objeto tablero
         $_SESSION['jugador1'] = new Jugador("Humano/a");
         $_SESSION['jugador2'] = new Jugador("Skynet");
         $_SESSION['mensajesJ1'] = "";
@@ -21,10 +20,18 @@
     if (isset($_POST['borrar'])) {
         cerrarSesion();
     }
-
-    if (isset($_GET['fila'])) {
-        //$_SESSION['tablero']->impacto($_GET['fila'],$_GET['columna']);
-        $_SESSION['jugador1']->disparar($_GET['fila'],$_GET['columna'],$_SESSION['jugador2']->getTablero());
+    
+    if ($_SESSION['turno']==1) {
+        if (isset($_GET['fila'])) {
+            $_SESSION['jugador1']->disparar($_GET['fila'],$_GET['columna'],$_SESSION['jugador2']->getTablero());
+            $_SESSION['turno'] = 2;
+        }
+    }
+    
+    if ($_SESSION['turno']==2) {
+        //Aquí juega la IA
+        //$_SESSION['jugador2']->incrementaDisparos(); //PRUEBAS, BORRAR
+        $_SESSION['turno'] = 1;
     }
 
     $_SESSION['finPartida'] = $_SESSION['jugador1']->getDerrotado() || $_SESSION['jugador2']->getDerrotado();

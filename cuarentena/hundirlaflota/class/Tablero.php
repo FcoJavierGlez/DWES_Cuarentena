@@ -8,6 +8,7 @@
 
         private $_tablero = array();
         private $_tableroJuego = array();
+        private $_tableroIA = array();
         private $_listaBarcos = array();
 
         private $_svg = array(
@@ -32,6 +33,7 @@
             for ($i=0; $i<10; $i++) {
                 array_push($this->_tablero, array(0,0,0,0,0,0,0,0,0,0));
                 array_push($this->_tableroJuego, array(0,0,0,0,0,0,0,0,0,0));
+                array_push($this->_tableroIA, ( ($i==0 || $i==9) ? array(4,6,6,6,6,6,6,6,6,4) : array(6,9,9,9,9,9,9,9,9,6)));
             }
         }
 
@@ -62,6 +64,18 @@
         }
 
         /**
+         * Devuelve el valor contenido en el tablero de la IA para las coordenadas pasadas como parámetro
+         * 
+         * @param {$fila}       Fila pasada por parámetro
+         * @param {$columna}    Columna pasada por parámetro
+         * 
+         * @return {int}        Valor contenido en el tablero para la posición [$fila][$columna]
+         */
+        public function getValorTableroIA($fila,$columna) {
+            return $this->_tableroIA[$fila][$columna];
+        }
+
+        /**
          * Devuelve el conjunto de barcos (objetos de la clase Barco) almacenados en este tablero
          * 
          * @return {Array}      Total de objetos de la clase barco almacenados en este tablero.
@@ -73,14 +87,44 @@
 
         /*** SETTERS ***/
 
+        /**
+         * Inserta un valor en el tablero para las coordenadas pasadas como parámetro
+         * 
+         * @param {$fila}       Fila pasada por parámetro
+         * @param {$columna}    Columna pasada por parámetro
+         * @param {$valor}      Valor a insertar en el tablero
+         */
         public function setValorTablero($fila,$columna,$valor) {
             $this->_tablero[$fila][$columna] = $valor;
         }
 
+        /**
+         * Inserta un valor en el tablero de juego para las coordenadas pasadas como parámetro
+         * 
+         * @param {$fila}       Fila pasada por parámetro
+         * @param {$columna}    Columna pasada por parámetro
+         * @param {$valor}      Valor a insertar en el tablero
+         */
         public function setValorTableroJuego($fila,$columna,$valor) {
             $this->_tableroJuego[$fila][$columna] = $valor;
         }
 
+        /**
+         * Inserta un valor en el tablero de la IA para las coordenadas pasadas como parámetro
+         * 
+         * @param {$fila}       Fila pasada por parámetro
+         * @param {$columna}    Columna pasada por parámetro
+         * @param {$valor}      Valor a insertar en el tablero
+         */
+        public function setValorTableroIA($fila,$columna,$valor) {
+            $this->_tableroIA[$fila][$columna] = $valor;
+        }
+
+        /**
+         * Elimina un barco que ha sido hundido
+         * 
+         * @param {$i}  Posición dónde está almacenado el barco a hundir
+         */
         public function setHundirBarco($i) {
             array_splice($this->_listaBarcos,$i,1);
         }

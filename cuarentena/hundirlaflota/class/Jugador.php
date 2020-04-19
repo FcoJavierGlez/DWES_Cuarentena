@@ -129,6 +129,13 @@
         }
 
         /**
+         * Incrementa el numDisparos del jugador
+         */
+        /* public function incrementaDisparos() {      //MÉTODO TEMPORAL PARA PRUEBAS
+            $this->_numDisparos++;
+        } */
+
+        /**
          * Incrementa el total de barcos hundidos en función del tipo de barco que se le pase como parámetro
          * 
          * @param {$tipoBarco}  El tipo de barco que se deseaincrementar
