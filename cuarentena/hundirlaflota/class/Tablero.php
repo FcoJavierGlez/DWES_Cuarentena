@@ -273,68 +273,6 @@
             array_push($this->_listaBarcos, new Barco($fila,$columna,$tipo,$direccion));
         }
 
-        
-
-        /**
-         * Incrementa el total de barcos hundidos de cada tipo.
-         * 
-         * @param {$tipo} Longitud del barco que acaba de hundirse
-         */
-        private function incrementaListaHundidos($tipo) {   //Este método pasará a clase Jugador
-            switch ($tipo) {
-                case 1:
-                    $_SESSION['submarinosHundidos']++;
-                    break;
-                case 2:
-                    $_SESSION['acorazadosHundidos']++;
-                    break;
-                case 3:
-                    $_SESSION['destructoresHundidos']++;
-                    break;
-                case 4:
-                    $_SESSION['portaavionesHundidos']++;
-                    break;
-            }
-        }
-
-        /**
-         * Se recibe las coordenadas del impacto
-         */
-        /* public function impacto($fila,$columna) {   //Este método pasará a clase Jugador y debe ser limpiado
-            if ($this->_tableroJuego[$fila][$columna]!=0) return;
-            if (!$this->_tablero[$fila][$columna]==0) {
-                for ($i=0; $i<sizeof($this->getListaBarcos()); $i++) { 
-                    if ($this->getListaBarcos()[$i]->comprobarImpacto($fila,$columna)) {    //comprobar cuál es el barco impactado
-                        $this->getListaBarcos()[$i]->destruirModulo($fila,$columna);
-                        if ($this->getListaBarcos()[$i]->getHundido()) {                    //determinar si el barco se ha hundido
-                            $_SESSION['mensajes'] = $this->getListaBarcos()[$i]->getMensajeHundido();
-                            $this->incrementaListaHundidos($this->getListaBarcos()[$i]->getTipo());
-                            $this->setHundirBarco($i);
-                        } 
-                        else 
-                            $_SESSION['mensajes'] = "";
-                        break;
-                    }
-                }
-                $this->_tableroJuego[$fila][$columna] = 1;
-                $this->setValorTablero($fila,$columna,1);
-            }
-            else {
-                $this->_tableroJuego[$fila][$columna] = 4;
-                $this->setValorTablero($fila,$columna,4);
-                $_SESSION['mensajes'] = "";
-            }
-        } */
-
-        /**
-         * Devuelve un booleano con el estado de la partida
-         * 
-         * @return {Boolean} True si la partida ha finalizado, false si no.
-         */
-        public function finDePartida() {    //Este método pasará a clase Jugador
-            return sizeof($this->_listaBarcos) == 0;
-        }
-
         /**
          * Imprime la lista de los barcos con la información de cada uno.
          */

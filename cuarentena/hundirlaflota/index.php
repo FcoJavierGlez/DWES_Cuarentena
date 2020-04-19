@@ -85,7 +85,6 @@
                         $_SESSION['jugador1']->getTablero()->imprTabVis($_SESSION['finPartida']);
 
                         echo "<form action='index.php' method='post'>";
-                        echo ($_SESSION['finPartida']) ? "<input type='submit' name='borrar' value='Nueva partida'>" : "";
                         //echo "<input type='submit' name='borrar' value='Nueva partida'>";
                         echo "</form>";
                     ?>
@@ -103,6 +102,18 @@
                         $_SESSION['jugador1']->imprimeBarcosHundidos();
                     ?>
                 </div>
+                <?php 
+                    if ($_SESSION['finPartida']) {
+                        echo "<div class='contenedorFinPartida'>";
+                            echo "<div class=".(($_SESSION['jugador2']->getDerrotado()) ? "victoria" : "derrota").">";
+                                echo "<h4>".(($_SESSION['jugador2']->getDerrotado()) ? "¡Felicidades, has ganado!" : "¡Has perdido!")."</h4>";
+                                echo "<form action='index.php' method='post'>";
+                                    echo "<input type='submit' name='borrar' value='Nueva partida'>";
+                                echo "</form>";
+                            echo "</div>";
+                        echo "</div>";
+                    }
+                ?>
             </div>
         </div>
     </main>

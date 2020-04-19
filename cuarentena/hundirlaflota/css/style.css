@@ -44,7 +44,7 @@ main {
 .juego {
     display: grid;
     grid-template-columns: repeat(3,1fr);
-    height: 75vh;
+    height: 70vh;
     align-content: center;
     column-gap: 20px;
 }
@@ -97,6 +97,35 @@ main {
     padding: 0 10px;
     *color: rgb(0, 190, 0);
     font-size: bold;
+}
+
+.mensaje {
+    height: max-content;
+}
+
+.contenedorFinPartida {
+    display: grid;
+    justify-items: center;
+}
+
+.contenedorFinPartida h4 {
+    margin: 2px 0;
+}
+
+.victoria {
+    text-align: center;
+    border-radius: 10px;
+    padding: 15px;
+    border: 2px solid rgb(0, 255, 0);
+    background-color: rgb(140, 255, 125);
+}
+
+.derrota {
+    text-align: center;
+    border-radius: 10px;
+    padding: 15px;
+    border: 2px solid rgb(255, 0, 0);
+    background-color: rgb(255, 100, 100);
 }
 
 footer h4 {
