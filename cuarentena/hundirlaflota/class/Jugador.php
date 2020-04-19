@@ -2,19 +2,11 @@
     include "class/Tablero.php";
 
     class Jugador {
-
-        /**
-         * Atributos:
-         * 
-         * -tablero (objeto de la clase tablero)
-         * -nombre: nombre del jugador
-         * -numDisparos: número de disparos que ha realizado el jugador
-         */
     
-        protected $_tablero;
-        protected $_nombre;
-        protected $_numDisparos;
-        protected $_barcosHundidos;
+        protected $_tablero;            //Objeto de la clase tablero
+        protected $_nombre;             //Nombre del jugador/a
+        protected $_numDisparos;        //Total de disparods hechos por el jugador
+        protected $_barcosHundidos;     //Array con la lista de barcos hundidos al enemigo
 
         public function __construct($nombre) {
             $this->_tablero = new Tablero();
@@ -39,13 +31,9 @@
         }
 
         /**
-         * getTablero: devuelve el tablero (tablero es protected y necesita un método público)
-         * colocarBarcos: añade los barcos del jugador en su tablero
-         * disparar: dispara a las coordenadas pasadas por parámetro del tablero del jugador enemigo
-         */
-
-        /**
+         * Devuelve la longitud del barco a crear según el número de barcos que se hayan creado
          * 
+         * @param {$i}  Número de barcos creados
          */
         private function longitudBarco($i) {
             switch ($i) {
