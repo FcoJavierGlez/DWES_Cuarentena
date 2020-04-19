@@ -105,7 +105,6 @@
                 </div>
             </div>
         </div>
-        
     </main>
     <footer>
         <h4>RRSS del autor:</h4>
