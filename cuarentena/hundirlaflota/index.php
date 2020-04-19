@@ -12,26 +12,10 @@
         //$_SESSION['tablero'] = new Tablero();   //Creamos el objeto tablero
         $_SESSION['jugador1'] = new Jugador("Humano/a");
         $_SESSION['jugador2'] = new Jugador("Skynet");
-        $_SESSION['mensajes'] = "";             //Mensaje de barcos hundidos;
-        $_SESSION['submarinosHundidos'] = 0;    //Mensaje de barcos hundidos;
-        $_SESSION['acorazadosHundidos'] = 0;    //Mensaje de barcos hundidos;
-        $_SESSION['destructoresHundidos'] = 0;  //Mensaje de barcos hundidos;
-        $_SESSION['portaavionesHundidos'] = 0;  //Mensaje de barcos hundidos;
-        /* for ($i=1; $i<11; $i++) {               //Añadimos los barcos en posiciones válidas
-            do {
-                $fila = rand(0,9);
-                $columna = rand(0,9);
-    
-                $sentido = rand(0,3);
-                
-                try {
-                    $_SESSION['tablero']->addBarco($fila,$columna,longitudBarco($i),$sentido);
-                    $ubicarBarco = false;
-                } catch (Exception $e) {
-                    $ubicarBarco = true;
-                }
-            } while ($ubicarBarco);
-        } */
+        $_SESSION['mensajesJ1'] = "";
+        $_SESSION['mensajesJ2'] = "";
+        $_SESSION['turno'] = rand(1,2);
+        $_SESSION['finPartida'] = false;
     }
 
     if (isset($_POST['borrar'])) {
@@ -42,6 +26,9 @@
         //$_SESSION['tablero']->impacto($_GET['fila'],$_GET['columna']);
         $_SESSION['jugador1']->disparar($_GET['fila'],$_GET['columna'],$_SESSION['jugador2']->getTablero());
     }
+
+    $_SESSION['finPartida'] = $_SESSION['jugador1']->getDerrotado() || $_SESSION['jugador2']->getDerrotado();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,8 +53,9 @@
         <div class="juego">
             <div class="informacion rival">
                 <div class="mensaje">
+                    <h4 class="center">Disparos realizados por <?php echo $_SESSION['jugador2']->getNombre().": ".$_SESSION['jugador2']->getDisparos(); ?></h4>
                     <h4>Mensaje:</h4>
-                    <?php /* echo $_SESSION['mensajes']; */ ?>
+                    <?php echo $_SESSION['mensajesJ2']; ?>
                 </div>
                 <div class="barcos_hundidos">
                     <h4>Barcos hundidos por <?php echo $_SESSION['jugador2']->getNombre(); ?>:</h4>
@@ -79,28 +67,28 @@
             <div class="tablero">
                 <div>
                     <?php
-                        echo "<h4>Tablero propio</h4>";
-                        //$_SESSION['tablero']->imprimir();
+                        echo "<h4>TABLERO PROPIO</h4>";
                         $_SESSION['jugador1']->getTablero()->imprimir();
                     ?>
                 </div>
                 <div>
                     <?php
                         //Tablero de juego
-                        echo "<h4>Tablero enemigo</h4>";
-                        //$_SESSION['tablero']->imprTabVis($_SESSION['tablero']->finDePartida());
-                        $_SESSION['jugador1']->getTablero()->imprTabVis(false);
+                        echo "<h4>TABLERO ENEMIGO</h4>";
+                        $_SESSION['jugador1']->getTablero()->imprTabVis($_SESSION['finPartida']);
 
                         echo "<form action='index.php' method='post'>";
-                        echo "<input type='submit' name='borrar' value='Nueva partida'>";
+                        echo ($_SESSION['finPartida']) ? "<input type='submit' name='borrar' value='Nueva partida'>" : "";
+                        //echo "<input type='submit' name='borrar' value='Nueva partida'>";
                         echo "</form>";
                     ?>
                 </div>                
             </div>
             <div class="informacion">
                 <div class="mensaje">
+                    <h4 class="center">Disparos realizados por <?php echo $_SESSION['jugador1']->getNombre().": ".$_SESSION['jugador1']->getDisparos(); ?></h4>
                     <h4>Mensaje:</h4>
-                    <?php echo $_SESSION['mensajes']; ?>
+                    <?php echo $_SESSION['mensajesJ1']; ?>
                 </div>
                 <div class="barcos_hundidos">
                     <h4>Barcos hundidos por <?php echo $_SESSION['jugador1']->getNombre(); ?>:</h4>

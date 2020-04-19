@@ -111,6 +111,24 @@
         }
 
         /**
+         * Devuelve un booleano informando si el juegador ha sido derrotado
+         * 
+         * @return {Boolean} True si el juegador ha perdido, false si no.
+         */
+        public function getDerrotado() {
+            return sizeof($this->getTablero()->getListaBarcos())==0;
+        }
+
+        /**
+         * Devuelve el números de disparos realizados por el jugador.
+         * 
+         * @return {int} Total de disparos realizados por el jugador.
+         */
+        public function getDisparos() {
+            return $this->_numDisparos;
+        }
+
+        /**
          * Incrementa el total de barcos hundidos en función del tipo de barco que se le pase como parámetro
          * 
          * @param {$tipoBarco}  El tipo de barco que se deseaincrementar
@@ -136,12 +154,12 @@
                     if ($tableroEnemigo->getListaBarcos()[$i]->comprobarImpacto($fila,$columna)) {    //comprobar cuál es el barco impactado
                         $tableroEnemigo->getListaBarcos()[$i]->destruirModulo($fila,$columna);
                         if ($tableroEnemigo->getListaBarcos()[$i]->getHundido()) {                    //determinar si el barco se ha hundido
-                            $_SESSION['mensajes'] = $tableroEnemigo->getListaBarcos()[$i]->getMensajeHundido();
+                            $_SESSION['mensajesJ1'] = $tableroEnemigo->getListaBarcos()[$i]->getMensajeHundido();
                             $this->incrementaBarcosHundidos($tableroEnemigo->getListaBarcos()[$i]->getTipo());
                             $tableroEnemigo->setHundirBarco($i);
                         } 
                         else 
-                            $_SESSION['mensajes'] = "";
+                            $_SESSION['mensajesJ1'] = "";
                         break;
                     }
                 }
@@ -151,8 +169,9 @@
             else {
                 $this->getTablero()->setValorTableroJuego($fila,$columna,4);
                 $tableroEnemigo->setValorTablero($fila,$columna,4);
-                $_SESSION['mensajes'] = "";
+                $_SESSION['mensajesJ1'] = "";
             }
+            $this->_numDisparos++;
         }
     }
 ?>

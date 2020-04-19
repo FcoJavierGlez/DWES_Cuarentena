@@ -2,13 +2,19 @@
     --php_color: rgb(127, 102, 151);
 }
 
+@font-face {
+    font-family: oldComputer;
+    font-size: 16px;
+    src: url("../fonts/retro_computer_personal_use.ttf");
+  }
+
 body {
     margin: 0;
 }
 
 header, footer {
     height: 10vh;
-    background-color: var(--php_color);
+    background-color: black;
 }
 
 header {
@@ -32,7 +38,6 @@ main {
 
 .github {
     text-align: right;
-    *background-color: rgba(255, 255, 255, 0.5);
     color: white;
 }
 
@@ -48,23 +53,31 @@ main {
     display: grid;
     grid-template-columns: repeat(2,1fr);
     column-gap: 30px;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.35);
+    border-radius: 20px;
     padding: 0 10px;
-    *justify-items: end;
 }
 
 .tablero h4 {
     text-align: center;
+    background-color: rgba(255, 166, 0, 0.75);
+    margin: 15px;
+    color: black;
 }
 
 .informacion {
     display: grid;
-    grid-template-rows: 20% 40%;
+    grid-template-rows: 30% 40%;
+    height: 50%;
     align-content: center;
-    background-color: rgba(255, 255, 255, 0.7);
+    align-self: center;
+    background-color: rgba(255, 255, 255, 0.6);
     border-radius: 20px;
     padding: 0 15px;
-    *width: 100%;
+}
+
+.center {
+    text-align: center;
 }
 
 .rival table {
@@ -77,9 +90,12 @@ main {
 }
 
 .mensaje, .barcos_hundidos {
-    background-color: black;
-    padding: 0 15px;
-    color: rgb(0, 190, 0);
+    font-family: oldComputer;
+    font-size: 0.7rem;
+    font-weight: bold;
+    *background-color: black;
+    padding: 0 10px;
+    *color: rgb(0, 190, 0);
     font-size: bold;
 }
 
