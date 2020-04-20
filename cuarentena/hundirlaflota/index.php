@@ -21,14 +21,16 @@
         cerrarSesion();
     }
     
-    if ($_SESSION['turno']==1) {
+    if ($_SESSION['turno']==1 && !$_SESSION['finPartida']) {
         if (isset($_GET['fila'])) {
             $_SESSION['jugador1']->disparar($_GET['fila'],$_GET['columna'],$_SESSION['jugador2']->getTablero());
             $_SESSION['turno'] = 2;
         }
     }
+
+    $_SESSION['finPartida'] = $_SESSION['jugador1']->getDerrotado() || $_SESSION['jugador2']->getDerrotado();
     
-    if ($_SESSION['turno']==2) {
+    if ($_SESSION['turno']==2 && !$_SESSION['finPartida']) {
         //Aquí juega la IA
         //$_SESSION['jugador2']->incrementaDisparos(); //PRUEBAS, BORRAR
         $_SESSION['turno'] = 1;
@@ -58,17 +60,17 @@
             </a>
         </div>
         <?php 
-                if ($_SESSION['finPartida']) {
-                    echo "<div class='contenedorFinPartida'>";
-                        echo "<div class=".(($_SESSION['jugador2']->getDerrotado()) ? "victoria" : "derrota").">";
-                            echo "<h4>".(($_SESSION['jugador2']->getDerrotado()) ? "¡Felicidades, has ganado!" : "¡Lo siento, has perdido!")."</h4>";
-                            echo "<form action='index.php' method='post'>";
-                                echo "<input type='submit' name='borrar' value='Nueva partida'>";
-                            echo "</form>";
-                        echo "</div>";
+            if ($_SESSION['finPartida']) {
+                echo "<div class='contenedorFinPartida'>";
+                    echo "<div class=".(($_SESSION['jugador2']->getDerrotado()) ? "victoria" : "derrota").">";
+                        echo "<h4>".(($_SESSION['jugador2']->getDerrotado()) ? "¡Felicidades, has ganado!" : "¡Lo siento, has perdido!")."</h4>";
+                        echo "<form action='index.php' method='post'>";
+                            echo "<input type='submit' name='borrar' value='Nueva partida'>";
+                        echo "</form>";
                     echo "</div>";
-                }
-            ?>
+                echo "</div>";
+            }
+        ?>
         <div class="juego">
             <div class="informacion rival">
                 <div class="mensaje">
@@ -114,18 +116,6 @@
                         $_SESSION['jugador1']->imprimeBarcosHundidos();
                     ?>
                 </div>
-                <?php 
-                    /* if ($_SESSION['finPartida']) {
-                        echo "<div class='contenedorFinPartida'>";
-                            echo "<div class=".(($_SESSION['jugador2']->getDerrotado()) ? "victoria" : "derrota").">";
-                                echo "<h4>".(($_SESSION['jugador2']->getDerrotado()) ? "¡Felicidades, has ganado!" : "¡Has perdido!")."</h4>";
-                                echo "<form action='index.php' method='post'>";
-                                    echo "<input type='submit' name='borrar' value='Nueva partida'>";
-                                echo "</form>";
-                            echo "</div>";
-                        echo "</div>";
-                    } */
-                ?>
             </div>
         </div>
     </main>

@@ -84,6 +84,17 @@
             return $this->_listaBarcos;
         }
 
+        /**
+         * Devuelve el índice del barco hundido
+         * 
+         * @return {int}    Devuelve el índice del barco que está hundido
+         */
+        public function getNumBarcoHundido() {
+            for ($i=0; $i<sizeof($this->_listaBarcos); $i++) 
+                if ($this->_listaBarcos[$i]->getHundido()) return $i;
+            return -1;
+        }
+
 
         /*** SETTERS ***/
 

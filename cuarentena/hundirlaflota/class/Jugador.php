@@ -142,6 +142,22 @@
             echo "</table>";
         }
 
+        /**
+         * Devuelve el número del índice del array donde está almacenado el barco impactado
+         * 
+         * @param {$fila}               Fila donde se ha producido el impacto
+         * @param {$columna}            Columna donde se ha producido el impacto
+         * @param {$tableroEnemigo}     Objeto tablero del jugador contrario
+         * 
+         * @return {int}                Índice donde está almacenado el barco
+         */
+        protected function getIndexBarcoImpactado($fila,$columna,$tableroEnemigo) {
+            for ($i=0; $i<sizeof($tableroEnemigo->getListaBarcos()); $i++) 
+                if ($tableroEnemigo->getListaBarcos()[$i]->comprobarImpacto($fila,$columna)) 
+                    return $i;
+            return -1;
+        }
+
         public function disparar($fila,$columna,$tableroEnemigo) {   //Este método pasará a clase Jugador y debe ser limpiado
             if ($this->_tablero->getValorTableroJuego($fila,$columna)!=0) return;
             if (!$tableroEnemigo->getValorTablero($fila,$columna)==0) {     //!$this->_tablero[$fila][$columna]==0
