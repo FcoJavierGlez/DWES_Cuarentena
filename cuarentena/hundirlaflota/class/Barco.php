@@ -4,9 +4,11 @@
 
         private $_modulos;
         private $_tipo;
+        private $_direccion;
 
         public function __construct($fila,$columna,$longitudBarco,$direccion) {
             $this->_tipo = $longitudBarco;
+            $this->_direccion = $direccion;
             $this->_modulos = $this->asignaModulos($fila,$columna,$longitudBarco,$direccion);
         }
 
@@ -35,6 +37,45 @@
                 case 4:
                     return "portaaviones";
             }
+        }
+
+        /**
+         * Devuelve la dirección a la que apunta el barco 
+         * 
+         * @return {int} Dirección a la que apunta el barco 0-3
+         */
+        public function getDireccion() {
+            return $this->_direccion;
+        }
+
+        /**
+         * Devuelve las coordenadas del módulo inicial
+         * 
+         * @return {Array}  Devuelve las coordenadas del módulo inicial en formato array ([0] -> fila | [1] -> columna)
+         */
+        public function getCoordModInicial() {
+            return array($this->_modulos[0]["fila"],$this->_modulos[0]["columna"]);
+        }
+
+        /**
+         * Devuelve si el barco está hundido (todos los módulos en estado = 0)
+         * 
+         * @return {Boolean} True si está hundido false si no lo está
+         */
+        public function getHundido() {
+            $mod = 0;
+            for ($i=0; $i<$this->_tipo; $i++) 
+                $mod += $this->_modulos[$i]["estado"];
+            return $mod == 0;
+        }
+
+        /**
+         * Devuelve el mensaje de que el barco se ha hundido.
+         * 
+         * @return {String} Mensaje de barco hundido.
+         */
+        public function getMensajeHundido() {
+            return "¡Enhorabuena, has hundido un ".$this->getNombreTipo()."!";
         }
 
         /**
@@ -90,15 +131,6 @@
         }
 
         /**
-         * Devuelve el mensaje de que el barco se ha hundido.
-         * 
-         * @return {String} Mensaje de barco hundido.
-         */
-        public function getMensajeHundido() {
-            return "¡Enhorabuena, has hundido un ".$this->getNombreTipo()."!";
-        }
-
-        /**
          * Comprueba si este barco ha sido impactado al pasarle las coordenadas de un impacto
          * 
          * @return {Boolean} True si ha sido impactado, false si no
@@ -121,18 +153,6 @@
                     $this->_modulos[$i]["estado"] = 0;
                     break;
                 }
-        }
-
-        /**
-         * Devuelve si el barco está hundido (todos los módulos en estado = 0)
-         * 
-         * @return {Boolean} True si está hundido false si no lo está
-         */
-        public function getHundido() {
-            $mod = 0;
-            for ($i=0; $i<$this->_tipo; $i++) 
-                $mod += $this->_modulos[$i]["estado"];
-            return $mod == 0;
         }
 
         /**

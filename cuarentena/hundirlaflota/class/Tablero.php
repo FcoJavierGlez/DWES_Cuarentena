@@ -85,6 +85,22 @@
         }
 
         /**
+         * Devuelve el número del índice del array donde está almacenado el barco impactado
+         * 
+         * @param {$fila}               Fila donde se ha producido el impacto
+         * @param {$columna}            Columna donde se ha producido el impacto
+         * @param {$tableroEnemigo}     Objeto tablero del jugador contrario
+         * 
+         * @return {int}                Índice donde está almacenado el barco
+         */
+        protected function getIndexBarcoImpactado($fila,$columna) {
+            for ($i=0; $i<sizeof($this->_listaBarcos); $i++) 
+                if ($this->_listaBarcos[$i]->comprobarImpacto($fila,$columna)) 
+                    return $i;
+            return -1;
+        }
+
+        /**
          * Devuelve el índice del barco hundido
          * 
          * @return {int}    Devuelve el índice del barco que está hundido
