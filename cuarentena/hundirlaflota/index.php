@@ -126,11 +126,11 @@
     </footer>
     <?php 
         //Modo Dev:
-        $_SESSION['jugador2']->getTablero()->imprimirTabIA();
+        /* $_SESSION['jugador2']->getTablero()->imprimirTabIA();
         $_SESSION['jugador1']->getTablero()->imprimirListaBarcos();
         echo "<form action='index.php' method='post'>";
         echo "<input type='submit' name='borrar' value='Nueva partida'>";
-        echo "</form>";
+        echo "</form>"; */
     ?>
 </body>
 </html>
