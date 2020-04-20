@@ -130,7 +130,7 @@
                     $this->desplazaPuntero(4);
                 }
                 if ($this->_faseHundir[2])                                      //Si estamos en la 3a fase de hundir invertimos disparo
-                    $this->invierteDireccionDisparo();
+                    $this->_direccionDiparo = $this->invierteDireccionDisparo();
             } else {                                                            //Si el disparo impacta en un barco
                 $tableroEnemigo->setValorTablero($fila,$columna,1);
                 $this->impacto($fila,$columna,-1);
