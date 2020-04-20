@@ -319,7 +319,8 @@
             for ($i=0; $i<sizeof($this->_tablero); $i++) { 
                 echo "<tr>";
                 for ($j=0; $j<sizeof($this->_tablero); $j++)
-                    echo "<td>".$this->_svg[$this->_tablero[$i][$j]]."</td>";
+                    echo "<td class="."c".$this->_tablero[$i][$j]."></td>";
+                    //echo "<td>".$this->_svg[$this->_tablero[$i][$j]]."</td>";
                 echo "</tr>";
             }
             echo "</table>";
@@ -337,11 +338,15 @@
                 echo "<tr>";
                 for ($j=0; $j<sizeof($this->_tableroJuego); $j++) {
                     if ($finPartida)
-                        echo "<td>".$this->_svg[$this->_tableroJuego[$i][$j]]."</td>";
+                        echo "<td class="."c".$this->_tableroJuego[$i][$j]."></td>";
+                        //echo "<td>".$this->_svg[$this->_tableroJuego[$i][$j]]."</td>";
                     else
                         echo ($this->_tableroJuego[$i][$j]!=0) ?  
+                        "<td class="."c".$this->_tableroJuego[$i][$j]."></td>" :
+                        "<td class='a'><a href=".$_SERVER['PHP_SELF']."?fila=".$i."&columna=".$j."> </a></td>";
+                        /* echo ($this->_tableroJuego[$i][$j]!=0) ?  
                         "<td>".$this->_svg[$this->_tableroJuego[$i][$j]]."</td>" :
-                        "<td><a href=".$_SERVER['PHP_SELF']."?fila=".$i."&columna=".$j.">".$this->_svg[$this->_tableroJuego[$i][$j]]."</a></td>";
+                        "<td><a href=".$_SERVER['PHP_SELF']."?fila=".$i."&columna=".$j.">".$this->_svg[$this->_tableroJuego[$i][$j]]."</a></td>"; */
                 }
                 echo "</tr>";
             }
