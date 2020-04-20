@@ -6,6 +6,7 @@
         private $_direccionDiparo = 0;
         private $_coordImpacto = array(0,0);    //Coordenadas del primer impacto a un barco ($_coordImpacto[0]=fila,$_coordImpacto[1]=columna)
         private $_coordPuntero = array(0,0);    //Coordenadas del puntero que se actualiza disparo tras disparo
+        private $_coordSonar = array();         //Cuando el sonar está activo almacena las coordenadas dónde es más probable encontrar barco
         private $_heDisparado = false;          //Indica si la IA ha disparado en su turno.
         
         public function __construc() {
@@ -119,6 +120,8 @@
          * La IA dispara en el tablero enemigo en las coordenadas dadas
          */
         private function dispara($fila,$columna,$tableroEnemigo) {
+            $_SESSION['mensajesJ2'] = "Disparo en las coordenadas (".($fila+1).",".($columna+1)."): ".
+                (($tableroEnemigo->getValorTablero($fila,$columna)==0) ? "agua." : "tocado.");
             if ($tableroEnemigo->getValorTablero($fila,$columna)==0) {          //Si el disparo impacta en agua
                 $tableroEnemigo->setValorTablero($fila,$columna,4);
                 $this->impacto($fila,$columna,0);
@@ -149,6 +152,7 @@
                         $tableroEnemigo->getListaBarcos()[$indexBarco]->getCoordModInicial()[1],    //Columna del módulo inicial del barco
                         $tableroEnemigo->getListaBarcos()[$indexBarco]->getTipo(),                  //Total módulos (longitud) del barco
                         $tableroEnemigo->getListaBarcos()[$indexBarco]->getDireccion());            //Dirección a la que apunta el barco
+                    $this->incrementaBarcosHundidos($tableroEnemigo->getListaBarcos()[$indexBarco]->getTipo());
                     $tableroEnemigo->setHundirBarco($indexBarco);
                     $this->resetearSistemaHundir();
                 }
@@ -301,6 +305,40 @@
         }
 
         /**
+         * Devuelve un array con el conjuto de coordenadas de aquellos puntos
+         * donde se almacena el valor más alto en el tableroIA
+         * 
+         * @return {Array}  Conjunto de oordenadas donde están ubicados los valores más altos en el tablero IA
+         */
+        private function extraeCoordSonar() {
+            $num = 0;
+            $salida = array();
+            for ($i=0; $i<10; $i++)     //Buscamos el valor mas alto almacenado en el TableroIA
+                for ($j=0; $j<10; $j++) 
+                    if ($num < $this->getTablero()->getValorTableroIA($i,$j)) $num = $this->getTablero()->getValorTableroIA($i,$j);
+            for ($i=0; $i<10; $i++)     //Por cada ubicación donde esté el valor más alto guardamos las coordenadas del mismo
+                for ($j=0; $j<10; $j++) 
+                    if ($num == $this->getTablero()->getValorTableroIA($i,$j)) array_push($salida, array($i,$j));
+            return $salida;
+        }
+
+        /**
+         * Una vez la IA ha acumulado 20 disparos comienza a usar el sonar.
+         * 
+         * El sona rastrea los valores más altos en el TableroIA, que son, en teoría,
+         * los puntos menos afectados por impactos cercanos y, por tanto, donde es más
+         * probable hayar un barco. Representaría los claros de un tablero.
+         * 
+         * Una vez obtenidas las coordenadas de posibles ubicaciones de barcos 
+         * la IA lanza un disparo a una de ellas.
+         */
+        private function activaSonar($tableroEnemigo) {
+            $this->_coordSonar = $this->extraeCoordSonar();            //Extraemos el conjunto de coordenadas donde puede haber un barco
+            $indice = rand(0,sizeof($this->_coordSonar)-1);     //Elegimos una coordenada al azar y disparamos
+            $this->dispara($this->_coordSonar[$indice][0],$this->_coordSonar[$indice][1],$tableroEnemigo);
+        }
+
+        /**
          * La IA juega, si ha detectado un barco antes usa el sistema de hundimiento
          * si no hay ningún barco detectado y lleva más de 20 disparos activa el sistema de rastreo, 
          * si no hace un disparo random.
@@ -313,8 +351,8 @@
             $this->_heDisparado = false;
             if ($this->activoSistemaHundir())
                 $this->hundirBarco($tableroEnemigo);
-            /* elseif ($this->_numDisparos>20 && !$this->_heDisparado) 
-                //instr */
+            elseif ($this->_numDisparos>20 && !$this->_heDisparado) 
+                $this->activaSonar($tableroEnemigo);
             elseif (!$this->_heDisparado)
                 $this->disparoRandom($tableroEnemigo);
         }

@@ -98,10 +98,6 @@
                         //Tablero de juego
                         echo "<h4>TABLERO ENEMIGO</h4>";
                         $_SESSION['jugador1']->getTablero()->imprTabVis($_SESSION['finPartida']);
-
-                        echo "<form action='index.php' method='post'>";
-                        echo "<input type='submit' name='borrar' value='Nueva partida'>";
-                        echo "</form>";
                     ?>
                 </div>                
             </div>
