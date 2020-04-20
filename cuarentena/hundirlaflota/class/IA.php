@@ -1,15 +1,6 @@
 <?php
     class IA extends Jugador {
 
-        /**
-         * Lista de Atributos de la IA:
-         * 
-         * coordPrimerImpacto: Almacena las coordenadas del primer impacto a un barco
-         * puntero: Posición que señala el último disparo realizado en la fase de barco detectado
-         * faseHundir[0], faseHundir[1], faseHundir[2]: booleanos que marcan en qué fase se encuentra la IA para hundir un barco (una vez detectado)
-         * 
-         */
-
         private $_faseHundir = array(false,false,false);
         private $_direccionValida = array(true,true,true,true);
         private $_direccionDiparo = 0;
@@ -52,10 +43,10 @@
          */
         private function impacto($fila,$columna,$valor) {
             for ($i=max($fila-1,0); $i<=min($fila+1,9); $i++) { 
-                for ($j=max($columna-1,0); $j<min($columna+1,9); $j++) { 
+                for ($j=max($columna-1,0); $j<=min($columna+1,9); $j++) { 
                     if ($i == $fila && $j == $columna)
                         $this->getTablero()->setValorTableroIA($i,$j,$valor);
-                    elseif (!($this->getTablero()->getValorTableroIA($i,$j) == 0 || $this->getTablero()->getValorTableroIA($i,$j) == -1))
+                    elseif ($this->getTablero()->getValorTableroIA($i,$j) > 0)
                         $this->getTablero()->setValorTableroIA($i,$j,$this->getTablero()->getValorTableroIA($i,$j)-1);
                 }
             }
@@ -174,7 +165,7 @@
             do {
                 $fila = rand(0,9);
                 $columna = rand(0,9);
-            } while ($this->getTablero()->getValorTableroIA($fila,$columna)==0 || $this->getTablero()->getValorTableroIA($fila,$columna)==-1);
+            } while ($this->getTablero()->getValorTableroIA($fila,$columna)<1);
             $this->dispara($fila,$columna,$tableroEnemigo);
         }
 
@@ -224,19 +215,19 @@
          */
         private function desplazaPuntero($direccion) {
             switch ($direccion) {
-                case 0:
+                case 0:                             //arriba -> fila--
                     $this->_coordPuntero[0]--;
                     break;
-                case 1:
+                case 1:                             //derecha -> columna++
                     $this->_coordPuntero[1]++;
                     break;
-                case 2:
+                case 2:                             //abajo -> fila++
                     $this->_coordPuntero[0]++;
                     break;
-                case 3:
+                case 3:                             //izquierda -> columna--
                     $this->_coordPuntero[1]--;
                     break;
-                case 4:
+                case 4:                             //Coordenadas origen impacto
                     $this->_coordPuntero[0] = $this->_coordImpacto[0];
                     $this->_coordPuntero[1] = $this->_coordImpacto[1];
                     break;
@@ -288,7 +279,7 @@
          * Tercera fase de hundimiento (continuar los disparos hasta terminar de hundir el barco en caso de no haberlo hundido antes (3+ módulos))
          */
         private function terceraFaseHundir($tableroEnemigo) {
-            if ($this->validarDirecciones($this->_direccionDiparo)) {       //Si la siguiente coordenada de disparo no es válida (sale de tablero o hay agua)
+            if (!$this->validarDirecciones($this->_direccionDiparo)) {       //Si la siguiente coordenada de disparo no es válida (sale de tablero o hay agua)
                 $this->_direccionDiparo = $this->invierteDireccionDisparo();//Invierte dirección de disparo y devuelve puntero a origen de impacto
                 $this->desplazaPuntero($this->_direccionDiparo);            //Desplaza el puntero desde el origen en la nueva dirección
             }
@@ -305,7 +296,7 @@
                 $this->primeraFaseHundir();
             if ($this->_faseHundir[1] && !$this->_heDisparado) 
                 $this->segundaFaseHundir($tableroEnemigo);
-            elseif ($this->_faseHundir[2] $$ !$this->_heDisparado) 
+            elseif ($this->_faseHundir[2] && !$this->_heDisparado) 
                 $this->terceraFaseHundir($tableroEnemigo);
         }
 
@@ -322,8 +313,8 @@
             $this->_heDisparado = false;
             if ($this->activoSistemaHundir())
                 $this->hundirBarco($tableroEnemigo);
-            elseif ($this->_numDisparos>20 && !$this->_heDisparado) 
-                //instr
+            /* elseif ($this->_numDisparos>20 && !$this->_heDisparado) 
+                //instr */
             elseif (!$this->_heDisparado)
                 $this->disparoRandom($tableroEnemigo);
         }

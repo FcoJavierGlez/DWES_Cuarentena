@@ -4,13 +4,15 @@
      */
     //include "class/Tablero.php";
     include "class/Jugador.php";
+    include "class/IA.php";
     include "resources/funciones.php";
 
     session_start();
 
     if (!isset($_SESSION['jugador1'])) {     //!isset($_SESSION['tablero'])
         $_SESSION['jugador1'] = new Jugador("Humano/a");
-        $_SESSION['jugador2'] = new Jugador("Skynet");
+        //$_SESSION['jugador2'] = new Jugador("Skynet");
+        $_SESSION['jugador2'] = new IA("Skynet");
         $_SESSION['mensajesJ1'] = "";
         $_SESSION['mensajesJ2'] = "";
         $_SESSION['turno'] = rand(1,2);
@@ -31,8 +33,7 @@
     $_SESSION['finPartida'] = $_SESSION['jugador1']->getDerrotado() || $_SESSION['jugador2']->getDerrotado();
     
     if ($_SESSION['turno']==2 && !$_SESSION['finPartida']) {
-        //Aquí juega la IA
-        //$_SESSION['jugador2']->incrementaDisparos(); //PRUEBAS, BORRAR
+        $_SESSION['jugador2']->jugar($_SESSION['jugador1']->getTablero());
         $_SESSION['turno'] = 1;
     }
 
@@ -99,7 +100,7 @@
                         $_SESSION['jugador1']->getTablero()->imprTabVis($_SESSION['finPartida']);
 
                         echo "<form action='index.php' method='post'>";
-                        //echo "<input type='submit' name='borrar' value='Nueva partida'>";
+                        echo "<input type='submit' name='borrar' value='Nueva partida'>";
                         echo "</form>";
                     ?>
                 </div>                
@@ -127,5 +128,13 @@
             <a href="https://www.linkedin.com/in/francisco-javier-gonz%C3%A1lez-sabariego-51052a175/" target="_blank"><img src="img/linkedin.png" alt="Enlace a cuenta de Linkedin del autor"></a>
         </div>
     </footer>
+    <?php 
+        //Modo Dev:
+        $_SESSION['jugador2']->getTablero()->imprimirTabIA();
+        $_SESSION['jugador1']->getTablero()->imprimirListaBarcos();
+        echo "<form action='index.php' method='post'>";
+        echo "<input type='submit' name='borrar' value='Nueva partida'>";
+        echo "</form>";
+    ?>
 </body>
 </html>

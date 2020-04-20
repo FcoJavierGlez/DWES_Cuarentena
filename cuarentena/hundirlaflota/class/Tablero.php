@@ -93,7 +93,7 @@
          * 
          * @return {int}                Índice donde está almacenado el barco
          */
-        protected function getIndexBarcoImpactado($fila,$columna) {
+        public function getIndexBarcoImpactado($fila,$columna) {
             for ($i=0; $i<sizeof($this->_listaBarcos); $i++) 
                 if ($this->_listaBarcos[$i]->comprobarImpacto($fila,$columna)) 
                     return $i;
@@ -343,6 +343,20 @@
                         "<td>".$this->_svg[$this->_tableroJuego[$i][$j]]."</td>" :
                         "<td><a href=".$_SERVER['PHP_SELF']."?fila=".$i."&columna=".$j.">".$this->_svg[$this->_tableroJuego[$i][$j]]."</a></td>";
                 }
+                echo "</tr>";
+            }
+            echo "</table>";
+        }
+
+        /**
+         * Imprime el tablero con la ubicación de los barcos
+         */
+        public function imprimirTabIA() {
+            echo "<table>";
+            for ($i=0; $i<sizeof($this->_tablero); $i++) { 
+                echo "<tr>";
+                for ($j=0; $j<sizeof($this->_tablero); $j++)
+                    echo "<td>".$this->_tableroIA[$i][$j]."</td>";
                 echo "</tr>";
             }
             echo "</table>";

@@ -163,7 +163,7 @@
             echo "<br/>Tipo de barco: ".$this->getNombreTipo()."<br/>";
             for ($i=0; $i<sizeof($this->_modulos); $i++) { 
                 echo "Módulo ".$this->_modulos[$i]["numModulo"].": <br/>";
-                echo "Fila: ".($this->_modulos[$i]["fila"]+1)." | Columna: ".($this->_modulos[$i]["columna"]+1)."<br/>";
+                echo "Fila: ".($this->_modulos[$i]["fila"])." | Columna: ".($this->_modulos[$i]["columna"])."<br/>";
                 echo "Estado: ".$this->_modulos[$i]["estado"]."<br/>";
             }
         }
