@@ -1,4 +1,13 @@
 <?php
+    /**
+     * Clase Jugador para el juego de hundir la flota.
+     * 
+     * @author  Francisco javier González Sabariego.
+     * @since   21/04/2020
+     * 
+     * @version 1.0
+     */
+
     include "class/Tablero.php";
 
     class Jugador {
@@ -117,13 +126,6 @@
         }
 
         /**
-         * Incrementa el numDisparos del jugador
-         */
-        /* public function incrementaDisparos() {      //MÉTODO TEMPORAL PARA PRUEBAS
-            $this->_numDisparos++;
-        } */
-
-        /**
          * Incrementa el total de barcos hundidos en función del tipo de barco que se le pase como parámetro
          * 
          * @param {$tipoBarco}  El tipo de barco que se deseaincrementar
@@ -143,41 +145,26 @@
         }
 
         /**
-         * Devuelve el número del índice del array donde está almacenado el barco enemigo impactado
+         * El jugador dispara al enemigo en las coordenadas dadas.
          * 
-         * @param {$fila}               Fila donde se ha producido el impacto
-         * @param {$columna}            Columna donde se ha producido el impacto
-         * @param {$tableroEnemigo}     Objeto tablero del jugador contrario
-         * 
-         * @return {int}                Índice donde está almacenado el barco
+         * @param {$fila}           Fila del disparo
+         * @param {$columna}        Columna del disparo
+         * @param {$tableroEnemigo} Objeto tablero del jugador enemigo
          */
-        /* protected function getIndexBarcoImpactado($fila,$columna,$tableroEnemigo) {
-            for ($i=0; $i<sizeof($tableroEnemigo->getListaBarcos()); $i++) 
-                if ($tableroEnemigo->getListaBarcos()[$i]->comprobarImpacto($fila,$columna)) 
-                    return $i;
-            return -1;
-        } */
-
-        public function disparar($fila,$columna,$tableroEnemigo) {   //Este método pasará a clase Jugador y debe ser limpiado
+        public function disparar($fila,$columna,$tableroEnemigo) {
             if ($this->_tablero->getValorTableroJuego($fila,$columna)!=0) return;
-            if (!$tableroEnemigo->getValorTablero($fila,$columna)==0) {     //!$this->_tablero[$fila][$columna]==0
-                for ($i=0; $i<sizeof($tableroEnemigo->getListaBarcos()); $i++) { 
-                    if ($tableroEnemigo->getListaBarcos()[$i]->comprobarImpacto($fila,$columna)) {    //comprobar cuál es el barco impactado
-                        $tableroEnemigo->getListaBarcos()[$i]->destruirModulo($fila,$columna);
-                        if ($tableroEnemigo->getListaBarcos()[$i]->getHundido()) {                    //determinar si el barco se ha hundido
-                            $_SESSION['mensajesJ1'] = $tableroEnemigo->getListaBarcos()[$i]->getMensajeHundido();
-                            $this->incrementaBarcosHundidos($tableroEnemigo->getListaBarcos()[$i]->getTipo());
-                            $tableroEnemigo->setHundirBarco($i);
-                        } 
-                        else 
-                            $_SESSION['mensajesJ1'] = "";
-                        break;
-                    }
-                }
+            if (!$tableroEnemigo->getValorTablero($fila,$columna)==0) {                                  //Si no hemos impactado en agua
                 $this->getTablero()->setValorTableroJuego($fila,$columna,1);
                 $tableroEnemigo->setValorTablero($fila,$columna,1);
-            }
-            else {
+                $indexBarco = $tableroEnemigo->getIndexBarcoImpactado($fila,$columna);
+                $tableroEnemigo->getListaBarcos()[$indexBarco]->destruirModulo($fila,$columna);
+                $_SESSION['mensajesJ1'] = ($tableroEnemigo->getListaBarcos()[$indexBarco]->getHundido()) //Añadimos mensaje
+                    ? $tableroEnemigo->getListaBarcos()[$indexBarco]->getMensajeHundido() : "";
+                if ($tableroEnemigo->getListaBarcos()[$indexBarco]->getHundido()) {                      //Si el barco está hundido
+                    $this->incrementaBarcosHundidos($tableroEnemigo->getListaBarcos()[$indexBarco]->getTipo());
+                    $tableroEnemigo->setHundirBarco($indexBarco);
+                }
+            } else {
                 $this->getTablero()->setValorTableroJuego($fila,$columna,4);
                 $tableroEnemigo->setValorTablero($fila,$columna,4);
                 $_SESSION['mensajesJ1'] = "";

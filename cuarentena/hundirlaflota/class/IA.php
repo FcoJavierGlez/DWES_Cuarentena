@@ -1,4 +1,13 @@
 <?php
+    /**
+     * Clase IA (hereda de Jugador) para el juego de hundir la flota.
+     * 
+     * @author  Francisco javier González Sabariego.
+     * @since   21/04/2020
+     * 
+     * @version 1.0
+     */
+
     class IA extends Jugador {
 
         private $_faseHundir = array(false,false,false);
@@ -117,53 +126,101 @@
         }
 
         /**
+         * Cuando el disparo impacta en agua.
+         * 
+         * @param {$fila}           Fila de la coordenada del disparo
+         * @param {$columna}        Columna de la coordenada del disparo
+         * @param {$tableroEnemigo} Objeto tablero enemigo
+         */
+        private function agua($fila,$columna,$tableroEnemigo) {
+            $tableroEnemigo->setValorTablero($fila,$columna,4);
+            $this->impacto($fila,$columna,0);
+            if ($this->_faseHundir[1]) {                                    //Si estamos en la 2a fase de hundir negamos dirección
+                $this->_direccionValida[$this->_direccionDiparo] = false;
+                $this->desplazaPuntero(4);
+            }
+            if ($this->_faseHundir[2])                                      //Si estamos en la 3a fase de hundir invertimos disparo
+                $this->_direccionDiparo = $this->invierteDireccionDisparo();
+        }
+
+        /**
+         * El barco impactado no está hundido todavía
+         * 
+         * @param {$fila}           Fila de la coordenada del disparo
+         * @param {$columna}        Columna de la coordenada del disparo
+         * @param {$tableroEnemigo} Objeto tablero enemigo
+         */
+        private function noHundido($fila,$columna) {
+            if (!$this->activoSistemaHundir()) {
+                $this->setCoordImpacto($fila,$columna);
+                $this->_faseHundir[0] = true;
+            } elseif($this->_faseHundir[1]) {  //Si verificamos impacto estando en fase 2 y no se ha hundido el barco activamos la fase 3
+                $this->_faseHundir[1] = false;
+                $this->_faseHundir[2] = true;
+            }
+        }
+
+        /**
+         * El barco impactado se ha hundido
+         * 
+         * @param {$fila}           Fila de la coordenada del disparo
+         * @param {$columna}        Columna de la coordenada del disparo
+         * @param {$tableroEnemigo} Objeto tablero enemigo
+         * @param {$indexBarco}     El índice donde está almacenado, en el array de barcos enemigo, el barco que se ha hundido
+         */
+        private function hundido($fila,$columna,$tableroEnemigo,$indexBarco) {
+            $_SESSION['mensajesJ1'] .= (($_SESSION['mensajesJ1']=="") ? "" : "<br/>").
+                $this->_nombre." ha hundido nuestro ".$tableroEnemigo->getListaBarcos()[$indexBarco]->getNombreTipo();
+            $this->rodearConAgua(
+                $tableroEnemigo->getListaBarcos()[$indexBarco]->getCoordModInicial()[0],    //Fila del módulo inicial del barco
+                $tableroEnemigo->getListaBarcos()[$indexBarco]->getCoordModInicial()[1],    //Columna del módulo inicial del barco
+                $tableroEnemigo->getListaBarcos()[$indexBarco]->getTipo(),                  //Total módulos (longitud) del barco
+                $tableroEnemigo->getListaBarcos()[$indexBarco]->getDireccion());            //Dirección a la que apunta el barco
+            $this->incrementaBarcosHundidos($tableroEnemigo->getListaBarcos()[$indexBarco]->getTipo());
+            $tableroEnemigo->setHundirBarco($indexBarco);
+            $this->resetearSistemaHundir();
+        }
+
+        /**
+         * El disparo ha impactado en un barco
+         * 
+         * @param {$fila}           Fila de la coordenada del disparo
+         * @param {$columna}        Columna de la coordenada del disparo
+         * @param {$tableroEnemigo} Objeto tablero enemigo
+         */
+        private function tocado($fila,$columna,$tableroEnemigo) {
+            $tableroEnemigo->setValorTablero($fila,$columna,1);
+            $this->impacto($fila,$columna,-1);
+            $indexBarco = $tableroEnemigo->getIndexBarcoImpactado($fila,$columna);
+            $tableroEnemigo->getListaBarcos()[$indexBarco]->destruirModulo($fila,$columna);
+            if (!$tableroEnemigo->getListaBarcos()[$indexBarco]->getHundido())               //Si el barco no está hundido
+                $this->noHundido($fila,$columna);
+            else                                                                             //Si el barco está hundido
+                $this->hundido($fila,$columna,$tableroEnemigo,$indexBarco);
+        }
+
+        /**
          * La IA dispara en el tablero enemigo en las coordenadas dadas
+         * 
+         * @param {$fila}           Fila de la coordenada del disparo
+         * @param {$columna}        Columna de la coordenada del disparo
+         * @param {$tableroEnemigo} Objeto tablero enemigo
          */
         private function dispara($fila,$columna,$tableroEnemigo) {
             $_SESSION['mensajesJ2'] = "Disparo en las coordenadas (".($fila+1).",".($columna+1)."): ".
                 (($tableroEnemigo->getValorTablero($fila,$columna)==0) ? "agua." : "tocado.");
-            if ($tableroEnemigo->getValorTablero($fila,$columna)==0) {          //Si el disparo impacta en agua
-                $tableroEnemigo->setValorTablero($fila,$columna,4);
-                $this->impacto($fila,$columna,0);
-                if ($this->_faseHundir[1]) {                                    //Si estamos en la 2a fase de hundir negamos dirección
-                    $this->_direccionValida[$this->_direccionDiparo] = false;
-                    $this->desplazaPuntero(4);
-                }
-                if ($this->_faseHundir[2])                                      //Si estamos en la 3a fase de hundir invertimos disparo
-                    $this->_direccionDiparo = $this->invierteDireccionDisparo();
-            } else {                                                            //Si el disparo impacta en un barco
-                $tableroEnemigo->setValorTablero($fila,$columna,1);
-                $this->impacto($fila,$columna,-1);
-                $indexBarco = $tableroEnemigo->getIndexBarcoImpactado($fila,$columna);
-                $tableroEnemigo->getListaBarcos()[$indexBarco]->destruirModulo($fila,$columna);
-                if (!$tableroEnemigo->getListaBarcos()[$indexBarco]->getHundido()) {                //Si el barco no está hundido
-                    if (!$this->activoSistemaHundir()) {
-                        $this->setCoordImpacto($fila,$columna);
-                        $this->_faseHundir[0] = true;
-                    } elseif($this->_faseHundir[1]) {           //Si verificamos impacto estando en fase 2 y no se ha hundido el barco activamos la fase 3
-                        $this->_faseHundir[1] = false;
-                        $this->_faseHundir[2] = true;
-                    }
-                } else {                                                                            //Si el barco está hundido
-                    $_SESSION['mensajesJ1'] .= (($_SESSION['mensajesJ1']=="") ? "" : "<br/>").
-                        $this->_nombre." ha hundido nuestro ".$tableroEnemigo->getListaBarcos()[$indexBarco]->getNombreTipo();
-                    $this->rodearConAgua(
-                        $tableroEnemigo->getListaBarcos()[$indexBarco]->getCoordModInicial()[0],    //Fila del módulo inicial del barco
-                        $tableroEnemigo->getListaBarcos()[$indexBarco]->getCoordModInicial()[1],    //Columna del módulo inicial del barco
-                        $tableroEnemigo->getListaBarcos()[$indexBarco]->getTipo(),                  //Total módulos (longitud) del barco
-                        $tableroEnemigo->getListaBarcos()[$indexBarco]->getDireccion());            //Dirección a la que apunta el barco
-                    $this->incrementaBarcosHundidos($tableroEnemigo->getListaBarcos()[$indexBarco]->getTipo());
-                    $tableroEnemigo->setHundirBarco($indexBarco);
-                    $this->resetearSistemaHundir();
-                }
-                
-            }
+            if ($tableroEnemigo->getValorTablero($fila,$columna)==0)       //Si el disparo impacta en agua
+                $this->agua($fila,$columna,$tableroEnemigo);
+            else                                                           //Si el disparo impacta en un barco
+                $this->tocado($fila,$columna,$tableroEnemigo);
             $this->_numDisparos++;
             $this->_heDisparado = true;
         }
 
         /**
-         * Un disparo a unas coordenadas aleatorias
+         * Se realiza un disparo a unas coordenadas aleatorias
+         * 
+         * @param {$tableroEnemigo} Objeto tablero enemigo
          */
         private function disparoRandom($tableroEnemigo) {
             do {
@@ -270,6 +327,8 @@
 
         /**
          * Segunda fase de hundimiento (descubrir alineamiento del barco -> "horizontal" | "vertical")
+         * 
+         * @param {$tableroEnemigo} Objeto tablero enemigo
          */
         private function segundaFaseHundir($tableroEnemigo) {
             do {
@@ -280,7 +339,10 @@
         }
 
         /**
-         * Tercera fase de hundimiento (continuar los disparos hasta terminar de hundir el barco en caso de no haberlo hundido antes (3+ módulos))
+         * Tercera fase de hundimiento (continuar los disparos hasta terminar de hundir el barco en caso 
+         * de no haberlo hundido antes (3+ módulos))
+         * 
+         * @param {$tableroEnemigo} Objeto tablero enemigo
          */
         private function terceraFaseHundir($tableroEnemigo) {
             if (!$this->validarDirecciones($this->_direccionDiparo)) {       //Si la siguiente coordenada de disparo no es válida (sale de tablero o hay agua)
@@ -294,6 +356,8 @@
 
         /**
          * Sistema de hundimiento de barco
+         * 
+         * @param {$tableroEnemigo} Objeto tablero enemigo
          */
         private function hundirBarco($tableroEnemigo) {
             if ($this->_faseHundir[0]) 
@@ -345,7 +409,7 @@
          * 
          * Tras su disparo incrementa en 1 su número de disparos.
          * 
-         * @param {Object}  Tablero enemigo.
+         * @param {$tableroEnemigo} Objeto tablero enemigo
          */
         public function jugar($tableroEnemigo) {
             $this->_heDisparado = false;

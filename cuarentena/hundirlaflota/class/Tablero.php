@@ -1,7 +1,20 @@
 <?php
     /**
+     * Clase Tablero para el juego de hundir la flota.
      * 
+     * Esta clase incluye:
+     * -El tablero dónde se almacena numericamente los barcos
+     * -El tablero de juego, que será el tablero que se imprima para el jugador humano y donde podrá clickar la casilla a disparar
+     * -El tablero de la IA, tablero que usará la IA para analizar dónde puede disparar y dónde se puede ocultar un barco enemigo
+     * -Lista de barcos (objetos de la clase Barco) con el total de barcos activos para el jugador.
+     * 
+     * 
+     * @author  Francisco javier González Sabariego.
+     * @since   21/04/2020
+     * 
+     * @version 1.0
      */
+
     include "class/Barco.php";
 
     class Tablero {
@@ -10,24 +23,6 @@
         private $_tableroJuego = array();
         private $_tableroIA = array();
         private $_listaBarcos = array();
-
-        private $_svg = array(
-            "<svg width='45' height='45'>
-            <rect width='45' height='45' fill='white' stroke-width='1' stroke='black' rx='10' />
-            </svg>",
-            "<svg width='45' height='45'>
-            <rect width='45' height='45' fill='red' stroke-width='1' stroke='black' rx='10' />
-            </svg>",
-            "<svg width='45' height='45'>
-            <rect width='45' height='45' fill='green' stroke-width='1' stroke='black' rx='10' />
-            </svg>",
-            "<svg width='45' height='45'>
-            <rect width='45' height='45' fill='orange' stroke-width='1' stroke='black' rx='10' />
-            </svg>",
-            "<svg width='45' height='45'>
-            <rect width='45' height='45' fill='dodgerblue' stroke-width='1' stroke='black' rx='10' />
-            </svg>"
-        );
 
         public function __construct() {
             for ($i=0; $i<10; $i++) {
@@ -100,18 +95,6 @@
             return -1;
         }
 
-        /**
-         * Devuelve el índice del barco hundido
-         * 
-         * @return {int}    Devuelve el índice del barco que está hundido
-         */
-        public function getNumBarcoHundido() {
-            for ($i=0; $i<sizeof($this->_listaBarcos); $i++) 
-                if ($this->_listaBarcos[$i]->getHundido()) return $i;
-            return -1;
-        }
-
-
         /*** SETTERS ***/
 
         /**
@@ -148,7 +131,7 @@
         }
 
         /**
-         * Elimina un barco que ha sido hundido
+         * Elimina un barco que ha sido hundido de la lista de objetos barcos 
          * 
          * @param {$i}  Posición dónde está almacenado el barco a hundir
          */
@@ -300,6 +283,8 @@
             array_push($this->_listaBarcos, new Barco($fila,$columna,$tipo,$direccion));
         }
 
+        /*** MÉTODOS DE IMPRESIÓN DE TABLEROS ***/
+
         /**
          * Imprime la lista de los barcos con la información de cada uno.
          */
@@ -320,7 +305,6 @@
                 echo "<tr>";
                 for ($j=0; $j<sizeof($this->_tablero); $j++)
                     echo "<td class="."c".$this->_tablero[$i][$j]."></td>";
-                    //echo "<td>".$this->_svg[$this->_tablero[$i][$j]]."</td>";
                 echo "</tr>";
             }
             echo "</table>";
@@ -339,14 +323,10 @@
                 for ($j=0; $j<sizeof($this->_tableroJuego); $j++) {
                     if ($finPartida)
                         echo "<td class="."c".$this->_tableroJuego[$i][$j]."></td>";
-                        //echo "<td>".$this->_svg[$this->_tableroJuego[$i][$j]]."</td>";
                     else
                         echo ($this->_tableroJuego[$i][$j]!=0) ?  
                         "<td class="."c".$this->_tableroJuego[$i][$j]."></td>" :
                         "<td class='a'><a href=".$_SERVER['PHP_SELF']."?fila=".$i."&columna=".$j."> </a></td>";
-                        /* echo ($this->_tableroJuego[$i][$j]!=0) ?  
-                        "<td>".$this->_svg[$this->_tableroJuego[$i][$j]]."</td>" :
-                        "<td><a href=".$_SERVER['PHP_SELF']."?fila=".$i."&columna=".$j.">".$this->_svg[$this->_tableroJuego[$i][$j]]."</a></td>"; */
                 }
                 echo "</tr>";
             }
@@ -354,7 +334,7 @@
         }
 
         /**
-         * Imprime el tablero con la ubicación de los barcos
+         * Imprime el tablero con la ubicación de los barcos. MODO DEV.
          */
         public function imprimirTabIA() {
             echo "<table>";

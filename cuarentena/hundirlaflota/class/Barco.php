@@ -1,4 +1,12 @@
 <?php
+    /**
+     * Clase Barco para el juego de hundir la flota.
+     * 
+     * @author  Francisco javier González Sabariego.
+     * @since   21/04/2020
+     * 
+     * @version 1.0
+     */
 
     class Barco {
 
