@@ -225,6 +225,14 @@ footer {
     .mensaje, .barcos_hundidos {
         font-size: 0.7rem;
     }
+    .a a {
+        display: block;
+        width: 32px;
+        height: 32px;
+    }
+    .c0,.c1,.c2,.c3,.c4 {
+        padding: 16px;
+    }
 }
 
 @media only screen and (min-width: 1800px) {
