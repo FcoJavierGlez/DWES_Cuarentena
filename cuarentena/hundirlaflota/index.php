@@ -1,17 +1,21 @@
 <?php
     /**
+     * Juego de hundir la flota. Capa de presentación.
      * 
+     * @author  Francisco javier González Sabariego.
+     * @since   21/04/2020
+     * 
+     * @version 1.0
      */
-    //include "class/Tablero.php";
+
     include "class/Jugador.php";
     include "class/IA.php";
     include "resources/funciones.php";
 
     session_start();
 
-    if (!isset($_SESSION['jugador1'])) {     //!isset($_SESSION['tablero'])
+    if (!isset($_SESSION['jugador1'])) {
         $_SESSION['jugador1'] = new Jugador("Humano/a");
-        //$_SESSION['jugador2'] = new Jugador("Skynet");
         $_SESSION['jugador2'] = new IA("Skynet");
         $_SESSION['mensajesJ1'] = "";
         $_SESSION['mensajesJ2'] = "";
@@ -45,9 +49,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Francisco Javier González Sabariego">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
-    <title>Barcos formulario</title>
+    <title>Hundir la flota</title>
 </head>
 <body>
     <header>
@@ -95,7 +100,6 @@
                 </div>
                 <div>
                     <?php
-                        //Tablero de juego
                         echo "<h4>TABLERO ENEMIGO</h4>";
                         $_SESSION['jugador1']->getTablero()->imprTabVis($_SESSION['finPartida']);
                     ?>
