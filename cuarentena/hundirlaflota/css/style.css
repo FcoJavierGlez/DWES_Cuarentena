@@ -146,7 +146,7 @@ footer h4 {
 }
 
 footer img {
-    height: 50px;
+    height: 30px;
 }
 
 footer {
@@ -193,6 +193,12 @@ footer {
 }
 
 @media only screen and (min-width: 1300px) {
+    h1 {
+        font-size: 28px;
+    }
+    .github {
+        font-size: 14px;
+    }
     .informacion {
         height: 70%;
     }
@@ -204,6 +210,8 @@ footer {
     }
     .tablero table tr td {
         border-radius: 8px;
+    }.tablero h4 {
+        font-size: 15px;
     }
     .a {
         padding: 0;
@@ -216,14 +224,29 @@ footer {
     .c0,.c1,.c2,.c3,.c4 {
         padding: 13px;
     }
+    footer h4 {
+        font-size: 12.5px;
+    }
+    footer img {
+        height: 45px;
+    }
 }
 
 @media only screen and (min-width: 1500px) {
+    h1 {
+        font-size: 32px;
+    }
+    .github {
+        font-size: 16px;
+    }
     .tablero {
         column-gap: 30px;
     }
     .mensaje, .barcos_hundidos {
         font-size: 0.7rem;
+    }
+    .tablero h4 {
+        font-size: 16px;
     }
     .a a {
         display: block;
@@ -232,6 +255,9 @@ footer {
     }
     .c0,.c1,.c2,.c3,.c4 {
         padding: 16px;
+    }
+    footer h4 {
+        font-size: 16px;
     }
 }
 
@@ -255,5 +281,11 @@ footer {
     }
     .c0,.c1,.c2,.c3,.c4 {
         padding: 20px;
+    }
+    footer h4 {
+        font-size: 16px;
+    }
+    footer img {
+        height: 50px;
     }
 }
