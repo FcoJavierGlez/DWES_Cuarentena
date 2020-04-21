@@ -159,7 +159,7 @@
                 $indexBarco = $tableroEnemigo->getIndexBarcoImpactado($fila,$columna);
                 $tableroEnemigo->getListaBarcos()[$indexBarco]->destruirModulo($fila,$columna);
                 $_SESSION['mensajesJ1'] = ($tableroEnemigo->getListaBarcos()[$indexBarco]->getHundido()) //Añadimos mensaje
-                    ? $tableroEnemigo->getListaBarcos()[$indexBarco]->getMensajeHundido() : "";
+                    ? "<div class='impactoJ1'>".$tableroEnemigo->getListaBarcos()[$indexBarco]->getMensajeHundido()."</div>" : "";
                 if ($tableroEnemigo->getListaBarcos()[$indexBarco]->getHundido()) {                      //Si el barco está hundido
                     $this->incrementaBarcosHundidos($tableroEnemigo->getListaBarcos()[$indexBarco]->getTipo());
                     $tableroEnemigo->setHundirBarco($indexBarco);

@@ -169,8 +169,8 @@
          * @param {$indexBarco}     El índice donde está almacenado, en el array de barcos enemigo, el barco que se ha hundido
          */
         private function hundido($fila,$columna,$tableroEnemigo,$indexBarco) {
-            $_SESSION['mensajesJ1'] .= (($_SESSION['mensajesJ1']=="") ? "" : "<br/>").
-                $this->_nombre." ha hundido nuestro ".$tableroEnemigo->getListaBarcos()[$indexBarco]->getNombreTipo();
+            $_SESSION['mensajesJ1'] .= (($_SESSION['mensajesJ1']=="") ? "" : "<br/>")."<div class='impactoIA'>".
+                $this->_nombre." ha hundido nuestro ".$tableroEnemigo->getListaBarcos()[$indexBarco]->getNombreTipo()."</div>";
             $this->rodearConAgua(
                 $tableroEnemigo->getListaBarcos()[$indexBarco]->getCoordModInicial()[0],    //Fila del módulo inicial del barco
                 $tableroEnemigo->getListaBarcos()[$indexBarco]->getCoordModInicial()[1],    //Columna del módulo inicial del barco

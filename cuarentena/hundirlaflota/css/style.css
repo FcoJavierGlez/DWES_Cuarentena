@@ -110,6 +110,13 @@ main {
     margin: 10px;
 }
 
+.impactoIA {
+    color: rgb(225, 0, 0);
+}
+.impactoJ1 {
+    color: rgb(0, 200, 0);
+}
+
 .contenedorFinPartida {
     position: absolute;
     display: grid;
