@@ -47,6 +47,15 @@
         }
 
         /**
+         * Devuelve el total de usuarios almacenados en el array de users.
+         * 
+         * @return {Array}  Total de usuarios almacenados
+         */
+        public function getUsers() {
+            return $this->_users;
+        }
+
+        /**
          * Añade un nuevo usuario y su password al array de usuarios.
          * 
          * @param {$user}   Nombre de usuario a añadir
