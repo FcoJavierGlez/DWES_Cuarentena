@@ -4,54 +4,16 @@
     class Gestor {
 
         private $_users = array();
+        private $_numAdds = 0;
 
         public function __construct() {
 
         }
 
         /**
-         * Comprueba si el usuario que se está logeando está dentro del sistema (admin | user)
-         * 
-         * @param {$cadena}                 Cadena formada por el nombre de usuario y la contraseña "user,pass"
-         * @param {$cadenombreFicherona}    Nombre del fichero en el que se desea buscar a la persona que se está logeando
-         * 
-         * @return {Boolean}                True si el usuario que logea se haya en el sistema, false si no
-         */
-        private function validarLogin($cadena,$nombreFichero) {
-            $file = fopen("db/".$nombreFichero.".txt", "r") or exit("No se ha encontrado el fichero");
-            $i = 0;
-            
-            while (($line = fgets($file)) !== false) {
-                if ($i>3) 
-                    if ($cadena == $line) {
-                        fclose($file);
-                        return true;
-                    }
-                $i++;
-            }
-            fclose($file);
-            return false;
-        }
-
-        /**
-         * Devuelve el perfil de la persona que se está logeando.
-         * 
-         * @param {$user}   Nombre de usuario que trata de logearse
-         * @param {$pass}   Contraseña del usuario que trata de logearse
-         * 
-         * @return {String} Nombre de perfil en función de la validación de login (administrador | usuario | invitado)
-         */
-        public function getPerfil($user,$pass) {
-            $cadena = limpiarDatos($user).",".limpiarDatos($pass);
-            if ($this->validarLogin($cadena,"admins")) return "administrador";
-            elseif ($this->validarLogin($cadena,"users")) return "usuario";
-            else return "invitado";
-        }
-
-        /**
          * Guarda en el array de usuarios el conjunto de usuarios almacenados en el fichero users
          */
-        public function getUsers() {
+        public function importUsers() {
             $file = fopen("db/users.txt", "r") or exit("No se ha encontrado el fichero");
             $i = 0;
             
@@ -66,7 +28,8 @@
         /**
          * Guarda en el fichero users.txt la lista de usuarios y sus contraseñas
          */
-        public function setUsers() {
+        public function exportUsers() {
+            if ($this->_numAdds==0) return;     //Si el contador de usuarios añadidos es cero no es necesario exportar al fichero
             $file = fopen("db/users.txt", "w") or exit("No se ha encontrado el fichero");
             $cabecera = array(
                 "----------------------------------------"."\n",
@@ -90,7 +53,8 @@
          * @param {$pass}   Contraseña del usuario a añadir
          */
         public function addUser($user,$pass) {
-            array_push($this->_users,limpiarDatos($user).",".limpiarDatos($pass));
+            array_push($this->_users,limpiarDatos($user).",".limpiarDatos($pass));  //Añadimos usuario, limpiando campos e incrementados contador
+            $this->_numAdds++;
         }
 
         /**
@@ -98,7 +62,7 @@
          * 
          * @param {$nombre} Nombre del fichero (sin extensión) del que se quiere imprimir su contenido
          */
-        function imprimeDatos($nombre) {
+        public function imprimeDatos($nombre) {
             $file = fopen("db/".$nombre.".txt", "r") or exit("No se ha encontrado el fichero");
             $i = 0;
             

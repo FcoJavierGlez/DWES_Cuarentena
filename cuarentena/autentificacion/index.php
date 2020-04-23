@@ -9,9 +9,9 @@
     }
 
     if (isset($_POST['login'])) {
-        $_SESSION['perfil'] = $_SESSION['gestor']->getPerfil($_POST['user'],$_POST['pswd']);
+        $_SESSION['perfil'] = getPerfil($_POST['user'],$_POST['pswd']);
         if ($_SESSION['perfil']=="administrador")
-            $_SESSION['gestor']->getUsers();
+            $_SESSION['gestor']->importUsers();
     }
 
     if (isset($_POST['add'])) {
@@ -20,7 +20,7 @@
 
     if (isset($_POST['cerrar'])) {
         if ($_SESSION['perfil']=="administrador")
-            $_SESSION['gestor']->setUsers();
+            $_SESSION['gestor']->exportUsers();
         cerrarSesion();
     }
 ?>
