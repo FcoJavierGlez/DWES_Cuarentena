@@ -8,20 +8,8 @@
         $_SESSION['gestor'] = new Gestor();
     }
 
-    if (isset($_POST['login'])) {
-        $_SESSION['perfil'] = $_SESSION['gestor']->getPerfil($_POST['user'],$_POST['pswd']);
-        if ($_SESSION['perfil']=="administrador")
-            $_SESSION['gestor']->getUsers();
-    }
-
-    if (isset($_POST['add'])) {
-        $_SESSION['gestor']->addUser($_POST['add_user'],$_POST['add_pswd']);
-    }
-
-    if (isset($_POST['cerrar'])) {
-        if ($_SESSION['perfil']=="administrador")
-            $_SESSION['gestor']->setUsers();
-        cerrarSesion();
+    if ($_SESSION['perfil'] !== "usuario") {
+        header('Location:index.php');
     }
 ?>
 <!DOCTYPE html>
@@ -31,7 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
-    <title>Home</title>
+    <title>Privado</title>
 </head>
 <body>
     <header>
@@ -45,18 +33,10 @@
             </a>
         </div>
        <?php
-            //Logeo
-            if ($_SESSION['perfil'] == "invitado") 
-                include "config/login.php";
-            else 
-                include "config/exit.php";
-
-            //Contenido
+            include "config/exit.php";
+            
             echo "<div class='contenedor'>";
-            if ($_SESSION['perfil'] == "administrador") 
-                include "config/add.php";
-            elseif ($_SESSION['perfil'] == "usuario")
-                echo "<a href='privado.php'>Acceder a privado</a>";
+            echo "<div><h3>El lado oculto de la luna</h3><a href='index.php'>Volver a Home</a></div>";
             echo "</div>";
        ?>
     </main>

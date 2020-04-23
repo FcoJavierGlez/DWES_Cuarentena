@@ -22,13 +22,18 @@ h1, h2 {
     text-align: center;
 }
 
-main {
-    height: 80vh;
-    display: grid;
-    grid-template-rows: max-content auto;
+nav {
+    *height: 5vh;
 }
 
-.github {
+main {
+    *height: 75vh;
+    height: 80vh;
+    display: grid;
+    grid-template-rows: max-content max-content auto;
+}
+
+.github, .login {
     text-align: right;
 }
 
@@ -38,39 +43,8 @@ main {
     align-items: center;
 }
 
-.juego {
-    border: 1px solid grey;
-    border-radius: 20px;
-    background-color: rgba(245, 245, 220, 0.2);
-    width: max-content;
-    height: max-content;
-    padding: 15px;
-}
-
-.opciones {
+.contenedor div {
     text-align: center;
-}
-
-.mensaje {
-    position: absolute;
-    top: 50%;
-    left: 15%;
-    height: 75px;
-    width: 250px;
-    border-radius: 20px;
-    display: grid;
-    justify-content: center;
-    align-items: center;
-}
-
-.perdido {
-    border: 2px solid red;
-    background-color: rgba(255, 0, 0, 0.3);
-}
-
-.ganado {
-    border: 2px solid rgb(0, 255, 0);
-    background-color: rgba(0, 255, 0, 0.3);
 }
 
 footer h4 {
