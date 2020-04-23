@@ -1,4 +1,6 @@
-<?php?>
+<?php
+    include "resource/funciones.php";
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -13,10 +15,14 @@
         <h1>Autentificación</h1>
     </header>
     <nav>
-        <!-- menú -->
+        <?php /* if (!$_SESSION['perfil'] == "invitado") imprimeMenu($_SESSION['perfil']); */ ?>
     </nav>
     <main>
-       <!--  estructura de main -->
+       <?php
+            //include "resource/funciones.php";
+
+            imprimeDatos("admins");
+       ?>
     </main>
     <footer>
         <h4>RRSS del autor:</h4>
