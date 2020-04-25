@@ -62,4 +62,56 @@
         else
             return getValorNumRom($numRom);
     }
+
+    /**
+     * Recibe un número y comprueba si es perfecto
+     * 
+     * @param {$num}        Número a comprobar.
+     * 
+     * @return {Boolean}    True si el número perfecto, false si no lo es.
+     */
+    function esPerfecto($num) {
+        if ($num%2!=0) return false;    //Si es impar no es perfecto (hasta la fecha no se conocen números perfectos impares)
+        $conjunto = array();
+        for ($i=1; $i<=$num/2; $i++) 
+            if ($num%$i==0) array_push($conjunto,$i);
+        return array_sum($conjunto) == $num;
+    }
+
+    /**
+     * Recibe como parámetro un número perfecto y devuelve el conjunto de números que sumados entre sí
+     * dan como resultado el propio número perfecto.
+     * 
+     * @param {$num}    Recibe un número perfecto por parámetro
+     * 
+     * @return {Array}  Devuelve un array con el conjunto numérico que suma el número perfecto
+     */
+    function getConjuntoNumPerf($num) {
+        $conjunto = array();
+        for ($i=1; $i<=$num/2; $i++) 
+            if ($num%$i==0) array_push($conjunto,$i);
+        return $conjunto;
+    }
+
+    /**
+     * Devuelve un array con el conjunto númerico (array) de acada uno de los n primeros números perfectos
+     * 
+     * @param {$n}  Total de los primeros números perfectos a buscar
+     * 
+     * @return {Array}  Devuelve un array bidimensional indexado con el conjunto numérico (array) de cada número perfecto
+     *                  ejemplo -> $salida[0] = (1,2,3)
+     */
+    function primerosNPerfectos($n) {
+        $salida = array();      //Array que almacena el total de conjuntos que formarían números perfectos
+        $numero = 6;            //Número a comprobar si es perfecto, el primero es el 6.
+        $contador = 0;          //El total de números perfectos que hemos hallado.
+        do {
+            if (esPerfecto($numero)){
+                array_push($salida,getConjuntoNumPerf($numero));
+                $contador++;
+            }
+            $numero++;
+        } while ($contador < $n);
+        return $salida;
+    }
 ?>

@@ -64,6 +64,12 @@
             echo "<h3>Lista de los 5 primeros números primos:</h3>";
             for ($i=0; $i<sizeof($numPrimos); $i++) 
                 echo "<p>".$numPrimos[$i]."</p>";
+
+            //generamos array con los primeros 3 números perfectos y lo imprimimos:
+            $numPerfectos = primerosNPerfectos(3);
+            echo "<h3>Lista de los 3 primeros números perfectos:</h3>";
+            for ($i=0; $i<sizeof($numPerfectos); $i++) 
+                echo "<p>".array_sum($numPerfectos[$i])." = ".implode(" + ",$numPerfectos[$i])."</p>";
         ?>
     </main>
     <footer></footer>
