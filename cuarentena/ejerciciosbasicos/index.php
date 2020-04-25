@@ -34,6 +34,7 @@
                 echo "<form action=".$_SERVER['PHP_SELF']." method='post'>";
                 echo "Validar DNI: <input type='text' value='' name='dni'><br/>";
                 echo "Verificar número primo: <input type='text' value='' name='num'><br/>";
+                echo "Convertir número romano: <input type='text' value='' name='rom'><br/>";
                 echo "<input type='submit' name='enviar' value='Enviar'>";
                 echo "</form>";
             } else {                                    //Formulario cuando se reciben los inputs por POST
@@ -44,7 +45,16 @@
                 //Verificar número primo
                 echo "Verificar número primo: <input type='text' value=".((empty($_POST['num'])) ? "(*)" : $_POST['num'])." name='num'>";
                 if (!empty($_POST['num']))
-                    echo  $_POST['num'].((esPrimo($_POST['num'])) ? " es primo." : " no es primo.");
+                    echo  $_POST['num'].((esPrimo($_POST['num'])) ? " es primo." : " no es primo.")."<br/>";
+                //Convertir número romano
+                echo "Convertir número romano: <input type='text' value=".((empty($_POST['rom'])) ? "(*)" : $_POST['rom'])." name='rom'>";
+                if (!empty($_POST['rom'])) {
+                    try {
+                        echo  strtoupper($_POST['rom'])." equivale a ".(convertirNumRom($_POST['rom']));
+                    } catch (Exception $e) {
+                        echo  strtoupper($_POST['rom'])." Es un número romano incorrecto.";
+                    }
+                }
                 echo "<br/><input type='submit' name='enviar' value='Enviar'>";
                 echo "</form>";
             }
