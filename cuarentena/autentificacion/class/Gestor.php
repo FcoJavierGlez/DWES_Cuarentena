@@ -55,6 +55,9 @@
             return $this->_users;
         }
 
+        /**
+         * Comprueba si el usuario ha sido añadido con anterioridad
+         */
         private function checkUserExist($user) {
             for ($i=0; $i<sizeof($this->_users); $i++) 
                 if($user==explode(",",$this->_users[$i])[0]) return true;
@@ -63,6 +66,7 @@
 
         /**
          * Añade un nuevo usuario y su password al array de usuarios.
+         * En caso de añadir un usuario previamente añadido lanzará una excepción.
          * 
          * @param {$user}   Nombre de usuario a añadir
          * @param {$pass}   Contraseña del usuario a añadir
