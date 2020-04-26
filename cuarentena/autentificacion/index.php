@@ -5,13 +5,14 @@
 
     if (!isset($_SESSION['perfil'])) {
         $_SESSION['perfil'] = "invitado";
-        $_SESSION['gestor'] = new Gestor();
     }
-
+    
     if (isset($_POST['login'])) {
         $_SESSION['perfil'] = getPerfil($_POST['user'],$_POST['pswd']);
-        if ($_SESSION['perfil']=="administrador")
+        if ($_SESSION['perfil']=="administrador") {
+            $_SESSION['gestor'] = new Gestor();
             $_SESSION['gestor']->importUsers();
+        }
     }
 
     if (isset($_POST['add'])) {
