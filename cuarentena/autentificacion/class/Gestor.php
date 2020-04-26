@@ -55,6 +55,12 @@
             return $this->_users;
         }
 
+        private function checkUserExist($user) {
+            for ($i=0; $i<sizeof($this->_users); $i++) 
+                if($user==explode(",",$this->_users[$i])[0]) return true;
+            return false;
+        }
+
         /**
          * Añade un nuevo usuario y su password al array de usuarios.
          * 
@@ -62,6 +68,7 @@
          * @param {$pass}   Contraseña del usuario a añadir
          */
         public function addUser($user,$pass) {
+            if ($this->checkUserExist($user)) throw new Exception("El usuario ya está registrado en el sistema.");
             array_push($this->_users,limpiarDatos($user).",".limpiarDatos($pass));  //Añadimos usuario, limpiando campos e incrementados contador
             $this->_numAdds++;
         }

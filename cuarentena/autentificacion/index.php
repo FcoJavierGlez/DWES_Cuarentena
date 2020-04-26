@@ -5,6 +5,7 @@
 
     if (!isset($_SESSION['perfil'])) {
         $_SESSION['perfil'] = "invitado";
+        $_SESSION['error'] = false;
     }
     
     if (isset($_POST['login'])) {
@@ -16,7 +17,12 @@
     }
 
     if (isset($_POST['add'])) {
-        $_SESSION['gestor']->addUser($_POST['add_user'],$_POST['add_pswd']);
+        $_SESSION['error'] = false;
+        try {
+            $_SESSION['gestor']->addUser($_POST['add_user'],$_POST['add_pswd']);
+        } catch (Exception $e) {
+            $_SESSION['error'] = true;
+        }
     }
 
     if (isset($_POST['cerrar'])) {
