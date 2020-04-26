@@ -23,13 +23,23 @@
             include "resources/funciones.php";
 
             if (isset($_POST['enviar'])) {
-                leerFichero($_POST['file']);
-                echo $_POST['file'];
+                if (isset($_POST['sistema'])) {
+                    if (sizeof($_POST['sistema'])==2) {     //Linux y MySQL
+                        creaScriptLinux();
+                        creaScriptMysql();
+                    }
+                    else {
+                        if ($_POST['sistema'][0]==1)        //Linux
+                            creaScriptLinux();
+                        elseif ($_POST['sistema'][0]==2)    //MySQL
+                            creaScriptMysql();
+                    }
+                }
             } else {
                 echo "<div class='contenedor'>";
 
                     echo "<form action=".$_SERVER['PHP_SELF']." method='post'>";
-                        echo "<input type='file' name='file' value=''><br/>";
+                        /* echo "<input type='file' name='file' value=''><br/>"; */
                         echo "<input type='checkbox' name='sistema[]' value='1'> Nuevo usuario de Linux.<br/>";
                         echo "<input type='checkbox' name='sistema[]' value='2'> Nuevo usuario MySQL.<br/>";
                         echo "<input type='submit' name='enviar'>";
