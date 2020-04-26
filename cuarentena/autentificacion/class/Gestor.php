@@ -1,5 +1,7 @@
 <?php
     include "resource/funciones.php";
+    include "class/error/UserExistException.php";
+    include "class/error/UserInvalidException.php";
 
     class Gestor {
 
@@ -57,6 +59,10 @@
 
         /**
          * Comprueba si el usuario ha sido añadido con anterioridad
+         * 
+         * @param {$user}       Nombre (o nick) de usuario que se desea comprobar si ha sido previamente añadido al sistema
+         * 
+         * @return {Boolean}    True si el usuario ya está dentro del sistema, false si nolo está.
          */
         private function checkUserExist($user) {
             for ($i=0; $i<sizeof($this->_users); $i++) 
@@ -65,15 +71,31 @@
         }
 
         /**
+         * Valida que los campos de registr de usuario son válidos
+         * 
+         * @param {$user}       Nombre (o nick) de usuario que se desea validar
+         * @param {$pass}       Contraseña que se desea validar
+         * 
+         * @return {Boolean}    True si el usuario y la contraseña son correctos, false si alguno no lo es
+         */
+        private function validarCampos($user,$pass) {
+            return preg_match('/^\w{4,}$/',$user) && preg_match('/^(\w|\W){4,}$/',$pass);
+        }
+
+        /**
          * Añade un nuevo usuario y su password al array de usuarios.
-         * En caso de añadir un usuario previamente añadido lanzará una excepción.
+         * En caso de añadir un usuario previamente añadido lanzará UserExistException.
+         * Si se intruducen campos inválidos se lanzará UserInvalidException.
          * 
          * @param {$user}   Nombre de usuario a añadir
          * @param {$pass}   Contraseña del usuario a añadir
          */
         public function addUser($user,$pass) {
-            if ($this->checkUserExist($user)) throw new Exception("El usuario ya está registrado en el sistema.");
-            array_push($this->_users,limpiarDatos($user).",".limpiarDatos($pass));  //Añadimos usuario, limpiando campos e incrementados contador
+            $user = limpiarDatos($user);
+            $pass = limpiarDatos($pass);
+            if (!$this->validarCampos($user,$pass)) throw new UserInvalidException();   //Si los campos no son válidos
+            if ($this->checkUserExist($user)) throw new UserExistException();           //Si el usuario ya existe en el sistema
+            array_push($this->_users,$user.",".$pass);  //Añadimos usuario, limpiando campos e incrementados contador
             $this->_numAdds++;
         }
 

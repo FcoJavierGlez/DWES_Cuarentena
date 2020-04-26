@@ -5,7 +5,8 @@
 
     if (!isset($_SESSION['perfil'])) {
         $_SESSION['perfil'] = "invitado";
-        $_SESSION['error'] = false;
+        $_SESSION['uee'] = false;
+        $_SESSION['uie'] = false;
     }
     
     if (isset($_POST['login'])) {
@@ -17,11 +18,14 @@
     }
 
     if (isset($_POST['add'])) {
-        $_SESSION['error'] = false;
+        $_SESSION['uee'] = false;
+        $_SESSION['uie'] = false;
         try {
             $_SESSION['gestor']->addUser($_POST['add_user'],$_POST['add_pswd']);
-        } catch (Exception $e) {
-            $_SESSION['error'] = true;
+        } catch (UserExistException $uee) {
+            $_SESSION['uee'] = true;
+        } catch (UserInvalidException $uie) {
+            $_SESSION['uie'] = true;
         }
     }
 
