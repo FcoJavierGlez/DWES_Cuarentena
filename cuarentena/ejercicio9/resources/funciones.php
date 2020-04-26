@@ -9,31 +9,33 @@
         return str_replace($acentos, $letras, strtolower($cadena));
     }
 
-    $usuarios = array();
+    function leerFichero() {
+        $usuarios = array();
 
-    $file = fopen("Alumnos.txt", "r") or exit("Unable to open file!");
-    //Output a line of the file until the end is reached
+        //$file = fopen($ruta, "r") or exit("Unable to open file!");
+        $file = fopen("./Alumnos.txt", "r") or exit("Unable to open file!");
 
-    $i = 0;
+        $i = 0;
 
-    if ($file) {
-        while (($line = fgets($file)) !== false) {
-            if ($i>7) {
-                $numUser = 0;
-                if (in_array(getUser($line),$usuarios)) {
-                    do {
-                        $numUser++;
-                    } while (in_array(getUser($line).$numUser,$usuarios));
-                    array_push($usuarios,getUser($line).$numUser);
-                } else 
-                    array_push($usuarios,getUser($line));
+        if ($file) {
+            while (($line = fgets($file)) !== false) {
+                if ($i>7) {
+                    $numUser = 0;
+                    if (in_array(getUser($line),$usuarios)) {
+                        do {
+                            $numUser++;
+                        } while (in_array(getUser($line).$numUser,$usuarios));
+                        array_push($usuarios,getUser($line).$numUser);
+                    } else 
+                        array_push($usuarios,getUser($line));
+                }
+                $i++;
             }
-            $i++;
-        }
-    } else
-        echo "El fichero no pudo ser abierto.";
+        } else
+            echo "El fichero no pudo ser abierto.";
 
-    //imprimir lista de usuarios:
-    for ($i=0; $i<sizeof($usuarios); $i++) 
-        echo $usuarios[$i]."<br/>";
+        //imprimir lista de usuarios:
+        for ($i=0; $i<sizeof($usuarios); $i++) 
+            echo $usuarios[$i]."<br/>";
+    }
 ?>

@@ -19,7 +19,27 @@
                 <button>Ver código</button>
             </a>
         </div>
-        <?php?>
+        <?php
+            include "resources/funciones.php";
+
+            if (isset($_POST['enviar'])) {
+                leerFichero($_POST['file']);
+                echo $_POST['file'];
+            } else {
+                echo "<div class='contenedor'>";
+
+                    echo "<form action=".$_SERVER['PHP_SELF']." method='post'>";
+                        echo "<input type='file' name='file' value=''><br/>";
+                        echo "<input type='checkbox' name='sistema[]' value='1'> Nuevo usuario de Linux.<br/>";
+                        echo "<input type='checkbox' name='sistema[]' value='2'> Nuevo usuario MySQL.<br/>";
+                        echo "<input type='submit' name='enviar'>";
+                    echo "</form>";
+
+                echo "</div>";
+            }
+
+            
+        ?>
     </main>
     <footer>
         <h4>RRSS del autor:</h4>

@@ -13,12 +13,7 @@ Frías Serrano, Javier
 González Prófumo, Juan Manuel       
 González Sabariego, Francisco Javier
 Leiva Toledano, Álvaro              
-Lopera Jiménez, Javier              
-Lopera Jiménez, Javier              
-Lopera Jiménez, Javier              
-Lopera Jiménez, Javier              
-Lopera Jiménez, Javier              
-Lopera Jiménez, Javier              
+Lopera Jiménez, Javier                          
 López Cruz, Rafael                  
 Luque Reyes, Samuel                 
 Moya Moruno, Adrián Ángel           
@@ -26,6 +21,4 @@ Murillo Ávila, Pablo
 Nieto Cardador, Rafael Jesús        
 Prieto Jalao, Cristina              
 Sánchez Romero, Francisco José      
-Urbano Estepa, Rafael  
-Urbano Estepa, Rafael  
 Urbano Estepa, Rafael  
