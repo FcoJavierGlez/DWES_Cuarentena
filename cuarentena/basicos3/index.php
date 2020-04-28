@@ -1,3 +1,17 @@
+<?php
+    include "class/Pila.php";
+    //include "resources/funciones.php";
+
+    session_start();
+
+    if (!isset($_SESSION['pila'])) {
+        $_SESSION['pila'] = new Pila();
+    }
+
+    if (isset($_POST['salir'])) {
+        cerrarSesion();
+    }
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,11 +20,11 @@
     <meta name="author" content="Francisco Javier González Sabariego">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
-    <title>Plantilla</title>
+    <title>Ejercicios básicos 3</title>
 </head>
 <body>
     <header>
-        <h1>Plantilla</h1>
+        <h1>Ejercicios básicos 3</h1>
     </header>
     <main>
         <div class="github">
@@ -20,9 +34,21 @@
             </a>
         </div>
         <?php
-            include "resources/funciones.php";
+            echo "<div class='contenedor'>";
+                //Suma dígitos de un número
+                include "config/suma.php";
 
-            echo sumaNumeros("123456789"); //Prueba
+                //Pila
+                include "config/control_pila.php";
+                
+                //Carta
+                //include "config/control_pila.php";
+            echo "</div>";
+
+            //Cerrar sesión
+            echo "<form action=".$_SERVER['PHP_SELF']." method='post'>";
+                echo "<input type='submit' value='Cerrar sesión' name='salir'>";
+            echo "</form>";
         ?>
     </main>
     <footer>

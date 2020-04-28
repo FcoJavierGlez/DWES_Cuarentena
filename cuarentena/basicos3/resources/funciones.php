@@ -21,9 +21,15 @@
     }
 
     /**
-     * Suma los dígitos del número pasado por parámetro.
+     * Suma los dígitos del número pasado por parámetro. Si el número contiene
+     * algún caracter no numérico lanza una excepción.
+     * 
+     * @param {$num}    Número entero, pasado en forma de cadena.
+     * 
+     * @return {int}    Suma de los dígitos del número
      */
     function sumaNumeros($num) {
+        if (!is_numeric(substr($num,0,1))) throw new Exception();               //Si la posición 0 de $num no es un número
         $salida = 0;
         if (strlen($num)==1) return strval($num);
         else {
