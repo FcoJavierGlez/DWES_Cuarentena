@@ -5,7 +5,6 @@
 
     if (!isset($_SESSION['perfil'])) {
         $_SESSION['perfil'] = "invitado";
-        $_SESSION['gestor'] = new Gestor();
     }
 
     if ($_SESSION['perfil'] !== "usuario") {
