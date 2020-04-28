@@ -20,7 +20,9 @@
             </a>
         </div>
         <?php
-            
+            include "resources/funciones.php";
+
+            echo sumaNumeros("123");
         ?>
     </main>
     <footer>
