@@ -39,8 +39,10 @@ main {
 
 .contenedor {
     display: grid;
+    grid-template-rows: repeat(2,max-content);
+    row-gap: 25px;
     justify-content: center;
-    align-items: center;
+    align-content: center;
     height: 75vh;
 }
 

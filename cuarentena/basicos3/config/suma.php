@@ -5,7 +5,7 @@
         else {
             echo "Inserte número entero: <input type='text' value=".$_POST['num']." name='num'><input type='submit' name='enviar'><br/>";
             try {
-                echo "Resultado: ".sumaNumeros($_POST['num']);
+                echo "<b>Resultado: ".sumaNumeros($_POST['num'])."</b>";
             } catch (Exception $e) {
                 echo "<p class='mensaje_error'>ERROR. Debes introducir un número entero</p>";
             }
