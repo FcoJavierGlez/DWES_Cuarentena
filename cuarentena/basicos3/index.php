@@ -22,7 +22,7 @@
         <?php
             include "resources/funciones.php";
 
-            echo sumaNumeros("123");
+            echo sumaNumeros("123456789"); //Prueba
         ?>
     </main>
     <footer>
