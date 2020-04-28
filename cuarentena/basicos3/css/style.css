@@ -1,0 +1,70 @@
+:root {
+    --php_color: rgb(127, 102, 151);
+}
+
+body {
+    margin: 0;
+}
+
+header, footer {
+    height: 10vh;
+    background-color: var(--php_color);
+}
+
+header {
+    display: grid;
+    align-items: center;
+}
+
+h1, h2 {
+    margin: 0;
+    color: white;
+    text-align: center;
+}
+
+nav {
+    *height: 5vh;
+}
+
+main {
+    *height: 75vh;
+    height: 80vh;
+    display: grid;
+    grid-template-rows: max-content max-content auto;
+}
+
+.github, .login {
+    text-align: right;
+}
+
+.contenedor {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+}
+
+.contenedor div {
+    text-align: center;
+}
+
+p.mensaje_error {
+    color: red;
+    text-align: center;
+}
+
+footer h4 {
+    color: white;
+    text-align: center;
+    margin: 1px;
+}
+
+footer img {
+    height: 50px;
+}
+
+footer {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
