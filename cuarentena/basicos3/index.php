@@ -1,11 +1,13 @@
 <?php
     include "class/Pila.php";
+    include "class/Carta.php";
     //include "resources/funciones.php";
 
     session_start();
 
     if (!isset($_SESSION['pila'])) {
         $_SESSION['pila'] = new Pila();
+        $_SESSION['cartas'] = new Carta();
     }
 
     if (isset($_POST['salir'])) {
@@ -43,12 +45,17 @@
                 
                 //Carta
                 //include "config/control_pila.php";
+                $_SESSION['cartas']->generarCartas();
+                echo "<div>";
+                    $_SESSION['cartas']->imprimeEnlaces();
+                echo "</div>";
             echo "</div>";
-
+            
             //Cerrar sesión
             echo "<form action=".$_SERVER['PHP_SELF']." method='post'>";
-                echo "<input type='submit' value='Cerrar sesión' name='salir'>";
+            echo "<input type='submit' value='Cerrar sesión' name='salir'>";
             echo "</form>";
+            
         ?>
     </main>
     <footer>
