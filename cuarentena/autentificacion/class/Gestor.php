@@ -7,6 +7,7 @@
 
         private $_users = array();
         private $_numAdds = 0;
+        private $_totalUsers = 0;
 
         public function __construct() {
 
