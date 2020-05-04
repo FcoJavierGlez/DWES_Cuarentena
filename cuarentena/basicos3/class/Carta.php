@@ -38,6 +38,8 @@
         private function importarDestinatarios(/* $ruta */) {
             $file = fopen("./files/input/destinatarios.txt", "r") or exit("No se ha encontrado el fichero");
             //$file = fopen($ruta, "r") or exit("No se ha encontrado el fichero");
+
+            $this->_destinatarios = array();                //Eliminamos posibles destinatarios importados anteriormente
             
             while (($line = fgets($file)) !== false) 
                 array_push( $this->_destinatarios, explode( "|",str_replace( "\n", "", $line ) ) );
@@ -51,6 +53,8 @@
         private function importarCarta(/* $ruta */) {
             $file = fopen("./files/input/carta_default.txt", "r") or exit("No se ha encontrado el fichero");
             //$file = fopen($ruta, "r") or exit("No se ha encontrado el fichero");
+
+            $this->_lineasCarta = array();                  //Eliminamos posibles líneas de una carta importada anteriormente
             
             while (($line = fgets($file)) !== false) 
                 array_push( $this->_lineasCarta, str_replace( "\n", "", $line ) );
@@ -87,6 +91,7 @@
         public function generarCartas(/* $rutaDest,$rutaCarta */) {
             $this->importarDestinatarios(/* $rutaDest */);
             $this->importarCarta(/* $rutaDest */);
+            $this->_enlacesDescarga = array();          //Eliminamos posibles enlaces de una carta anterior
             for ($i=0; $i<sizeof($this->_destinatarios); $i++) 
                 $this->crearCarta($this->_destinatarios[$i]);
         }

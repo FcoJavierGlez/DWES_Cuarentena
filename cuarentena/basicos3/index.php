@@ -47,9 +47,9 @@
             echo "</div>";
             
             //Cerrar sesión
-            /* echo "<form action=".$_SERVER['PHP_SELF']." method='post'>";
+            echo "<form action=".$_SERVER['PHP_SELF']." method='post'>";
                 echo "<input type='submit' value='Cerrar sesión' name='salir'>";
-            echo "</form>"; */
+            echo "</form>";
             
         ?>
     </main>
