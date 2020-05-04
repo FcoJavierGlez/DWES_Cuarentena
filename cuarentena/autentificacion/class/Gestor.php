@@ -5,48 +5,62 @@
 
     class Gestor {
 
+        private $_USUARIO = "root";
+        private $_CONTRASENNA = "";
         private $_users = array();
-        private $_numAdds = 0;
         private $_totalUsers = 0;
+        private $_db;
 
         public function __construct() {
-
+            
         }
 
         /**
-         * Guarda en el array de usuarios el conjunto de usuarios almacenados en el fichero users
+         * Conecta con la BD
+         */
+        private function conectaDB(){
+            try{
+                $db = new PDO('mysql:host=localhost;dbname=autentificacion;charset=utf8',$this->_USUARIO,$this->_CONTRASENNA);
+                $db -> setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
+    
+                return ($db);
+            }
+            catch(PDOException $e){
+                echo "Error";
+                exit();
+            }
+        }
+
+        /**
+         * Guarda en el array de usuarios el conjunto de usuarios almacenados en la base de datos
          */
         public function importUsers() {
-            $file = fopen("db/users.txt", "r") or exit("No se ha encontrado el fichero");
-            $i = 0;
-            
-            while (($line = fgets($file)) !== false) {
-                if ($i>3 && $line!=="") 
-                    array_push($this->_users,str_replace("\n", "", $line));
-                $i++;
-            }
-            fclose($file);
+            $this->_db = $this->conectaDB();                //Conectamos a la BD
+
+            $consulta = $this->_db->prepare("SELECT user, pass FROM users");    //Preparamos la consulta
+            $consulta->execute();                                               //La ejecutamos
+
+            $this->_users = $consulta->fetchAll(PDO::FETCH_ASSOC);              //Almacenamos los usuarios en el array _users
+
+            $this->_db = null;                              //Cerramos la conexión con la BD
+
+            $this->_totalUsers = sizeof($this->_users);     //Guardamos la cantidad inicial de usuarios
         }
 
         /**
-         * Guarda en el fichero users.txt la lista de usuarios y sus contraseñas
+         * Guarda en la base de datos la lista de usuarios y sus contraseñas
          */
         public function exportUsers() {
-            if ($this->_numAdds==0) return;     //Si el contador de usuarios añadidos es cero no es necesario exportar al fichero
-            $file = fopen("db/users.txt", "w") or exit("No se ha encontrado el fichero");
-            $cabecera = array(
-                "----------------------------------------"."\n",
-                "                USUARIOS                "."\n",
-                "----------------------------------------"."\n",
-                "\n");
+            if (sizeof($this->_users) - $this->_totalUsers == 0) return;     //Si no hay usuarios nuevos no es necesario exportar
+            
+            $this->_db = $this->conectaDB();       //Conectamos a la BD
 
-            for ($i=0; $i<sizeof($this->_users)+4; $i++) { 
-                if ($i>3) 
-                    fwrite($file, ($this->_users[$i-4].(($i==sizeof($this->_users)+3) ? "" : "\n"))); //Si es el último usuario no se añade \n
-                else
-                    fwrite($file, $cabecera[$i]);
+            for ($i = $this->_totalUsers; $i < sizeof($this->_users); $i++) { 
+                $consulta = $this->_db->prepare("INSERT INTO users (user, pass) VALUES (?,?)"); //Preparamos la consulta
+                $consulta->execute(array($this->_users[$i]['user'],$this->_users[$i]['pass'])); //La ejecutamos pasándole los parámetros
             }
-            fclose($file);
+
+            $this->_db = null;
         }
 
         /**
@@ -67,7 +81,7 @@
          */
         private function checkUserExist($user) {
             for ($i=0; $i<sizeof($this->_users); $i++) 
-                if($user==explode(",",$this->_users[$i])[0]) return true;
+                if($user == $this->_users[$i]['user']) return true;
             return false;
         }
 
@@ -96,8 +110,7 @@
             $pass = limpiarDatos($pass);
             if (!$this->validarCampos($user,$pass)) throw new UserInvalidException();   //Si los campos no son válidos
             if ($this->checkUserExist($user)) throw new UserExistException();           //Si el usuario ya existe en el sistema
-            array_push($this->_users,$user.",".$pass);  //Añadimos usuario, limpiando campos e incrementados contador
-            $this->_numAdds++;
+            array_push($this->_users,array("user" => $user, "pass" => $pass));  //Añadimos usuario, limpiando campos e incrementados contador
         }
 
         /**

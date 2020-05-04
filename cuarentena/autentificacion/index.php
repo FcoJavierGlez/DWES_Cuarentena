@@ -1,4 +1,5 @@
 <?php
+    include "class/GestorLogin.php";
     include "class/Gestor.php";
 
     session_start();
@@ -10,7 +11,7 @@
     }
     
     if (isset($_POST['login'])) {
-        $_SESSION['perfil'] = getPerfil($_POST['user'],$_POST['pswd']);
+        $_SESSION['perfil'] = GestorLogin::getPerfil($_POST['user'],$_POST['pswd']);
         if ($_SESSION['perfil']=="administrador") {
             $_SESSION['gestor'] = new Gestor();
             $_SESSION['gestor']->importUsers();
