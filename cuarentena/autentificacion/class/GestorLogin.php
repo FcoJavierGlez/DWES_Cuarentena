@@ -3,19 +3,16 @@
 
     abstract class GestorLogin {
 
-        private const USUARIO = "root";
-        private const CONTRASENNA = "";
-        private $_user;
-        private $_pass;
-        private $_db;
-        private $db_name = 'autentificacion';
+        private static $_USUARIO = "root";
+        private static $_CONTRASENNA = "";
+        private static $_db;
 
         /**
          * Conecta con la BD
          */
         private static function conectaDB(){
             try{
-                $db = new PDO('mysql:host=localhost;dbname=autentificacion;charset=utf8',SELF::USUARIO,SELF::CONTRASENNA);
+                $db = new PDO('mysql:host=localhost;dbname=autentificacion;charset=utf8',SELF::$_USUARIO,SELF::$_CONTRASENNA);
                 $db -> setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
     
                 return ($db);
@@ -52,14 +49,14 @@
          * @return {Boolean}                True si el usuario que logea se haya en el sistema, false si no
          */
         private function validarLogin($user,$pass,$nombreTabla) {
-            $_db = SELF::conectaDB();       //Conectamos a la BD
+            SELF::$_db = SELF::conectaDB();       //Conectamos a la BD
 
-            $consulta = $_db->prepare("SELECT user, pass FROM $nombreTabla WHERE user = :user");    //Preparamos la consulta
+            $consulta = SELF::$_db->prepare("SELECT user, pass FROM $nombreTabla WHERE user = :user");    //Preparamos la consulta
             $consulta->execute(array(":user" => $user));                                            //La ejecutamos pasándole los parámetros
 
             $resultado = $consulta->fetchAll(PDO::FETCH_ASSOC); //PDO::FETCH_ASSOC -> array asociativo | PDO::FETCH_NUM -> array indexado
 
-            $_db = null;                    //Cerramos la conexión
+            SELF::$_db = null;                    //Cerramos la conexión
 
             if (sizeof($resultado) == 0) return false;
             elseif ($resultado[0]['pass'] == $pass) return true;
