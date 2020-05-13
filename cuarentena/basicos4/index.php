@@ -1,11 +1,11 @@
 <?php
-    include "class/Pila.php";
+    include "class/Cola.php";
     include "class/Carta.php";
 
     session_start();
 
-    if (!isset($_SESSION['pila'])) {
-        $_SESSION['pila'] = new Pila();
+    if (!isset($_SESSION['cola'])) {
+        $_SESSION['cola'] = new Cola();
         $_SESSION['cartas'] = new Carta();
     }
 
@@ -30,7 +30,7 @@
     <main>
         <div class="github">
             <b>El siguiente botón conduce al repositorio de GitHub:</b>
-            <a href="https://github.com/FcoJavierGlez/DWES_Cuarentena/tree/basicos3/cuarentena/basicos3" target="_blank">
+            <a href="#" target="_blank">
                 <button>Ver código</button>
             </a>
         </div>
@@ -39,11 +39,11 @@
                 //Suma dígitos de un número
                 include "config/suma.php";
 
-                //Pila
-                include "config/control_pila.php";
+                //Cola
+                include "config/control_cola.php";
                 
                 //Carta
-                include "config/genCartas.php";
+                //include "config/genCartas.php";
             echo "</div>";
             
             //Cerrar sesión
