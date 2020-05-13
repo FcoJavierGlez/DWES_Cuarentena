@@ -21,11 +21,11 @@
     <meta name="author" content="Francisco Javier González Sabariego">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
-    <title>Ejercicios básicos 3</title>
+    <title>Ejercicios básicos 4</title>
 </head>
 <body>
     <header>
-        <h1>Ejercicios básicos 3</h1>
+        <h1>Ejercicios básicos 4</h1>
     </header>
     <main>
         <div class="github">
