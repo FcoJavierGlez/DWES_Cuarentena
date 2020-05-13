@@ -3,7 +3,7 @@
         echo "Pila <input type='text' name='elemento'>
                 <input type='submit' value='Añadir elemento' name='add'>
                 <input type='submit' value='Borrar elemento' name='del'>
-                <input type='submit' value='Vaciar pila' name='clean'><br/>";
+                <input type='submit' value='Vaciar cola' name='clean'><br/>";
 
         if (isset($_POST['add'])) {                 //Si se pulsa el botón "Añadir elemento"
             if (!empty($_POST['elemento'])) {
