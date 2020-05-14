@@ -4,10 +4,8 @@
 
     session_start();
 
-    if ( !isset($_SESSION['perfil']) ) {
-        $_SESSION['perfil'] = "invitado";
-        $_SESSION['uee'] = false;
-        $_SESSION['uie'] = false;
+    if ($_SESSION['perfil'] !== "administrador") {
+        header('Location:index.php');
     }
     
     if ( isset($_POST['login']) ) {
@@ -18,7 +16,7 @@
         }
     }
 
-    if ( isset($_POST['add']) ) {
+    /* if ( isset($_POST['add']) ) {
         $_SESSION['uee'] = false;
         $_SESSION['uie'] = false;
         try {
@@ -28,11 +26,9 @@
         } catch (UserInvalidException $uie) {
             $_SESSION['uie'] = true;
         }
-    }
+    } */
 
     if (isset($_POST['cerrar'])) {
-        /* if ($_SESSION['perfil']=="administrador")
-            $_SESSION['gestor']->exportUsers(); */
         cerrarSesion();
     }
 ?>
@@ -43,7 +39,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
-    <title>Home</title>
+    <title>Libros</title>
 </head>
 <body>
     <header>
@@ -71,38 +67,37 @@
         </nav>
         <main>
             <div class="contenedor">
-                <!-- <div>
-                    <h3>Listado de títulos</h3>
-
+                <div>
+                    <h3>Listado de préstamos</h3>
                 </div>
                 <div class="filtro">
-                    <form action="#">
+                    <!-- <form action="#">
                         Buscar:  <input type="text" name="nombre_libro">
                         <input type="submit" value="Enviar" name="consulta">
-                    </form>  |  <a href="#">Nuevo</a>
+                    </form>  |  <a href="#">Nuevo</a> -->
                 </div>
                 <div class="listado">
-                    <p>ejemplo1</p>
-                    <p>ejemplo2</p>
-                    <p>ejemplo3</p>
-                    <p>ejemplo4</p>
-                    <p>ejemplo5</p>
-                    <p>ejemplo6</p>
-                    <p>ejemplo7</p>
-                    <p>ejemplo8</p>
-                    <p>ejemplo9</p>
-                    <p>ejemplo10</p>
-                    <p>ejemplo11</p>
-                    <p>ejemplo12</p>
-                    <p>ejemplo13</p>
-                    <p>ejemplo14</p>
-                    <p>ejemplo15</p>
-                    <p>ejemplo16</p>
-                    <p>ejemplo17</p>
-                    <p>ejemplo18</p>
-                    <p>ejemplo19</p>
-                    <p>ejemplo20</p>
-                </div> -->
+                    <p>Préstamo 1</p>
+                    <p>Préstamo 2</p>
+                    <p>Préstamo 3</p>
+                    <p>Préstamo 4</p>
+                    <p>Préstamo 5</p>
+                    <p>Préstamo 6</p>
+                    <p>Préstamo 7</p>
+                    <p>Préstamo 8</p>
+                    <p>Préstamo 9</p>
+                    <p>Préstamo 10</p>
+                    <p>Préstamo 11</p>
+                    <p>Préstamo 12</p>
+                    <p>Préstamo 13</p>
+                    <p>Préstamo 14</p>
+                    <p>Préstamo 15</p>
+                    <p>Préstamo 16</p>
+                    <p>Préstamo 17</p>
+                    <p>Préstamo 18</p>
+                    <p>Préstamo 19</p>
+                    <p>Préstamo 20</p>
+                </div>
             </div>
         </main>
     </div>

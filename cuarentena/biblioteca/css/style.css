@@ -2,6 +2,11 @@
     --php_color: rgb(127, 102, 151);
 }
 
+@font-face {
+    font-family: "Old Book";
+    src: url(../font/Olde\ English\ Regular.ttf);
+}
+
 body {
     margin: 0;
 }
@@ -22,6 +27,12 @@ header {
     align-items: center;
 }
 
+h1 {
+    font-family: "Old Book";
+    font-weight: lighter;
+    font-size: 50px;
+}
+
 h1, h2 {
     margin: 0;
     color: white;
@@ -32,35 +43,16 @@ nav {
     *height: 5vh;
 }
 
-/* main {
-    background-image: url(../img/fondo_libros.webp);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-    background-size: cover;
-    *height: 75vh;
-    height: 80vh;
-    display: grid;
-} */
-
 .github, .login {
     text-align: right;
 }
-
-/* .login {
-    display: grid;
-    align-items: center;
-    background-color: rgb(88, 88, 88);
-    color: white;
-    height: 5vh;
-} */
 
 .login {
     display: grid;
     align-items: flex-end;
     color: white;
     align-content: flex-end;
-    margin: 5px;
+    margin: 8px;
     font-size: 16px;
 }
 
@@ -110,6 +102,10 @@ nav a {
     text-decoration: none;
     color: white;
     margin: 0 100px;
+}
+
+nav a:hover {
+    color: orange;
 }
 
 main {
