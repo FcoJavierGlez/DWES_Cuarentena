@@ -1,12 +1,10 @@
 <?php
     include "class/Cola.php";
-    include "class/Carta.php";
 
     session_start();
 
     if (!isset($_SESSION['cola'])) {
         $_SESSION['cola'] = new Cola();
-        $_SESSION['cartas'] = new Carta();
     }
 
     if (isset($_POST['salir'])) {
