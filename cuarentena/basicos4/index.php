@@ -1,4 +1,5 @@
 <?php
+    include "resources/funciones.php";
     include "class/Cola.php";
     include "class/ValidarExpresion.php";
 

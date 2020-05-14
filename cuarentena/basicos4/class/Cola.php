@@ -1,5 +1,4 @@
 <?php
-    include "resources/funciones.php";
 
     class Cola {
 
