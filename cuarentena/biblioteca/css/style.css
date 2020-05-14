@@ -13,6 +13,12 @@ header, footer {
 
 header {
     display: grid;
+    grid-template-columns: repeat(3,1fr);
+    *align-items: center;
+}
+
+.title_header {
+    display: grid;
     align-items: center;
 }
 
@@ -26,34 +32,89 @@ nav {
     *height: 5vh;
 }
 
-main {
+/* main {
     background-image: url(../img/fondo_libros.webp);
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
     background-size: cover;
-    height: 75vh;
-    *height: 80vh;
+    *height: 75vh;
+    height: 80vh;
     display: grid;
-    *justify-content: center;
-    *align-content: center;
-    *grid-template-rows: max-content max-content auto;
-}
+} */
 
 .github, .login {
     text-align: right;
 }
 
-.login {
+/* .login {
     display: grid;
     align-items: center;
     background-color: rgb(88, 88, 88);
     color: white;
     height: 5vh;
+} */
+
+.login {
+    display: grid;
+    align-items: flex-end;
+    color: white;
+    align-content: flex-end;
+    margin: 5px;
+    font-size: 16px;
 }
 
 .login input {
     width: 100px;
+}
+
+.login a {
+    color: orange;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.cuerpo {
+    background-image: url(../img/fondo_libros.webp);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 80vh;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 5% 95%;
+}
+
+nav {
+    *display: grid;
+    *align-items: flex-start;
+    background-color: rgb(88, 88, 88);
+    color: white;
+    *height: 5vh;
+}
+
+nav ul {
+    margin: 10px auto;
+    padding: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline-block;
+    list-style: none;
+}
+
+nav a {
+    display: block;
+    text-decoration: none;
+    color: white;
+    margin: 0 100px;
+}
+
+main {
+    *justify-self: center;
+   display: grid;
 }
 
 .contenedor {
@@ -82,10 +143,7 @@ main {
 }
 
 .listado {
-    *background-color: pink;
-    *border-radius: 20px;
     height: 100%;
-    *width: 100%;
     overflow-x: auto;
     scrollbar-width: none;
 }
