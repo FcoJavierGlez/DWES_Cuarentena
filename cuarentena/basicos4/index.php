@@ -1,10 +1,12 @@
 <?php
     include "class/Cola.php";
+    include "class/ValidarExpresion.php";
 
     session_start();
 
     if (!isset($_SESSION['cola'])) {
         $_SESSION['cola'] = new Cola();
+        $_SESSION['exp'] = new ValidarExpresion();
     }
 
     if (isset($_POST['salir'])) {
@@ -40,8 +42,8 @@
                 //Cola
                 include "config/control_cola.php";
                 
-                //Carta
-                //include "config/genCartas.php";
+                //Validar expresión
+                include "config/valExp.php";
             echo "</div>";
             
             //Cerrar sesión
