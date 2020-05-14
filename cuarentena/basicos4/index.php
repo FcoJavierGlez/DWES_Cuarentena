@@ -31,7 +31,7 @@
     <main>
         <div class="github">
             <b>El siguiente botón conduce al repositorio de GitHub:</b>
-            <a href="#" target="_blank">
+            <a href="https://github.com/FcoJavierGlez/DWES_Cuarentena/tree/basicos4/cuarentena/basicos4" target="_blank">
                 <button>Ver código</button>
             </a>
         </div>
