@@ -142,14 +142,60 @@ main {
     height: 100%;
     overflow-x: auto;
     scrollbar-width: none;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    justify-items: center;
+    *row-gap: 25px;
 }
 
 .contenedor .listado::-webkit-scrollbar {
     display: none;
 }
 
-.contenedor div {
+/* .contenedor div {
     text-align: center;
+} */
+
+.contenedor h3 {
+    text-align: center;
+}
+
+.info_libro {
+    width: 90%;
+    height: max-content;
+    display: grid;
+    grid-template-columns: 15% 85%;
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+.info_libro:hover {
+    border: 2px solid black;
+}
+
+.info_libro img {
+    *display: grid;
+    justify-self: center;
+    align-self: center;
+    padding: 5px;
+    width: 80%;
+}
+
+div.info_contenido {
+    display: grid;
+    grid-template-rows: 80% 20%;
+    padding: 5px;
+}
+
+.info {
+    display: grid;
+    grid-template-columns: 65% 35%;
+    *grid-template-rows: repeat(3,auto);
+}
+
+.info_enlaces {
+    text-align: right;
 }
 
 p.mensaje_error {

@@ -1,26 +1,33 @@
 <?php
-    
 
-    abstract class GestorLogin {
+    class GestorLogin extends DBAbstractModel {
 
-        private static $_USUARIO = "root";
-        private static $_CONTRASENNA = "";
-        private static $_db;
+        private static $_instancia;
+        private $_user;
+        private $_pass;
+        private $_tabla;
 
-        /**
-         * Conecta con la BD
-         */
-        private static function conectaDB(){
-            try{
-                $db = new PDO('mysql:host=localhost;dbname=autentificacion;charset=utf8',SELF::$_USUARIO,SELF::$_CONTRASENNA);
-                $db -> setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
-    
-                return ($db);
+        public function __construct() {
+
+        }
+
+        public static function singleton() {
+            if (!isset(self::$_instancia)) {
+                $miClase = __CLASS__;
+                self::$_instancia = new $miClase;
             }
-            catch(PDOException $e){
-                echo "Error";
-                exit();
-            }
+            return self::$_instancia;
+        }
+
+        protected function get( $user_data = array(), $nombreTabla='' ) {
+            $this->query = "
+                    SELECT id, user, pass
+                    FROM $nombreTabla
+                    WHERE user = :user";
+            $this->parametros['user'] = $user_data['user'];	
+            $this->get_results_from_query();
+            
+            $this->close_connection();
         }
 
         /**
@@ -31,11 +38,11 @@
          * 
          * @return {String} Nombre de perfil en función de la validación de login (administrador | usuario | invitado)
          */
-        public static function getPerfil($user,$pass) {
-            $user = limpiarDatos($user);
-            $pass = limpiarDatos($pass);
-            if (SELF::validarLogin($user,$pass,"admins")) return "administrador";
-            elseif (SELF::validarLogin($user,$pass,"users")) return "usuario";
+        public function getPerfil($user,$pass) {
+            $this->_user = limpiarDatos($user);
+            $this->_pass = limpiarDatos($pass);
+            if ( $this->validarLogin( array('user'=>$this->_user, 'pass'=>$this->_pass ),"bi_admins") ) return "administrador";
+            elseif ( $this->validarLogin( array('user'=>$this->_user, 'pass'=>$this->_pass ),"bi_users") ) return "usuario";
             else return "invitado";
         }
 
@@ -48,18 +55,11 @@
          * 
          * @return {Boolean}                True si el usuario que logea se haya en el sistema, false si no
          */
-        private function validarLogin($user,$pass,$nombreTabla) {
-            SELF::$_db = SELF::conectaDB();       //Conectamos a la BD
+        private function validarLogin( $user_data=array(), $nombreTabla ) {
+            $this->get( $user_data, $nombreTabla );
 
-            $consulta = SELF::$_db->prepare("SELECT user, pass FROM $nombreTabla WHERE user = :user");    //Preparamos la consulta
-            $consulta->execute(array(":user" => $user));                                            //La ejecutamos pasándole los parámetros
-
-            $resultado = $consulta->fetchAll(PDO::FETCH_ASSOC); //PDO::FETCH_ASSOC -> array asociativo | PDO::FETCH_NUM -> array indexado
-
-            SELF::$_db = null;                    //Cerramos la conexión
-
-            if (sizeof($resultado) == 0) return false;
-            elseif ($resultado[0]['pass'] == $pass) return true;
+            if ( sizeof($this->rows) == 0 ) return false;
+            elseif ($this->rows[0]['pass'] == $this->_pass) return true;
             return false;
         }
     }

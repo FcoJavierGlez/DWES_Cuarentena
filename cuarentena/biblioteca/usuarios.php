@@ -1,5 +1,8 @@
 <?php
+    include "config/config_dev.php";
+    include "class/DBAbstractModel.php";
     include "class/GestorLogin.php";
+    include "class/Libro.php";
     include "class/Gestor.php";
 
     session_start();
@@ -9,8 +12,10 @@
     }
     
     if ( isset($_POST['login']) ) {
-        $_SESSION['perfil'] = GestorLogin::getPerfil($_POST['user'],$_POST['pswd']);
-        if ($_SESSION['perfil']=="administrador") {
+        $_SESSION['gestorLogin'] = GestorLogin::singleton();
+        $_SESSION['libro'] = Libro::singleton();
+        $_SESSION['perfil'] = $_SESSION['gestorLogin']->getPerfil($_POST['user'], $_POST['pswd']);
+        if ( $_SESSION['perfil'] == "administrador" ) {
             $_SESSION['gestor'] = new Gestor();
             //$_SESSION['gestor']->importUsers();
         }

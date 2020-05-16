@@ -1,5 +1,8 @@
 <?php
+    include "config/config_dev.php";
+    include "class/DBAbstractModel.php";
     include "class/GestorLogin.php";
+    include "class/Libro.php";
     include "class/Gestor.php";
 
     session_start();
@@ -9,8 +12,10 @@
     }
     
     if ( isset($_POST['login']) ) {
-        $_SESSION['perfil'] = GestorLogin::getPerfil($_POST['user'],$_POST['pswd']);
-        if ($_SESSION['perfil']=="administrador") {
+        $_SESSION['gestorLogin'] = GestorLogin::singleton();
+        $_SESSION['libro'] = Libro::singleton();
+        $_SESSION['perfil'] = $_SESSION['gestorLogin']->getPerfil($_POST['user'], $_POST['pswd']);
+        if ( $_SESSION['perfil'] == "administrador" ) {
             $_SESSION['gestor'] = new Gestor();
             //$_SESSION['gestor']->importUsers();
         }
@@ -74,32 +79,21 @@
 
                 </div>
                 <div class="filtro">
-                    <form action="#">
+                    <?php
+                        echo "<form action=".$_SERVER['PHP_SELF']." method='post'>";
+                        echo "Buscar:  <input type='text' name='nombre_libro'>";
+                        echo "<input type='submit' value='Enviar' name='consulta'>";
+                        echo "</form>  |  <a href='#'><button>Añadir libro</button></a>";
+                    ?>
+                    <!-- <form action="#" method="post">
                         Buscar:  <input type="text" name="nombre_libro">
                         <input type="submit" value="Enviar" name="consulta">
-                    </form>  |  <a href="#"><button>Añadir libro</button></a>
+                    </form>  |  <a href="#"><button>Añadir libro</button></a> -->
                 </div>
                 <div class="listado">
-                    <p>Libro 1</p>
-                    <p>Libro 2</p>
-                    <p>Libro 3</p>
-                    <p>Libro 4</p>
-                    <p>Libro 5</p>
-                    <p>Libro 6</p>
-                    <p>Libro 7</p>
-                    <p>Libro 8</p>
-                    <p>Libro 9</p>
-                    <p>Libro 10</p>
-                    <p>Libro 11</p>
-                    <p>Libro 12</p>
-                    <p>Libro 13</p>
-                    <p>Libro 14</p>
-                    <p>Libro 15</p>
-                    <p>Libro 16</p>
-                    <p>Libro 17</p>
-                    <p>Libro 18</p>
-                    <p>Libro 19</p>
-                    <p>Libro 20</p>
+                    <?php 
+                        include "include/info_libro.php";
+                    ?>
                 </div>
             </div>
         </main>
