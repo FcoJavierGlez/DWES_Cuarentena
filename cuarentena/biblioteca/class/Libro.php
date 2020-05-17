@@ -34,13 +34,61 @@
             return $this->rows;
         }
 
+        public function getID ( $id = '' ) {
+            if ( $id !== '' ) {
+                if ( is_numeric($id) ) {
+                    $this->query = "SELECT * FROM bi_libros WHERE id = :id";
+                    $this->parametros['id'] = $id;
+                }
+            }
+            else
+                $this->query = "SELECT * FROM bi_libros";
+            
+            $this->get_results_from_query();
+            $this->close_connection();
+
+            return $this->rows;
+        }
+
         public function set ( $book_data = array() ) {
-            $this->query = "INSERT INTO bi_libros (titulo,autor,isbn) VALUES (:titulo,:autor,:isbn)";
+            $this->query = "INSERT INTO bi_libros (titulo,autor,isbn,editorial,anno_publicacion,img) 
+                                VALUES (:titulo,:autor,:isbn,:editorial,:anno_publicacion,:img)";
             $this->parametros['titulo'] = $book_data['titulo'];
             $this->parametros['autor'] = $book_data['autor'];
             $this->parametros['isbn'] = $book_data['isbn'];
+            $this->parametros['editorial'] = $book_data['editorial'];
+            $this->parametros['anno_publicacion'] = $book_data['anno_publicacion'];
+            $this->parametros['img'] = $book_data['img'];
             $this->get_results_from_query();
-            $this->mensaje = 'Usuario agregado exitosamente';
+            $this->close_connection();
+        }
+
+        public function edit ( $book_data = array() ) {
+            if ( $book_data['img'] == '' ) {
+                $this->query = "UPDATE bi_libros SET titulo = :titulo, autor = :autor, isbn = :isbn,
+                                editorial = :editorial, anno_publicacion = :anno_publicacion WHERE id = :id";
+            } else {
+                $this->query = "UPDATE bi_libros SET titulo = :titulo, autor = :autor, isbn = :isbn,
+                                editorial = :editorial, anno_publicacion = :anno_publicacion, img = :img WHERE id = :id";
+                $this->parametros['img'] = $book_data['img'];
+            }
+            $this->parametros['titulo'] = $book_data['titulo'];
+            $this->parametros['autor'] = $book_data['autor'];
+            $this->parametros['isbn'] = $book_data['isbn'];
+            $this->parametros['editorial'] = $book_data['editorial'];
+            $this->parametros['anno_publicacion'] = $book_data['anno_publicacion'];
+            $this->parametros['id'] = $book_data['id'];
+            $this->get_results_from_query();
+            $this->close_connection();
+        }
+
+        public function del ( $id = '' ) {
+            if ( $id !== '' && is_numeric($id) ) {
+                $this->query = "DELETE FROM bi_libros WHERE id = :id";
+                $this->parametros['id'] = $id;
+                $this->get_results_from_query();
+                $this->close_connection();
+            }
         }
         
     }

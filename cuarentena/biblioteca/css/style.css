@@ -152,6 +152,27 @@ main {
     display: none;
 }
 
+.add_editar {
+    height: 100%;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+}
+
+/* .add_editar div {
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(2,1fr);
+    text-align: center;
+} */
+
+.col2 {
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(2,1fr);
+    text-align: center;
+}
+
 /* .contenedor div {
     text-align: center;
 } */
@@ -196,6 +217,56 @@ div.info_contenido {
 
 .info_enlaces {
     text-align: right;
+}
+
+.portada {
+    height: 100px;
+}
+
+.alert {
+    background-color: white;
+    border: 3px solid red;
+    border-radius: 15px;
+    display: grid;
+    padding: 15px;
+    row-gap: 5px;
+}
+
+.opciones {
+    margin-top: 15px;
+    *text-align: right;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    justify-self: center;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.boton {
+    color: white;
+    border-radius: 50%;
+    border: 0;
+    padding: 5px 10px;
+}
+
+.aceptar {
+    background-color: rgb(93, 252, 30);
+}
+
+.aceptar:hover {
+    color: black;
+    background-color: rgb(43, 255, 0);
+    box-shadow: 2px 1px 1px rgb(85, 85, 85);
+}
+
+.cancelar {
+    background-color: rgb(255, 29, 29);
+}
+
+.cancelar:hover {
+    color: black;
+    background-color: rgb(255, 0, 0);
+    box-shadow: 2px 1px 1px rgb(85, 85, 85);
 }
 
 p.mensaje_error {

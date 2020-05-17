@@ -1,9 +1,9 @@
 <?php
+    include "resource/funciones.php";
     include "config/config_dev.php";
     include "class/DBAbstractModel.php";
     include "class/GestorLogin.php";
     include "class/Libro.php";
-    include "class/Gestor.php";
 
     session_start();
 
@@ -15,39 +15,18 @@
         $_SESSION['gestorLogin'] = GestorLogin::singleton();
         $_SESSION['libro'] = Libro::singleton();
         $_SESSION['perfil'] = $_SESSION['gestorLogin']->getPerfil($_POST['user'], $_POST['pswd']);
-        if ( $_SESSION['perfil'] == "administrador" ) {
-            $_SESSION['gestor'] = new Gestor();
-            //$_SESSION['gestor']->importUsers();
-        }
     }
 
-    if ( isset($_POST['ed_libro']) ) {
+    if ( isset($_POST['add_libro']) ) {
         $book_data = array(
-            'id' => limpiarDatos($_POST['id']),
             'titulo' => limpiarDatos($_POST['titulo']),
             'autor' => limpiarDatos($_POST['autor']),
             'isbn' => limpiarDatos($_POST['isbn']),
-            'editorial' => limpiarDatos($_POST['editorial']),
-            'anno_publicacion' => limpiarDatos($_POST['anno_publicacion']),
-            'img' => limpiarDatos($_POST['img']),
+            'editorial' => ( ($_POST['editorial'] == "") ? null : limpiarDatos($_POST['editorial']) ),
+            'anno_publicacion' => ( ($_POST['anno_publicacion'] == "") ? null : limpiarDatos($_POST['anno_publicacion']) ),
+            'img' => ( ($_POST['img'] == "") ? null : limpiarDatos($_POST['img']) ),
         );
-        $_SESSION['libro']->edit( $book_data );
-    }
-
-    if ( isset($_POST['delete_libro']) ) {
-        $_SESSION['libro']->del( $_POST['id'] );
-    }
-
-    if ( isset($_POST['add']) ) {
-        $_SESSION['uee'] = false;
-        $_SESSION['uie'] = false;
-        try {
-            $_SESSION['gestor']->addUser($_POST['add_user'],$_POST['add_pswd']);
-        } catch (UserExistException $uee) {
-            $_SESSION['uee'] = true;
-        } catch (UserInvalidException $uie) {
-            $_SESSION['uie'] = true;
-        }
+        $_SESSION['libro']->set( $book_data );
     }
 
     if (isset($_POST['cerrar'])) {
@@ -90,12 +69,7 @@
         <main>
             <div class="contenedor">
                 <?php 
-                    if ( isset($_GET['edit']) )
-                        include "include/edit_libro.php";
-                    else if( isset($_GET['del']) )
-                        include "include/del_libro.php";
-                    else
-                        include "include/info_libro.php";
+                    include "include/new_libro.php";
                 ?>
             </div>
         </main>

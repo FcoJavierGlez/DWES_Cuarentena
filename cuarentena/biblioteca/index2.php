@@ -10,9 +10,10 @@
     echo DBPASS;
 
     $datos = array(
-        "titulo" => "Veinte mil leguas de viaje submarino",
-        "autor" => "Julio Verne",
-        "isbn" => "1234"
+        "titulo" => "prueba",
+        "autor" => "prueba",
+        "isbn" => "5643",
+        "editorial" => null,
     );
 
     $libro = new Libro();
