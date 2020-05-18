@@ -2,7 +2,6 @@
     include "config/config_dev.php";
     include "resource/funciones.php";
     include "class/DBAbstractModel.php";
-    include "class/GestorLogin.php";
     include "class/Libro.php";
     include "class/Usuario.php";
 
@@ -14,11 +13,13 @@
                 $user_data = array(
                     'user' => limpiarDatos($_POST['user']),
                     'pass' => limpiarDatos($_POST['pass']),
-                    'estatus' => "pendiente_aceptar",
+                    'perfil' => "lector",
+                    'estado' => "pendiente",
                     'nombre' => limpiarDatos($_POST['nombre']),
                     'apellidos' => limpiarDatos($_POST['apellidos']),
+                    'dni' => limpiarDatos($_POST['dni']),
                     'telefono' => limpiarDatos($_POST['telefono']),
-                    'email' => $_POST['email'],
+                    'email' => limpiarDatos($_POST['email']),
                     'img' => ( ($_POST['img'] == "") ? null : limpiarDatos($_POST['img']) ),
                 );
                 $_SESSION['usuario']->set( $user_data );

@@ -46,24 +46,26 @@
     }
 
     /**
-     * Imprime la información de cada usuario
+     * Imprime una tabla con los usuarios en el sistema
      */
     function imprimeInfoUser( $users ) {
         if ( sizeof($users) == 0 ) echo "<b>No se obtuvo ningún resultado.</b>";
         else {
             echo "<table>";
-            echo "<th>ID</th><th>NICK</th><th>EMAIL</th><th>ESTATUS</th><th>ACEPTAR</th><th>BANEAR</th><th>ELIMINAR</th>";
+            echo "<th>ID</th><th>NICK</th><th>EMAIL</th><th>ESTADO</th><th>ACTIVAR</th><th>BLOQUEAR</th><th>ELIMINAR</th>";
                 foreach ($users as $user) {
                     echo "<tr>";
                         echo "<td>".$user['id']."</td>";
                         echo "<td>".$user['user']."</td>";
                         echo "<td>".$user['email']."</td>";
-                        echo ( ($user['estatus'] == "ban" ) ? "<td class='ban'>".$user['estatus']."</td>" : "<td>".$user['estatus']."</td>" );
-                        echo ( ($user['estatus'] == "pendiente_aceptar") ? 
+                        echo ( ( $user['estado'] == "ban" ) ? 
+                                "<td class='ban'>".$user['estado']."</td>" : "<td>".$user['estado']."</td>" );
+                        echo ( ( $user['estado'] == "pendiente"  && $user['perfil'] !== "administrador" ) ? 
                             "<td><a href=".$_SERVER['PHP_SELF']."?aceptar=".$user['id']."><button>Aceptar</button></a></td>" : "<td>---</td>" );
-                        echo ( ($user['estatus'] == "alta") ? 
+                        echo ( ( $user['estado'] == "activo" ) ? 
                             "<td><a href=".$_SERVER['PHP_SELF']."?banear=".$user['id']."><button>Banear</button></a></td>" : "<td>---</td>" );
-                        echo "<td><a href=".$_SERVER['PHP_SELF']."?borrar=".$user['id']."><button>Eliminar</button></a></td>";
+                        echo ( (  $user['perfil'] !== "administrador"  ) ? 
+                            "<td><a href=".$_SERVER['PHP_SELF']."?borrar=".$user['id']."><button>Eliminar</button></a></td>" : "<td>---</td>" );
                     echo "</tr>";
                 }
             echo "</table>";

@@ -275,6 +275,10 @@ table tr td,th {
     background-color: white;
 }
 
+th {
+    background-color: lightblue;
+}
+
 .ban {
     color: red;
 }

@@ -29,13 +29,17 @@
                 if ( is_numeric($busqueda) ) {
                     $this->query = "SELECT * FROM bi_users WHERE id = :id";
                     $this->parametros['id'] = $busqueda;
+                } elseif( $busqueda == '*' ) {
+                    $this->query = "SELECT * FROM bi_users";
                 } else {
                     $this->query = "SELECT * FROM bi_users WHERE lower( user ) = :user";
                     $this->parametros['user'] = strtolower( $busqueda );
                 }
             }
-            else
-                $this->query = "SELECT * FROM bi_users";
+            else {
+                $this->query = "SELECT * FROM bi_users WHERE perfil = :perfil";
+                $this->parametros['perfil'] = "lector";
+            }
             
             $this->get_results_from_query();
             $this->close_connection();
@@ -44,13 +48,15 @@
         }
 
         public function set ( $user_data = array() ) {
-            $this->query = "INSERT INTO bi_users (user,pass,estatus,nombre,apellidos,telefono,email,img) 
-                                VALUES (:user,:pass,:estatus,:nombre,:apellidos,:telefono,:email,:img)";
+            $this->query = "INSERT INTO bi_users (user,pass,perfil,estado,nombre,apellidos,dni,telefono,email,img) 
+                                VALUES (:user,:pass,:perfil,:estado,:nombre,:apellidos,:dni,:telefono,:email,:img)";
             $this->parametros['user'] = $user_data['user'];
             $this->parametros['pass'] = $user_data['pass'];
-            $this->parametros['estatus'] = $user_data['estatus'];
+            $this->parametros['perfil'] = $user_data['perfil'];
+            $this->parametros['estado'] = $user_data['estado'];
             $this->parametros['nombre'] = $user_data['nombre'];
             $this->parametros['apellidos'] = $user_data['apellidos'];
+            $this->parametros['dni'] = $user_data['dni'];
             $this->parametros['telefono'] = $user_data['telefono'];
             $this->parametros['email'] = $user_data['email'];
             $this->parametros['img'] = $user_data['img'];

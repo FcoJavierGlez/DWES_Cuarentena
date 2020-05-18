@@ -2,7 +2,6 @@
     include "config/config_dev.php";
     include "resource/funciones.php";
     include "class/DBAbstractModel.php";
-    include "class/GestorLogin.php";
     include "class/Libro.php";
     include "class/Usuario.php";
 
@@ -17,8 +16,9 @@
     }
     
     if ( isset($_POST['login']) ) {
-        $_SESSION['gestorLogin'] = GestorLogin::singleton();
-        $_SESSION['perfil'] = $_SESSION['gestorLogin']->getPerfil(limpiarDatos($_POST['user']), limpiarDatos($_POST['pswd']));
+        $usuario = $_SESSION['usuario']->get( limpiarDatos($_POST['user']) );
+        if ( $usuario[0]['pass'] == limpiarDatos($_POST['pswd']) ) 
+            $_SESSION['perfil'] = $usuario[0]['perfil'];
     }
 
     if (isset($_POST['cerrar'])) {

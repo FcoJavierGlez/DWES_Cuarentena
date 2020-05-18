@@ -2,7 +2,6 @@
     include "config/config_dev.php";
     include "resource/funciones.php";
     include "class/DBAbstractModel.php";
-    include "class/GestorLogin.php";
     include "class/Libro.php";
     include "class/Usuario.php";
 

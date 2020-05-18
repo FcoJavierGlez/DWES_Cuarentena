@@ -1,5 +1,5 @@
 <?php
-    include "class/Gestor.php";
+    /* include "class/Gestor.php"; */
 
     session_start();
 
