@@ -4,6 +4,7 @@
     include "class/DBAbstractModel.php";
     include "class/GestorLogin.php";
     include "class/Libro.php";
+    include "class/Usuario.php";
 
     session_start();
 
@@ -14,6 +15,7 @@
     if ( isset($_POST['login']) ) {
         $_SESSION['gestorLogin'] = GestorLogin::singleton();
         $_SESSION['libro'] = Libro::singleton();
+        $_SESSION['usuario'] = Usuario::singleton();
         $_SESSION['perfil'] = $_SESSION['gestorLogin']->getPerfil($_POST['user'], $_POST['pswd']);
     }
 
@@ -48,7 +50,7 @@
             
         </div>
         <div class="title_header">
-            <h1>Biblioteca</h1>
+            <h1><a href="index.php">Biblioteca</a></h1>
         </div>
         <div class="login">
             <?php

@@ -7,10 +7,6 @@
     include "class/Usuario.php";
 
     session_start();
-
-    if ($_SESSION['perfil'] !== "administrador") {
-        header('Location:index.php');
-    }
     
     /* if ( isset($_POST['login']) ) {
         $_SESSION['gestorLogin'] = GestorLogin::singleton();
@@ -19,16 +15,28 @@
         $_SESSION['perfil'] = $_SESSION['gestorLogin']->getPerfil($_POST['user'], $_POST['pswd']);
     } */
 
-    if ( isset($_POST['add_libro']) ) {
-        $book_data = array(
-            'titulo' => limpiarDatos($_POST['titulo']),
-            'autor' => limpiarDatos($_POST['autor']),
-            'isbn' => limpiarDatos($_POST['isbn']),
-            'editorial' => ( ($_POST['editorial'] == "") ? null : limpiarDatos($_POST['editorial']) ),
-            'anno_publicacion' => ( ($_POST['anno_publicacion'] == "") ? null : limpiarDatos($_POST['anno_publicacion']) ),
-            'img' => ( ($_POST['img'] == "") ? null : limpiarDatos($_POST['img']) ),
-        );
-        $_SESSION['libro']->set( $book_data );
+    if ( isset($_POST['add_user']) ) {
+        if ( $_POST['pass'] == $_POST['pass2'] ) {
+            if ( sizeof( $_SESSION['usuario']->get( $_POST['user'] ) ) == 0 ) {
+                $user_data = array(
+                    'user' => limpiarDatos($_POST['user']),
+                    'pass' => limpiarDatos($_POST['pass']),
+                    'estatus' => "pendiente_aceptar",
+                    'nombre' => limpiarDatos($_POST['nombre']),
+                    'apellidos' => limpiarDatos($_POST['apellidos']),
+                    'telefono' => limpiarDatos($_POST['telefono']),
+                    'email' => $_POST['email'],
+                    'img' => ( ($_POST['img'] == "") ? null : limpiarDatos($_POST['img']) ),
+                );
+                $_SESSION['usuario']->set( $user_data );
+            } else {
+                //nick usuario no disponible
+            }
+
+        } else {
+            //la contraseña y su verificación no coinciden
+        }
+        
     }
 
     if (isset($_POST['cerrar'])) {
@@ -71,7 +79,7 @@
         <main>
             <div class="contenedor">
                 <?php 
-                    include "include/new_libro.php";
+                    include "include/new_user.php";
                 ?>
             </div>
         </main>

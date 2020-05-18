@@ -39,6 +39,16 @@ h1, h2 {
     text-align: center;
 }
 
+h1 a {
+    color: white;
+    text-decoration: none;
+}
+
+h1 a:active {
+    color: white;
+    text-decoration: none;
+}
+
 nav {
     *height: 5vh;
 }
@@ -256,6 +266,17 @@ div.info_contenido {
     color: black;
     background-color: rgb(255, 0, 0);
     box-shadow: 2px 1px 1px rgb(85, 85, 85);
+}
+
+table tr td,th {
+    border: 1px solid black;
+    padding: 3px;
+    text-align: center;
+    background-color: white;
+}
+
+.ban {
+    color: red;
 }
 
 p.mensaje_error {
