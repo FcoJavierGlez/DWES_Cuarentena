@@ -3,9 +3,6 @@
     class GestorLogin extends DBAbstractModel {
 
         private static $_instancia;
-        private $_user;
-        private $_pass;
-        private $_tabla;
 
         public function __construct() {
 
@@ -39,10 +36,8 @@
          * @return {String} Nombre de perfil en función de la validación de login (administrador | usuario | invitado)
          */
         public function getPerfil($user,$pass) {
-            $this->_user = limpiarDatos($user);
-            $this->_pass = limpiarDatos($pass);
-            if ( $this->validarLogin( array('user'=>$this->_user, 'pass'=>$this->_pass ),"bi_admins") ) return "administrador";
-            elseif ( $this->validarLogin( array('user'=>$this->_user, 'pass'=>$this->_pass ),"bi_users") ) return "usuario";
+            if ( $this->validarLogin( array('user'=>$user, 'pass'=>$pass ),"bi_admins") ) return "administrador";
+            elseif ( $this->validarLogin( array('user'=>$user, 'pass'=>$pass ),"bi_users") ) return "usuario";
             else return "invitado";
         }
 
@@ -59,7 +54,7 @@
             $this->get( $user_data, $nombreTabla );
 
             if ( sizeof($this->rows) == 0 ) return false;
-            elseif ($this->rows[0]['pass'] == $this->_pass) return true;
+            elseif ($this->rows[0]['pass'] == $user_data['pass']) return true;
             return false;
         }
     }

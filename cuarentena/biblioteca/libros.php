@@ -1,9 +1,9 @@
 <?php
     include "config/config_dev.php";
+    include "resource/funciones.php";
     include "class/DBAbstractModel.php";
     include "class/GestorLogin.php";
     include "class/Libro.php";
-    include "class/Gestor.php";
 
     session_start();
 
@@ -15,10 +15,6 @@
         $_SESSION['gestorLogin'] = GestorLogin::singleton();
         $_SESSION['libro'] = Libro::singleton();
         $_SESSION['perfil'] = $_SESSION['gestorLogin']->getPerfil($_POST['user'], $_POST['pswd']);
-        if ( $_SESSION['perfil'] == "administrador" ) {
-            $_SESSION['gestor'] = new Gestor();
-            //$_SESSION['gestor']->importUsers();
-        }
     }
 
     if ( isset($_POST['ed_libro']) ) {
@@ -38,7 +34,7 @@
         $_SESSION['libro']->del( $_POST['id'] );
     }
 
-    if ( isset($_POST['add']) ) {
+    /* if ( isset($_POST['add']) ) {
         $_SESSION['uee'] = false;
         $_SESSION['uie'] = false;
         try {
@@ -48,7 +44,7 @@
         } catch (UserInvalidException $uie) {
             $_SESSION['uie'] = true;
         }
-    }
+    } */
 
     if (isset($_POST['cerrar'])) {
         cerrarSesion();

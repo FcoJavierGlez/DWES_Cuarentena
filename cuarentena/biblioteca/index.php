@@ -1,9 +1,10 @@
 <?php
     include "config/config_dev.php";
+    include "resource/funciones.php";
     include "class/DBAbstractModel.php";
     include "class/GestorLogin.php";
     include "class/Libro.php";
-    include "class/Gestor.php";
+    /* include "class/Gestor.php"; */
 
     session_start();
 
@@ -16,14 +17,14 @@
     if ( isset($_POST['login']) ) {
         $_SESSION['gestorLogin'] = GestorLogin::singleton();
         $_SESSION['libro'] = Libro::singleton();
-        $_SESSION['perfil'] = $_SESSION['gestorLogin']->getPerfil($_POST['user'], $_POST['pswd']);
-        if ( $_SESSION['perfil'] == "administrador" ) {
+        $_SESSION['perfil'] = $_SESSION['gestorLogin']->getPerfil(limpiarDatos($_POST['user']), limpiarDatos($_POST['pswd']));
+        /* if ( $_SESSION['perfil'] == "administrador" ) {
             $_SESSION['gestor'] = new Gestor();
             //$_SESSION['gestor']->importUsers();
-        }
+        } */
     }
 
-    if ( isset($_POST['add']) ) {
+    /* if ( isset($_POST['add']) ) {
         $_SESSION['uee'] = false;
         $_SESSION['uie'] = false;
         try {
@@ -33,11 +34,9 @@
         } catch (UserInvalidException $uie) {
             $_SESSION['uie'] = true;
         }
-    }
+    } */
 
     if (isset($_POST['cerrar'])) {
-        /* if ($_SESSION['perfil']=="administrador")
-            $_SESSION['gestor']->exportUsers(); */
         cerrarSesion();
     }
 ?>
@@ -76,38 +75,7 @@
         </nav>
         <main>
             <div class="contenedor">
-                <!-- <div>
-                    <h3>Listado de títulos</h3>
-
-                </div>
-                <div class="filtro">
-                    <form action="#">
-                        Buscar:  <input type="text" name="nombre_libro">
-                        <input type="submit" value="Enviar" name="consulta">
-                    </form>  |  <a href="#">Nuevo</a>
-                </div>
-                <div class="listado">
-                    <p>ejemplo1</p>
-                    <p>ejemplo2</p>
-                    <p>ejemplo3</p>
-                    <p>ejemplo4</p>
-                    <p>ejemplo5</p>
-                    <p>ejemplo6</p>
-                    <p>ejemplo7</p>
-                    <p>ejemplo8</p>
-                    <p>ejemplo9</p>
-                    <p>ejemplo10</p>
-                    <p>ejemplo11</p>
-                    <p>ejemplo12</p>
-                    <p>ejemplo13</p>
-                    <p>ejemplo14</p>
-                    <p>ejemplo15</p>
-                    <p>ejemplo16</p>
-                    <p>ejemplo17</p>
-                    <p>ejemplo18</p>
-                    <p>ejemplo19</p>
-                    <p>ejemplo20</p>
-                </div> -->
+                
             </div>
         </main>
     </div>

@@ -1,9 +1,9 @@
 <?php
     include "config/config_dev.php";
+    include "resource/funciones.php";
     include "class/DBAbstractModel.php";
     include "class/GestorLogin.php";
     include "class/Libro.php";
-    include "class/Gestor.php";
 
     session_start();
 
@@ -15,10 +15,6 @@
         $_SESSION['gestorLogin'] = GestorLogin::singleton();
         $_SESSION['libro'] = Libro::singleton();
         $_SESSION['perfil'] = $_SESSION['gestorLogin']->getPerfil($_POST['user'], $_POST['pswd']);
-        if ( $_SESSION['perfil'] == "administrador" ) {
-            $_SESSION['gestor'] = new Gestor();
-            //$_SESSION['gestor']->importUsers();
-        }
     }
 
     /* if ( isset($_POST['add']) ) {
@@ -72,38 +68,9 @@
         </nav>
         <main>
             <div class="contenedor">
-                <div>
-                    <h3>Listado de usuarios</h3>
-
-                </div>
-                <div class="filtro">
-                    <form action="#">
-                        Buscar:  <input type="text" name="nombre_libro">
-                        <input type="submit" value="Enviar" name="consulta">
-                    </form><!--   |  <a href="#">Nuevo</a> -->
-                </div>
-                <div class="listado">
-                    <p>Usuario 1</p>
-                    <p>Usuario 2</p>
-                    <p>Usuario 3</p>
-                    <p>Usuario 4</p>
-                    <p>Usuario 5</p>
-                    <p>Usuario 6</p>
-                    <p>Usuario 7</p>
-                    <p>Usuario 8</p>
-                    <p>Usuario 9</p>
-                    <p>Usuario 10</p>
-                    <p>Usuario 11</p>
-                    <p>Usuario 12</p>
-                    <p>Usuario 13</p>
-                    <p>Usuario 14</p>
-                    <p>Usuario 15</p>
-                    <p>Usuario 16</p>
-                    <p>Usuario 17</p>
-                    <p>Usuario 18</p>
-                    <p>Usuario 19</p>
-                    <p>Usuario 20</p>
-                </div>
+                <?php
+                    include "include/info_user.php";
+                ?>
             </div>
         </main>
     </div>

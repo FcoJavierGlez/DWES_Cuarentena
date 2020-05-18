@@ -24,7 +24,7 @@
      * Imprime la información de cada libro
      */
     function imprimeInfoLibro( $libros ) {
-        if ( sizeof($libros) == 0 ) echo "No se ha encontrado ningún libro con título: ".limpiarDatos($_POST['nombre_libro'])."";
+        if ( sizeof($libros) == 0 ) echo "<b>No se ha encontrado ningún libro con título: ".limpiarDatos($_POST['nombre_libro'])."</b>";
         else 
             foreach ($libros as $libro) {
                 echo "<div class='info_libro'>";
