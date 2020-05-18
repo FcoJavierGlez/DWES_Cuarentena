@@ -70,11 +70,11 @@
             <div class="contenedor">
                 <?php 
                     if ( isset($_GET['edit']) )
-                        include "include/edit_libro.php";
+                        include "include/books/edit_libro.php";
                     else if( isset($_GET['del']) )
-                        include "include/del_libro.php";
+                        include "include/books/del_libro.php";
                     else
-                        include "include/info_libro.php";
+                        include "include/books/info_libro.php";
                 ?>
             </div>
         </main>

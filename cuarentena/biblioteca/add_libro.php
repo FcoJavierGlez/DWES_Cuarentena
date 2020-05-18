@@ -64,7 +64,7 @@
         <main>
             <div class="contenedor">
                 <?php 
-                    include "include/new_libro.php";
+                    include "include/books/new_libro.php";
                 ?>
             </div>
         </main>
