@@ -52,7 +52,7 @@
         <main>
             <div class="contenedor">
                 <?php
-                    include "include/info_user.php";
+                    include "include/users/info_user.php";
                 ?>
             </div>
         </main>

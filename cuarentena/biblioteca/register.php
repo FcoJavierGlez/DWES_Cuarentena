@@ -72,7 +72,7 @@
         <main>
             <div class="contenedor">
                 <?php 
-                    include "include/new_user.php";
+                    include "include/users/new_user.php";
                 ?>
             </div>
         </main>
