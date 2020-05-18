@@ -45,9 +45,9 @@
         <div class="login">
             <?php
                 if ( $_SESSION['perfil'] == "invitado" ) 
-                    include "config/login.php";
+                    include "include/login.php";
                 else 
-                    include "config/exit.php";
+                    include "include/exit.php";
             ?>
         </div>
     </header>
@@ -55,7 +55,7 @@
         <nav>
             <?php
                 if ( $_SESSION['perfil'] == "administrador" )
-                    include "config/nav.php";
+                    include "include/nav.php";
             ?>
         </nav>
         <main>
