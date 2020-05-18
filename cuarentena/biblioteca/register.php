@@ -7,13 +7,6 @@
     include "class/Usuario.php";
 
     session_start();
-    
-    /* if ( isset($_POST['login']) ) {
-        $_SESSION['gestorLogin'] = GestorLogin::singleton();
-        $_SESSION['libro'] = Libro::singleton();
-        $_SESSION['usuario'] = Usuario::singleton();
-        $_SESSION['perfil'] = $_SESSION['gestorLogin']->getPerfil($_POST['user'], $_POST['pswd']);
-    } */
 
     if ( isset($_POST['add_user']) ) {
         if ( $_POST['pass'] == $_POST['pass2'] ) {

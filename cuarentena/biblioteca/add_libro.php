@@ -11,13 +11,6 @@
     if ($_SESSION['perfil'] !== "administrador") {
         header('Location:index.php');
     }
-    
-    /* if ( isset($_POST['login']) ) {
-        $_SESSION['gestorLogin'] = GestorLogin::singleton();
-        $_SESSION['libro'] = Libro::singleton();
-        $_SESSION['usuario'] = Usuario::singleton();
-        $_SESSION['perfil'] = $_SESSION['gestorLogin']->getPerfil($_POST['user'], $_POST['pswd']);
-    } */
 
     if ( isset($_POST['add_libro']) ) {
         $book_data = array(
