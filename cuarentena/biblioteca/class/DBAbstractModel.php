@@ -11,15 +11,16 @@
 
         //Manejo de consultas:
         protected $query;
+        protected $lastID;
         protected $parametros = array();
         protected $rows = array();
 
         public $mensaje = 'Hecho';
 
         //Métodos abstractos:
-        abstract protected function get();
-        /* abstract protected function set(); */
-        /* abstract protected function edit();
+        /* abstract protected function get();
+        abstract protected function set();
+        abstract protected function edit();
         abstract protected function delete(); */
 
         //execute_single_query()
@@ -57,7 +58,7 @@
             
                 try {
                     if (! $_stmt->execute()) {
-                        printf("Error de consulta: %s\n", $_stmt->errorInfo()[2]);
+                        print_f("Error de consulta: %s\n", $_stmt->errorInfo()[2]);
                     }
                     //$_result = $_stmt->fetchAll(PDO::FETCH_ASSOC);
                     $this->rows = $_stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -65,10 +66,16 @@
                     $_stmt->closeCursor();
                 } 
                 catch(PDOException $e){
-                    printf("Error en consulta: %s\n" , $e->getMessage());
+                    print_f("Error en consulta: %s\n" , $e->getMessage());
                 }
             }
+            $this->lastID = $this->conn->lastInsertId();
             //return $_result;
+        }
+
+        //
+        public function lastInsert() {
+            return $this->lastID;
         }
     }
 ?>

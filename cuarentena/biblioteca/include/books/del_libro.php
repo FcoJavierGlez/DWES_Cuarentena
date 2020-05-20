@@ -27,8 +27,8 @@
             ¿Deseas continuar?
             <form action="libros.php" method="post">
                 <input type="text" name="id" value="<?php echo $libro[0]['id']; ?>" hidden>
-                <input type='submit' value='Aceptar' name='delete_libro' class="boton aceptar">
-                <input type='submit' value='Cancelar' name=''  class="boton cancelar">
+                <input type='submit' value='Aceptar' name='delete_libro' class="boton_sq aceptar">
+                <input type='submit' value='Cancelar' name=''  class="boton_sq cancelar">
             </form>
      </div>
     </div>

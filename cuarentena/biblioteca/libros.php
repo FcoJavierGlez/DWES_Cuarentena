@@ -70,8 +70,10 @@
                 <?php 
                     if ( isset($_GET['edit']) )
                         include "include/books/edit_libro.php";
-                    else if( isset($_GET['del']) )
+                    elseif( isset($_GET['del']) )
                         include "include/books/del_libro.php";
+                    elseif ( isset($_GET['view']) ) 
+                        include "include/books/view_libro.php";
                     else
                         include "include/books/info_libro.php";
                 ?>

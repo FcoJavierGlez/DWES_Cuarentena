@@ -4,11 +4,22 @@
     include "class/DBAbstractModel.php";
     include "class/Libro.php";
     include "class/Usuario.php";
+    include "class/Prestamo.php";
+
 
     session_start();
 
     if ($_SESSION['perfil'] !== "administrador") {
         header('Location:index.php');
+    }
+
+    if ( isset($_GET['devolver']) ) {
+        $data = array(
+            'devuelto' => date('Y-m-d'),
+            'id_pres' => limpiarDatos($_GET['devolver'])
+        );
+        $_SESSION['prestamo']->edit($data);
+        header('Location:prestamos.php');
     }
 
     if (isset($_POST['cerrar'])) {
@@ -50,37 +61,9 @@
         </nav>
         <main>
             <div class="contenedor">
-                <div>
-                    <h3>Listado de préstamos</h3>
-                </div>
-                <div class="filtro">
-                    <!-- <form action="#">
-                        Buscar:  <input type="text" name="nombre_libro">
-                        <input type="submit" value="Enviar" name="consulta">
-                    </form>  |  <a href="#">Nuevo</a> -->
-                </div>
-                <div class="listado">
-                    <p>Préstamo 1</p>
-                    <p>Préstamo 2</p>
-                    <p>Préstamo 3</p>
-                    <p>Préstamo 4</p>
-                    <p>Préstamo 5</p>
-                    <p>Préstamo 6</p>
-                    <p>Préstamo 7</p>
-                    <p>Préstamo 8</p>
-                    <p>Préstamo 9</p>
-                    <p>Préstamo 10</p>
-                    <p>Préstamo 11</p>
-                    <p>Préstamo 12</p>
-                    <p>Préstamo 13</p>
-                    <p>Préstamo 14</p>
-                    <p>Préstamo 15</p>
-                    <p>Préstamo 16</p>
-                    <p>Préstamo 17</p>
-                    <p>Préstamo 18</p>
-                    <p>Préstamo 19</p>
-                    <p>Préstamo 20</p>
-                </div>
+                <?php
+                    include "include/borrow/info_borrow.php";
+                ?>
             </div>
         </main>
     </div>

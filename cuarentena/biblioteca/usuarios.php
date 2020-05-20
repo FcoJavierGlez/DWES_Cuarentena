@@ -11,6 +11,24 @@
         header('Location:index.php');
     }
 
+    if ( isset($_GET['aceptar']) ) {
+        $user_data = array(
+            'estado' => "activo",
+            'id_user' => limpiarDatos($_GET['aceptar'])
+        );
+        $_SESSION['usuario']->editEstado($user_data);
+        header('Location:usuarios.php');
+    }
+
+    if ( isset($_GET['bloquear']) ) {
+        $user_data = array(
+            'estado' => "bloqueado",
+            'id_user' => limpiarDatos($_GET['bloquear'])
+        );
+        $_SESSION['usuario']->editEstado($user_data);
+        header('Location:usuarios.php');
+    }
+
     if (isset($_POST['cerrar'])) {
         cerrarSesion();
     }

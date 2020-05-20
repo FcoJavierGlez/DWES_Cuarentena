@@ -20,10 +20,15 @@
             trigger_error('La clonación no es permitida.', E_USER_ERROR);
         }
 
-        public function get ( $titulo = '' ) {
-            if ( $titulo !== '' ) {
-                $this->query = "SELECT * FROM bi_libros WHERE lower( titulo ) = :titulo";
-                $this->parametros['titulo'] = strtolower( $titulo );
+        public function get ( $busqueda = '' ) {
+            if ( $busqueda !== '' ) {
+                if ( preg_match_all('/^(978-|979-)?\d{1,5}(-)\d{1,6}(\2)\d{1,6}(\2)\d$/',$busqueda) ) {
+                    $this->query = "SELECT * FROM bi_libros WHERE isbn = :isbn";
+                    $this->parametros['isbn'] = $busqueda;
+                } else {
+                    $this->query = "SELECT * FROM bi_libros WHERE lower( titulo ) = :titulo";
+                    $this->parametros['titulo'] = strtolower( $busqueda );
+                }
             }
             else
                 $this->query = "SELECT * FROM bi_libros";
@@ -90,7 +95,6 @@
                 $this->close_connection();
             }
         }
-        
     }
 
 ?>

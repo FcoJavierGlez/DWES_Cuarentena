@@ -4,6 +4,7 @@
     include "class/DBAbstractModel.php";
     include "class/Libro.php";
     include "class/Usuario.php";
+    include "class/Prestamo.php";
 
     session_start();
 
@@ -13,6 +14,7 @@
         $_SESSION['uie'] = false;
         $_SESSION['libro'] = Libro::singleton();
         $_SESSION['usuario'] = Usuario::singleton();
+        $_SESSION['prestamo'] = Prestamo::singleton();
     }
     
     if ( isset($_POST['login']) ) {

@@ -3,7 +3,7 @@
 </div>
 <div class="filtro">
     <form action=<?php echo $_SERVER['PHP_SELF']; ?> method="post">
-        Buscar título:  <input type="text" name="nombre_libro">
+        Buscar por título o ISBN:  <input type="text" name="nombre_libro">
         <input type="submit" value="Enviar" name="consulta">
     </form>  |  <a href="add_libro.php"><button>Añadir libro</button></a>
 </div>
