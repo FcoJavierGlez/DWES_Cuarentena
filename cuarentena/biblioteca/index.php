@@ -13,21 +13,9 @@
         $_SESSION['usuario'] = Usuario::singleton();
         $_SESSION['prestamo'] = Prestamo::singleton();
 
-        $_SESSION['uee'] = false;
-        //$_SESSION['uie'] = false;
-        $_SESSION['dnie'] = false;
-        $_SESSION['cpe'] = false;
-        $_SESSION['ok'] = false;
-
-
         $_SESSION['user'] = array(
             'perfil' => "invitado"
         );
-    } else {
-        $_SESSION['uee'] = false;
-        $_SESSION['dnie'] = false;
-        $_SESSION['cpe'] = false;
-        $_SESSION['ok'] = false;
     }
     
     if ( isset($_POST['login']) ) {
