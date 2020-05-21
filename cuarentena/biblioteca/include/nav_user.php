@@ -10,11 +10,7 @@
         ),
         array(
             "enlace" => "prestamos.php",
-            "nombre" => "Préstamos"
-        ),
-        array(
-            "enlace" => "usuarios.php",
-            "nombre" => "Usuarios"
+            "nombre" => "Mis préstamos"
         ),
         array(
             "enlace" => "privado.php",

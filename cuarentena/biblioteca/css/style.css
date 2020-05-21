@@ -379,6 +379,10 @@ th {
     color: red;
 }
 
+h2.bloqueado {
+    font-size: 50px;
+}
+
 p.mensaje_error {
     color: red;
     text-align: center;

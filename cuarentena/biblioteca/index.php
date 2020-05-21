@@ -8,19 +8,23 @@
 
     session_start();
 
-    if ( !isset($_SESSION['perfil']) ) {
-        $_SESSION['perfil'] = "invitado";
+    if ( !isset($_SESSION['user']) ) { 
+        $_SESSION['user'] = array(
+            'perfil' => "invitado"
+        );
         $_SESSION['uee'] = false;
         $_SESSION['uie'] = false;
         $_SESSION['libro'] = Libro::singleton();
         $_SESSION['usuario'] = Usuario::singleton();
         $_SESSION['prestamo'] = Prestamo::singleton();
+
+        $prueba = $_SESSION['prestamo']->getDisponible( 3 );
     }
     
     if ( isset($_POST['login']) ) {
         $usuario = $_SESSION['usuario']->get( limpiarDatos($_POST['user']) );
         if ( $usuario[0]['pass'] == limpiarDatos($_POST['pswd']) ) 
-            $_SESSION['perfil'] = $usuario[0]['perfil'];
+            $_SESSION['user'] = $usuario[0];
     }
 
     if (isset($_POST['cerrar'])) {
@@ -46,7 +50,7 @@
         </div>
         <div class="login">
             <?php
-                if ( $_SESSION['perfil'] == "invitado" ) 
+                if ( $_SESSION['user']['perfil'] == "invitado" ) 
                     include "include/login.php";
                 else 
                     include "include/exit.php";
@@ -56,13 +60,17 @@
     <div class="cuerpo">
         <nav>
             <?php
-                if ( $_SESSION['perfil'] == "administrador" )
+                if ( $_SESSION['user']['perfil'] == "administrador" ) 
                     include "include/nav.php";
+                elseif ( $_SESSION['user']['perfil'] == "lector" && $_SESSION['user']['estado'] == "activo" )
+                    include "include/nav_user.php";
             ?>
         </nav>
         <main>
             <div class="contenedor">
-                
+                <?php
+                    include "include/main.php";
+                ?>
             </div>
         </main>
     </div>

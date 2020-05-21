@@ -7,7 +7,7 @@
 
     session_start();
 
-    if ($_SESSION['perfil'] !== "administrador") {
+    if ($_SESSION['user']['perfil'] !== "administrador") { 
         header('Location:index.php');
     }
 
@@ -46,7 +46,7 @@
         </div>
         <div class="login">
             <?php
-                if ( $_SESSION['perfil'] == "invitado" ) 
+                if ( $_SESSION['user']['perfil'] == "invitado" ) 
                     include "include/login.php";
                 else 
                     include "include/exit.php";
@@ -56,7 +56,7 @@
     <div class="cuerpo">
         <nav>
             <?php
-                if ( $_SESSION['perfil'] == "administrador" )
+                if ( $_SESSION['user']['perfil'] == "administrador" ) 
                     include "include/nav.php";
             ?>
         </nav>

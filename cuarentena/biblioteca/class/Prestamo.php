@@ -57,6 +57,17 @@
             return $this->rows;
         }
 
+        public function getDisponible ( $idLibro = '' ) {
+            $this->query = "SELECT COUNT(id_libro) FROM bi_prestamos WHERE devuelto is null and id_libro = :id_libro";
+
+            $this->parametros['id_libro'] = $idLibro;
+            
+            $this->get_results_from_query();
+            $this->close_connection();
+
+            return $this->rows;
+        }
+
         public function edit ( $prestamos_data = array() ) {
             $this->query = "UPDATE bi_prestamos SET devuelto = :devuelto WHERE id_pres = :id_pres";
             $this->parametros['devuelto'] = $prestamos_data['devuelto'];
@@ -67,6 +78,8 @@
 
             return $this->rows;
         }
+
+        //SELECT COUNT(id_libro) FROM bi_prestamos WHERE devuelto is null and id_libro = 5
 
     }
 

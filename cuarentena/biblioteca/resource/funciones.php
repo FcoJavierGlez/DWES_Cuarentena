@@ -62,7 +62,7 @@
                         echo ( ( $user['estado'] == "bloqueado" ) ? 
                                 "<td class='bloqueado'>".$user['estado']."</td>" : "<td>".$user['estado']."</td>" );
                         echo ( ( ( $user['estado'] == "pendiente" || $user['estado'] == "bloqueado" )  && $user['perfil'] !== "administrador" ) ? 
-                            "<td><a href=".$_SERVER['PHP_SELF']."?aceptar=".$user['id_user']."><button class='boton_sq aceptar'>Aceptar</button></a></td>" : "<td>---</td>" );
+                            "<td><a href=".$_SERVER['PHP_SELF']."?aceptar=".$user['id_user']."><button class='boton_sq aceptar'>Activar</button></a></td>" : "<td>---</td>" );
                         echo ( ( $user['estado'] == "activo" ) ? 
                             "<td><a href=".$_SERVER['PHP_SELF']."?bloquear=".$user['id_user']."><button class='boton_sq cancelar'>Bloquear</button></a></td>" : "<td>---</td>" );
                         echo ( (  $user['perfil'] !== "administrador"  ) ? 
@@ -73,7 +73,7 @@
         }
     }
 
-        /**
+    /**
      * Imprime la ficha de cada préstamo
      */
     function imprimeFichaPrestamos( $prestamos ) {
@@ -112,10 +112,39 @@
                     if ( $prestamo['devuelto'] == null ) {
                         echo "<div class='pie_ficha c2'>";
                             echo "<div><a href="."".$prestamo['id_user']."><button class='boton_sq aceptar'>Contactar lector</button></a></div>";
-                            echo "<div><a href="."".$prestamo['id_user']."><button class='boton_sq cancelar'>Bloquear lector</button></a></div>";
+                            echo "<div><a href="."usuarios.php?bloquear=".$prestamo['id_user']."><button class='boton_sq cancelar'>Bloquear lector</button></a></div>";
                         echo "</div>";
                     }
 
+                echo "</div>";
+            }
+    }
+
+    /**
+     * Imprime la ficha de cada préstamo
+     */
+    function imprimeFichaLibros( $libros ) {
+        if ( sizeof($libros) == 0 ) echo "<b>No se obtuvo ningún resultado.</b>";
+        else 
+            foreach ($libros as $libro) {
+                echo "<div class='ficha_prestamo'>";
+                    echo "<h3>Ficha de libro</h3>";
+                    echo "<div class='ficha_pres_libro'>";
+                        echo "<img src="."img/books/".( ($libro['img'] == null) ? "0.png" : $libro['img'] ).">";
+                        echo "<div class='info_prestamo w100'>";
+                            echo "<div><b>Título:</b></div> <div>".$libro['titulo']."</div>";
+                            echo "<div><b>Autor:</b></div> <div>".$libro['autor']."</div>";
+                            echo "<div><b>ISBN:</b></div> <div>".$libro['isbn']."</div>";
+                            echo "<div><b>Editorial:</b></div> <div>".$libro['editorial']."</div>";
+                        echo "</div>";
+                    echo "</div>";
+                    echo "<div class='pie_ficha'>";
+                        if ( $_SESSION['prestamo']->getDisponible( $libro['id'] )[0]['COUNT(id_libro)'] == 0)
+                            echo "<div><a href="."prestamos.php?solicitar=id_libro"."><button class='boton_sq aceptar'>Solicitar préstamo</button></a></div>";
+                        else
+                            echo "<div class='bloqueado'>Actualmente en préstamo</div>";
+                        //echo $_SESSION['prestamo']->getDisponible( $libro['id'] )[0]['COUNT(id_libro)'];
+                    echo "</div>";
                 echo "</div>";
             }
     }
