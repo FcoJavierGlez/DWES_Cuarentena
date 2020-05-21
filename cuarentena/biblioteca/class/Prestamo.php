@@ -68,10 +68,54 @@
             return $this->rows;
         }
 
+        public function getPrestamosUser ( $busqueda = '', $idUser = '' ) {
+            if ( $busqueda !== '' ) {
+                if ( $busqueda == '*' ) 
+                    $this->query = "SELECT L.*, P.prestado, P.devuelto FROM bi_libros L, bi_prestamos P, bi_users U 
+                        WHERE P.id_libro = L.id and P.id_user = U.id_user and U.id_user = :id_user";
+                elseif ( preg_match_all('/^(978-|979-)?\d{1,5}(-)\d{1,6}(\2)\d{1,6}(\2)\d$/',$busqueda) ) {
+                    $this->query = "SELECT L.*, P.prestado, P.devuelto FROM bi_libros L, bi_prestamos P, bi_users U 
+                        WHERE P.id_libro = L.id and P.id_user = U.id_user and L.isbn = :isbn and U.id_user = :id_user";
+
+                    $this->parametros['isbn'] = $busqueda;
+                }
+                else {
+                    $this->query = "SELECT L.*, P.prestado, P.devuelto FROM bi_libros L, bi_prestamos P, bi_users U 
+                        WHERE P.id_libro = L.id and P.id_user = U.id_user and LOWER( L.titulo ) = :titulo and U.id_user = :id_user";
+
+                    $this->parametros['titulo'] = strtolower($busqueda);
+                }
+            } 
+            else {
+                $this->query = "SELECT L.*, P.prestado, P.devuelto FROM bi_libros L, bi_prestamos P, bi_users U 
+                    WHERE P.id_libro = L.id and P.id_user = U.id_user and P.devuelto is null and U.id_user = :id_user ";
+
+}
+
+            $this->parametros['id_user'] = $idUser;
+            
+            $this->get_results_from_query();
+            $this->close_connection();
+
+            return $this->rows;
+        }
+
         public function edit ( $prestamos_data = array() ) {
             $this->query = "UPDATE bi_prestamos SET devuelto = :devuelto WHERE id_pres = :id_pres";
             $this->parametros['devuelto'] = $prestamos_data['devuelto'];
             $this->parametros['id_pres'] = $prestamos_data['id_pres'];
+            
+            $this->get_results_from_query();
+            $this->close_connection();
+
+            return $this->rows;
+        }
+
+        public function set ( $prestamos_data = array() ) {
+            $this->query = "INSERT INTO bi_prestamos (id_user,id_libro,prestado) VALUES (:id_user,:id_libro,:prestado)";
+            $this->parametros['id_user'] = $prestamos_data['id_user'];
+            $this->parametros['id_libro'] = $prestamos_data['id_libro'];
+            $this->parametros['prestado'] = $prestamos_data['prestado'];
             
             $this->get_results_from_query();
             $this->close_connection();

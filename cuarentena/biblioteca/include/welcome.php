@@ -5,5 +5,5 @@
     
 </div>
 <div class='add_editar'>
-
+    Añadir texto de bienvenida
 </div>

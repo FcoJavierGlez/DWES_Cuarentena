@@ -9,7 +9,7 @@
 
     session_start();
 
-    if ( $_SESSION['user']['perfil'] == "invitado" || $_SESSION['user']['estado'] == "bloqueado" ) {
+    if ( $_SESSION['user']['perfil'] == "invitado" || $_SESSION['user']['estado'] == "bloqueado" || $_SESSION['user']['estado'] == "pendiente" ) {
         header('Location:index.php');
     }
 
@@ -20,6 +20,15 @@
         );
         $_SESSION['prestamo']->edit($data);
         header('Location:prestamos.php');
+    }
+
+    if ( isset($_POST['solicitar']) ) {
+        $prestamos_data = array(
+            'id_user' => $_SESSION['user']['id_user'],
+            'id_libro' => $_POST['id'],
+            'prestado' => date('Y-m-d')
+        );
+        $_SESSION['prestamo']->set($prestamos_data);
     }
 
     if (isset($_POST['cerrar'])) {

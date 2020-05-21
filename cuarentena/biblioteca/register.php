@@ -7,9 +7,22 @@
 
     session_start();
 
+    /* $_SESSION['uee'] = false;
+    $_SESSION['dnie'] = false;
+    $_SESSION['cpe'] = false;
+    $_SESSION['ok'] = false; */
+    $uee = false;
+    $dnie = false;
+    $cpe = false;
+    $ok = false;
+
     if ( isset($_POST['add_user']) ) {
-        if ( $_POST['pass'] == $_POST['pass2'] ) {
-            if ( sizeof( $_SESSION['usuario']->get( $_POST['user'] ) ) == 0 ) {
+        if ( sizeof( $_SESSION['usuario']->get( $_POST['user'] ) ) == 1 ) {     //Comprueba que el nick esté libre
+            $uee = true;
+        } elseif ( sizeof( $_SESSION['usuario']->getDNI( preg_replace('/(-|\s)/',"",$_POST['dni']) ) ) == 1 ) { //Comprueba si el DNI está registrado
+            $dnie = true;
+        } else {
+            if ( $_POST['pass'] == $_POST['pass2'] ) {  //Comprueba que la contraseña y su verificación son idénticas
                 $user_data = array(
                     'user' => limpiarDatos($_POST['user']),
                     'pass' => limpiarDatos($_POST['pass']),
@@ -23,14 +36,10 @@
                     'img' => ( ($_POST['img'] == "") ? null : limpiarDatos($_POST['img']) ),
                 );
                 $_SESSION['usuario']->set( $user_data );
-            } else {
-                //nick usuario no disponible
-            }
-
-        } else {
-            //la contraseña y su verificación no coinciden
+                $ok = true;
+            } else 
+                $cpe = true;
         }
-        
     }
 
     if (isset($_POST['cerrar'])) {
@@ -73,7 +82,19 @@
         <main>
             <div class="contenedor">
                 <?php 
-                    include "include/users/new_user.php";
+                    if ( $ok ) {
+                        echo "<div>";
+                            echo "<h3>Registrarse</h3>";
+                        echo "</div>";
+                        echo "<div class='center'>";
+                            
+                        echo "</div>";
+                        echo "<div class='add_editar'>";
+                            echo "<div><b>Se ha registrado correctamente.</b>  <a href='index.php'><button>Continuar</button></a></div>";
+                        echo "</div>";
+                    }
+                    else
+                        include "include/users/new_user.php";
                 ?>
             </div>
         </main>

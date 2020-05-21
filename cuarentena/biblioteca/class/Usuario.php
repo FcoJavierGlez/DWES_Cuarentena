@@ -47,6 +47,17 @@
             return $this->rows;
         }
 
+        public function getDNI ( $dni = '' ) {
+            $this->query = "SELECT * FROM bi_users WHERE dni = :dni";
+
+            $this->parametros['dni'] = $dni;
+            
+            $this->get_results_from_query();
+            $this->close_connection();
+
+            return $this->rows;
+        }
+
         public function set ( $user_data = array() ) {
             $this->query = "INSERT INTO bi_users (user,pass,perfil,estado,nombre,apellidos,dni,telefono,email,img) 
                                 VALUES (:user,:pass,:perfil,:estado,:nombre,:apellidos,:dni,:telefono,:email,:img)";

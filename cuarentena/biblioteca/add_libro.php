@@ -11,16 +11,28 @@
         header('Location:index.php');
     }
 
+    $isbnError = false;
+    $isbnUsado = false;
+    $ok = false;
+
     if ( isset($_POST['add_libro']) ) {
-        $book_data = array(
-            'titulo' => limpiarDatos($_POST['titulo']),
-            'autor' => limpiarDatos($_POST['autor']),
-            'isbn' => limpiarDatos($_POST['isbn']),
-            'editorial' => ( ($_POST['editorial'] == "") ? null : limpiarDatos($_POST['editorial']) ),
-            'anno_publicacion' => ( ($_POST['anno_publicacion'] == "") ? null : limpiarDatos($_POST['anno_publicacion']) ),
-            'img' => ( ($_POST['img'] == "") ? null : limpiarDatos($_POST['img']) ),
-        );
-        $_SESSION['libro']->set( $book_data );
+        if ( !validarISBN( limpiarDatos($_POST['isbn']) ) )
+            $isbnError = true;
+        elseif ( sizeof( $_SESSION['libro']->get( limpiarDatos($_POST['isbn']) ) ) == 1 )
+            $isbnUsado = true;
+        else {
+            $book_data = array(
+                'titulo' => limpiarDatos($_POST['titulo']),
+                'autor' => limpiarDatos($_POST['autor']),
+                'isbn' => limpiarDatos($_POST['isbn']),
+                'editorial' => ( ($_POST['editorial'] == "") ? null : limpiarDatos($_POST['editorial']) ),
+                'anno_publicacion' => ( ($_POST['anno_publicacion'] == "") ? null : limpiarDatos($_POST['anno_publicacion']) ),
+                'img' => ( ($_POST['img'] == "") ? null : limpiarDatos($_POST['img']) ),
+            );
+            $_SESSION['libro']->set( $book_data );
+            $ok = true;
+        }
+        
     }
 
     if (isset($_POST['cerrar'])) {
@@ -63,7 +75,21 @@
         <main>
             <div class="contenedor">
                 <?php 
-                    include "include/books/new_libro.php";
+                    if ( $ok ) {
+                        echo "<div>";
+                            echo "<h3>Añadir libro</h3>";
+                        echo "</div>";
+                        echo "<div class='filtro'>";
+                            /* <form action="libros.php" method="post">
+                                Buscar título:  <input type="text" name="nombre_libro">
+                                <input type="submit" value="Enviar" name="consulta">
+                            </form> */
+                        echo "</div>";
+                        echo "<div class='add_editar'>";
+                            echo "<div><b>Libro añadido correctamente.</b>  <a href='index.php'><button>Volver a home</button></a> <a href='add_libro.php'><button>Añadir nuevo libro</button></a></div>";
+                        echo "</div>";
+                    } else
+                        include "include/books/new_libro.php";
                 ?>
             </div>
         </main>

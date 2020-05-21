@@ -9,16 +9,25 @@
     session_start();
 
     if ( !isset($_SESSION['user']) ) { 
-        $_SESSION['user'] = array(
-            'perfil' => "invitado"
-        );
-        $_SESSION['uee'] = false;
-        $_SESSION['uie'] = false;
         $_SESSION['libro'] = Libro::singleton();
         $_SESSION['usuario'] = Usuario::singleton();
         $_SESSION['prestamo'] = Prestamo::singleton();
 
-        $prueba = $_SESSION['prestamo']->getDisponible( 3 );
+        $_SESSION['uee'] = false;
+        //$_SESSION['uie'] = false;
+        $_SESSION['dnie'] = false;
+        $_SESSION['cpe'] = false;
+        $_SESSION['ok'] = false;
+
+
+        $_SESSION['user'] = array(
+            'perfil' => "invitado"
+        );
+    } else {
+        $_SESSION['uee'] = false;
+        $_SESSION['dnie'] = false;
+        $_SESSION['cpe'] = false;
+        $_SESSION['ok'] = false;
     }
     
     if ( isset($_POST['login']) ) {

@@ -10,11 +10,16 @@
 <div class="add_editar">
     <form action="add_libro.php" method="post">
         <div class="col2">Portada: <input type='file' name='img'></div>
-        <div class="col2">Título: <input type='text' name='titulo' value="" required></div>
-        <div class="col2">Autor: <input type='text' name='autor' value="" required></div>
-        <div class="col2">ISBN: <input type='text' name='isbn' value="" required></div>
-        <div class="col2">Editorial: <input type='text' name='editorial' value=""></div>
-        <div class="col2">Año de publicación: <input type='date' name='anno_publicacion' value=""><br/>
+        <div class="col2">Título: <input type='text' name='titulo' value="<?php echo ( ( isset($_POST['add_libro']) ) ? $_POST['titulo'] : "" ); ?>" required></div>
+        <div class="col2">Autor: <input type='text' name='autor' value="<?php echo ( ( isset($_POST['add_libro']) ) ? $_POST['autor'] : "" ); ?>" required></div>
+        <div class="col2">
+            ISBN: <input type='text' name='isbn' value="<?php echo ( ( isset($_POST['add_libro']) ) ? $_POST['isbn'] : "" ); ?>"
+                    <?php echo ( ( $isbnError || $isbnUsado ) ? "class='input_error'" : "" ); ?> required>
+            <?php echo ( ($isbnError) ? "<div></div><span class='bloqueado'><b>Formato código ISBN incorrecto.</b></span>" : "" ); ?>
+            <?php echo ( ($isbnUsado) ? "<div></div><span class='bloqueado'><b>Libro con ISBN ya registrado.</b></span>" : "" ); ?>
+        </div>
+        <div class="col2">Editorial: <input type='text' name='editorial' value="<?php echo ( ( isset($_POST['add_libro']) ) ? $_POST['editorial'] : "" ); ?>"></div>
+        <div class="col2">Año de publicación: <input type='date' name='anno_publicacion' value="<?php echo ( ( isset($_POST['add_libro']) ) ? $_POST['anno_publicacion'] : "" ); ?>"><br/>
         <input type='submit' value='Añadir' name='add_libro'>
     </form>
 </div>

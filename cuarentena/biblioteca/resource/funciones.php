@@ -74,7 +74,7 @@
     }
 
     /**
-     * Imprime la ficha de cada préstamo
+     * Imprime la ficha de cada préstamo para el administrador
      */
     function imprimeFichaPrestamos( $prestamos ) {
         if ( sizeof($prestamos) == 0 ) echo "<b>No se obtuvo ningún resultado.</b>";
@@ -121,7 +121,7 @@
     }
 
     /**
-     * Imprime la ficha de cada préstamo
+     * Imprime la ficha de cada libro
      */
     function imprimeFichaLibros( $libros ) {
         if ( sizeof($libros) == 0 ) echo "<b>No se obtuvo ningún resultado.</b>";
@@ -140,12 +140,50 @@
                     echo "</div>";
                     echo "<div class='pie_ficha'>";
                         if ( $_SESSION['prestamo']->getDisponible( $libro['id'] )[0]['COUNT(id_libro)'] == 0)
-                            echo "<div><a href="."prestamos.php?solicitar=id_libro"."><button class='boton_sq aceptar'>Solicitar préstamo</button></a></div>";
+                            echo "<div><a href="."prestamos.php?solicitar=".$libro['id']."><button class='boton_sq aceptar'>Solicitar préstamo</button></a></div>";
                         else
                             echo "<div class='bloqueado'>Actualmente en préstamo</div>";
-                        //echo $_SESSION['prestamo']->getDisponible( $libro['id'] )[0]['COUNT(id_libro)'];
                     echo "</div>";
                 echo "</div>";
             }
+    }
+
+    /**
+     * Imprime la ficha de cada préstamo
+     */
+    function imprimePrestamosLector( $prestamos ) {
+        if ( sizeof($prestamos) == 0 ) echo "<b>No se obtuvo ningún resultado.</b>";
+        else 
+            foreach ($prestamos as $prestamo) {
+                echo "<div class='ficha_prestamo'>";
+                    echo "<h3>Ficha de libro</h3>";
+                    echo "<div class='ficha_pres_libro'>";
+                        echo "<img src="."img/books/".( ($prestamo['img'] == null) ? "0.png" : $prestamo['img'] ).">";
+                        echo "<div class='info_prestamo w100'>";
+                            echo "<div><b>Título:</b></div> <div>".$prestamo['titulo']."</div>";
+                            echo "<div><b>Autor:</b></div> <div>".$prestamo['autor']."</div>";
+                            echo "<div><b>ISBN:</b></div> <div>".$prestamo['isbn']."</div>";
+                            echo "<div><b>Editorial:</b></div> <div>".$prestamo['editorial']."</div>";
+                        echo "</div>";
+                    echo "</div>";
+                    echo "<div class='pie_ficha c2'>";
+                        echo "<div><b>Prestado: </b>".$prestamo['prestado']."</div>";
+                        if ( $prestamo['devuelto'] == null )
+                            echo "<div><b>Devuelto: </b><span class='bloqueado'>Pendiente</span></div>";
+                        else
+                            echo "<div><b>Devuelto: </b>".$prestamo['devuelto']."</div>";
+                    echo "</div>";
+                echo "</div>";
+            }
+    }
+
+
+    /**
+     * Valida un código isbn
+     */
+    function validarISBN( $isbn ) {
+        if ( preg_match_all('/^(978-|979-)?\d{1,5}(-)\d{1,6}(\2)\d{1,6}(\2)\d$/',$isbn) )
+            return strlen( str_replace("-","",$isbn) ) == 10 || strlen( str_replace("-","",$isbn) ) == 13;
+        return false;
     }
 ?>
