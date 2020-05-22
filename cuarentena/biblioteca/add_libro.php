@@ -2,6 +2,8 @@
     include "config/config_dev.php";
     include "resource/funciones.php";
     include "class/DBAbstractModel.php";
+    include "class/error/IsbnInvalidException.php";
+    include "class/error/IsbnExistException.php";
     include "class/Libro.php";
     include "class/Usuario.php";
 
@@ -11,16 +13,12 @@
         header('Location:index.php');
     }
 
-    $isbnError = false;
-    $isbnUsado = false;
+    $iie = false;
+    $iee = false;
     $ok = false;
 
     if ( isset($_POST['add_libro']) ) {
-        if ( !validarISBN( limpiarDatos($_POST['isbn']) ) )
-            $isbnError = true;
-        elseif ( sizeof( $_SESSION['libro']->get( limpiarDatos($_POST['isbn']) ) ) == 1 )
-            $isbnUsado = true;
-        else {
+        try {
             $book_data = array(
                 'titulo' => limpiarDatos($_POST['titulo']),
                 'autor' => limpiarDatos($_POST['autor']),
@@ -31,8 +29,9 @@
             );
             $_SESSION['libro']->set( $book_data );
             $ok = true;
-        }
-        
+        } 
+        catch (IsbnInvalidException $iie) {}
+        catch (IsbnExistException $iee) {}
     }
 
     if (isset($_POST['cerrar'])) {
@@ -80,10 +79,7 @@
                             echo "<h3>Añadir libro</h3>";
                         echo "</div>";
                         echo "<div class='filtro'>";
-                            /* <form action="libros.php" method="post">
-                                Buscar título:  <input type="text" name="nombre_libro">
-                                <input type="submit" value="Enviar" name="consulta">
-                            </form> */
+
                         echo "</div>";
                         echo "<div class='add_editar'>";
                             echo "<div><b>Libro añadido correctamente.</b>  <a href='index.php'><button>Volver a home</button></a> <a href='add_libro.php'><button>Añadir nuevo libro</button></a></div>";
@@ -95,12 +91,9 @@
         </main>
     </div>
     <footer>
-        <h4>RRSS del autor:</h4>
-        <div class="rrss">
-            <a href="https://twitter.com/Fco_Javier_Glez" target="_blank"><img src="img/twitter.png" alt="Enlace a cuenta de Twitter del autor"></a>
-            <a href="https://github.com/FcoJavierGlez" target="_blank"><img src="img/github.png" alt="Enlace a cuenta de GitHub del autor"></a>
-            <a href="https://www.linkedin.com/in/francisco-javier-gonz%C3%A1lez-sabariego-51052a175/" target="_blank"><img src="img/linkedin.png" alt="Enlace a cuenta de Linkedin del autor"></a>
-        </div>
+        <?php
+            include "include/footer.php";
+        ?>
     </footer>
 </body>
 </html>

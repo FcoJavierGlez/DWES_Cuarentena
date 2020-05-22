@@ -24,7 +24,7 @@
      * Imprime la información de cada libro
      */
     function imprimeInfoLibro( $libros ) {
-        if ( sizeof($libros) == 0 ) echo "<b>No se ha encontrado ningún libro con título: ".limpiarDatos($_POST['nombre_libro'])."</b>";
+        if ( sizeof($libros) == 0 ) echo "<b>No se obtuvo ningún resultado.</b>";
         else 
             foreach ($libros as $libro) {
                 echo "<div class='info_libro'>";
@@ -136,10 +136,11 @@
                             echo "<div><b>Autor:</b></div> <div>".$libro['autor']."</div>";
                             echo "<div><b>ISBN:</b></div> <div>".$libro['isbn']."</div>";
                             echo "<div><b>Editorial:</b></div> <div>".$libro['editorial']."</div>";
+                            echo "<div><b>Publicado:</b></div> <div>".$libro['anno_publicacion']."</div>";
                         echo "</div>";
                     echo "</div>";
                     echo "<div class='pie_ficha'>";
-                        if ( $_SESSION['prestamo']->getDisponible( $libro['id'] )[0]['COUNT(id_libro)'] == 0)
+                        if ( $libro['disponible'] == 1 )
                             echo "<div><a href="."prestamos.php?solicitar=".$libro['id']."><button class='boton_sq aceptar'>Solicitar préstamo</button></a></div>";
                         else
                             echo "<div class='bloqueado'>Actualmente en préstamo</div>";
@@ -175,15 +176,5 @@
                     echo "</div>";
                 echo "</div>";
             }
-    }
-
-
-    /**
-     * Valida un código isbn
-     */
-    function validarISBN( $isbn ) {
-        if ( preg_match_all('/^(978-|979-)?\d{1,5}(-)\d{1,6}(\2)\d{1,6}(\2)\d$/',$isbn) )
-            return strlen( str_replace("-","",$isbn) ) == 10 || strlen( str_replace("-","",$isbn) ) == 13;
-        return false;
     }
 ?>

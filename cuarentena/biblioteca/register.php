@@ -2,27 +2,22 @@
     include "config/config_dev.php";
     include "resource/funciones.php";
     include "class/DBAbstractModel.php";
-    include "class/Libro.php";
+    include "class/error/UserExistException.php";
+    include "class/error/DniInvalidException.php";
+    include "class/error/DniExistException.php";
     include "class/Usuario.php";
 
     session_start();
-
-    /* $_SESSION['uee'] = false;
-    $_SESSION['dnie'] = false;
-    $_SESSION['cpe'] = false;
-    $_SESSION['ok'] = false; */
+    
     $uee = false;
-    $dnie = false;
+    $die = false;
+    $dee = false;
     $cpe = false;
     $ok = false;
 
     if ( isset($_POST['add_user']) ) {
-        if ( sizeof( $_SESSION['usuario']->get( $_POST['user'] ) ) == 1 ) {     //Comprueba que el nick esté libre
-            $uee = true;
-        } elseif ( sizeof( $_SESSION['usuario']->getDNI( preg_replace('/(-|\s)/',"",$_POST['dni']) ) ) == 1 ) { //Comprueba si el DNI está registrado
-            $dnie = true;
-        } else {
-            if ( $_POST['pass'] == $_POST['pass2'] ) {  //Comprueba que la contraseña y su verificación son idénticas
+        if ( $_POST['pass'] == $_POST['pass2'] ) {  //Comprueba que la contraseña y su verificación son idénticas
+            try {
                 $user_data = array(
                     'user' => limpiarDatos($_POST['user']),
                     'pass' => limpiarDatos($_POST['pass']),
@@ -37,9 +32,12 @@
                 );
                 $_SESSION['usuario']->set( $user_data );
                 $ok = true;
-            } else 
-                $cpe = true;
-        }
+            } 
+            catch (UserExistException $uee) {}
+            catch (DniInvalidException $die) {}
+            catch (DniExistException $dee) {}
+        } else 
+            $cpe = true;
     }
 
     if (isset($_POST['cerrar'])) {
@@ -100,12 +98,9 @@
         </main>
     </div>
     <footer>
-        <h4>RRSS del autor:</h4>
-        <div class="rrss">
-            <a href="https://twitter.com/Fco_Javier_Glez" target="_blank"><img src="img/twitter.png" alt="Enlace a cuenta de Twitter del autor"></a>
-            <a href="https://github.com/FcoJavierGlez" target="_blank"><img src="img/github.png" alt="Enlace a cuenta de GitHub del autor"></a>
-            <a href="https://www.linkedin.com/in/francisco-javier-gonz%C3%A1lez-sabariego-51052a175/" target="_blank"><img src="img/linkedin.png" alt="Enlace a cuenta de Linkedin del autor"></a>
-        </div>
+        <?php
+            include "include/footer.php";
+        ?>
     </footer>
 </body>
 </html>

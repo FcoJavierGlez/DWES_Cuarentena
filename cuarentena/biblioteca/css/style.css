@@ -19,7 +19,6 @@ header, footer {
 header {
     display: grid;
     grid-template-columns: repeat(3,1fr);
-    *align-items: center;
 }
 
 .title_header {
@@ -47,10 +46,6 @@ h1 a {
 h1 a:active {
     color: white;
     text-decoration: none;
-}
-
-nav {
-    *height: 5vh;
 }
 
 .github, .login {
@@ -89,11 +84,8 @@ nav {
 }
 
 nav {
-    *display: grid;
-    *align-items: flex-start;
     background-color: rgb(88, 88, 88);
     color: white;
-    *height: 5vh;
 }
 
 nav ul {
@@ -119,7 +111,6 @@ nav a:hover {
 }
 
 main {
-    *justify-self: center;
    display: grid;
 }
 
@@ -159,15 +150,20 @@ main {
     *row-gap: 25px;
 }
 
-.contenedor .listado::-webkit-scrollbar {
-    display: none;
-}
-
 .add_editar {
     height: 100%;
     display: grid;
     justify-items: center;
     align-items: center;
+}
+
+.scroll {
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.scroll::-webkit-scrollbar {
+    display: none;
 }
 
 .col2 {
@@ -228,10 +224,6 @@ main {
 }
 
 .ficha_pres_libro img {
-    *height: 80px;
-    *justify-self: center;
-    *align-self: center;
-    *padding: 5px;
     width: 80%;
 }
 
@@ -261,13 +253,16 @@ main {
 }
 
 .c3 {
-    *grid-template-columns: repeat(3,1fr);
     grid-template-columns: repeat(2,40%) 20%;
 }
 
 hr {
     width: 90%;
     border: 2px solid black;
+}
+
+.dashed {
+    border: 1px dashed;
 }
 
 div.contenido {
@@ -291,7 +286,6 @@ div.info_contenido {
 .info {
     display: grid;
     grid-template-columns: 65% 35%;
-    *grid-template-rows: repeat(3,auto);
 }
 
 .info_enlaces {
@@ -314,7 +308,6 @@ div.info_contenido {
 
 .opciones {
     margin-top: 15px;
-    *text-align: right;
     display: grid;
     grid-template-columns: repeat(2,1fr);
     justify-self: center;
@@ -388,9 +381,27 @@ p.mensaje_error {
     text-align: center;
 }
 
+.img_perfil {
+    display: grid;
+    justify-self: start;
+    margin: 0 20px;
+    height: 150px;
+}
+
 .input_error {
     border: 2px solid red;
     background-color: rgba(255, 0, 0, 0.35);
+}
+
+.fixed {
+    position: fixed;
+}
+
+.registro {
+    background-color: white;
+    padding: 25px;
+    border: 2px solid black;
+    border-radius: 20px;
 }
 
 footer h4 {

@@ -90,7 +90,7 @@
                 $this->query = "SELECT L.*, P.prestado, P.devuelto FROM bi_libros L, bi_prestamos P, bi_users U 
                     WHERE P.id_libro = L.id and P.id_user = U.id_user and P.devuelto is null and U.id_user = :id_user ";
 
-}
+            }
 
             $this->parametros['id_user'] = $idUser;
             
@@ -123,7 +123,10 @@
             return $this->rows;
         }
 
-        //SELECT COUNT(id_libro) FROM bi_prestamos WHERE devuelto is null and id_libro = 5
+        //SELECT * FROM bi_libros WHERE id NOT IN (SELECT id_libro FROM bi_prestamos WHERE devuelto IS null)
+
+        //CREATE TRIGGER libroPrestado AFTER INSERT ON bi_prestamos FOR EACH ROW UPDATE bi_libros SET disponible = 0 WHERE id = NEW.id_libro
+        //CREATE TRIGGER libroDisponible AFTER UPDATE ON bi_prestamos FOR EACH ROW UPDATE bi_libros SET disponible = 1 WHERE id = OLD.id_libro
 
     }
 

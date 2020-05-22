@@ -6,8 +6,8 @@
 </div>
 <div class="filtro">
     <form action="libros.php" method="post">
-        Buscar título:  <input type="text" name="nombre_libro">
-        <input type="submit" value="Enviar" name="consulta">
+        Buscar libro:  <input type="text" name="nombre_libro">
+        <input type="submit" value="Buscar" name="consulta" class="boton_sq editar">
     </form>
 </div>
 <div class="add_editar">

@@ -2,15 +2,31 @@
     include "config/config_dev.php";
     include "resource/funciones.php";
     include "class/DBAbstractModel.php";
-    include "class/Libro.php";
+    include "class/error/UserExistException.php";
+    include "class/error/DniInvalidException.php";
+    include "class/error/DniExistException.php";
     include "class/Usuario.php";
-    include "class/Prestamo.php";
 
     session_start();
+    
+    $uee = false;
+    $die = false;
+    $dee = false;
+    $cpe = false;
+    $ok = false;
 
     if ( $_SESSION['user']['perfil'] == "invitado" || $_SESSION['user']['estado'] == "bloqueado" || $_SESSION['user']['estado'] == "pendiente" ) {
         header('Location:index.php');
     }
+
+    if ( isset($_POST['cancelar']) ) {
+        header('Location:index.php');
+    }
+
+    if ( isset($_POST['up_perfil']) ) {
+
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -50,18 +66,27 @@
         <main>
             <div class="contenedor">
                 <?php 
-                    include "include/users/edit_user.php";
+                    if ( $ok ) {
+                        echo "<div>";
+                            echo "<h3>Registrarse</h3>";
+                        echo "</div>";
+                        echo "<div class='center'>";
+                            
+                        echo "</div>";
+                        echo "<div class='add_editar'>";
+                            echo "<div><b>Se ha registrado correctamente.</b>  <a href='index.php'><button>Continuar</button></a></div>";
+                        echo "</div>";
+                    }
+                    else
+                        include "include/users/edit_user.php";
                 ?>
             </div>
         </main>
     </div>
     <footer>
-        <h4>RRSS del autor:</h4>
-        <div class="rrss">
-            <a href="https://twitter.com/Fco_Javier_Glez" target="_blank"><img src="img/twitter.png" alt="Enlace a cuenta de Twitter del autor"></a>
-            <a href="https://github.com/FcoJavierGlez" target="_blank"><img src="img/github.png" alt="Enlace a cuenta de GitHub del autor"></a>
-            <a href="https://www.linkedin.com/in/francisco-javier-gonz%C3%A1lez-sabariego-51052a175/" target="_blank"><img src="img/linkedin.png" alt="Enlace a cuenta de Linkedin del autor"></a>
-        </div>
+        <?php
+            include "include/footer.php";
+        ?>
     </footer>
 </body>
 </html>

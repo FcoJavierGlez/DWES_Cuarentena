@@ -8,8 +8,8 @@
 </div>
 <div class="filtro">
     <form action=<?php echo $_SERVER['PHP_SELF']; ?> method="post">
-        Buscar título:  <input type="text" name="nombre_libro">
-        <input type="submit" value="Enviar" name="consulta">
+        Buscar libro:  <input type="text" name="nombre_libro">
+        <input type="submit" value="Buscar" name="consulta"  class="boton_sq editar">
     </form>
 </div>
 <div class="add_editar">
@@ -30,7 +30,6 @@
                 <input type='submit' value='Aceptar' name='delete_libro' class="boton_sq aceptar">
                 <input type='submit' value='Cancelar' name=''  class="boton_sq cancelar">
             </form>
-     </div>
+        </div>
     </div>
-    
 </div>

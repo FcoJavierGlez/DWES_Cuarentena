@@ -1,11 +1,11 @@
 <div>
     <h3>Registrarse</h3>
 </div>
-<div class="center">
-    <a href="index.php"><button>Volver a Home</button></a>
+<div>
+
 </div>
 <div class="add_editar">
-    <form action="register.php" method="post">
+    <form action="register.php" method="post" class="registro">
         <div class="col2">Foto: <input type='file' name='img'></div>
         <div class="col2">
             Nick: <input type='text' name='user' value="<?php echo ( ( isset($_POST['add_user']) ) ? $_POST['user'] : "" ); ?>"
@@ -25,11 +25,15 @@
         <div class="col2">Apellidos: <input type='text' name='apellidos' value="<?php echo ( ( isset($_POST['add_user']) ) ? $_POST['apellidos'] : "" ); ?>" required></div>
         <div class="col2">
             DNI: <input type='text' name='dni' value="<?php echo ( ( isset($_POST['add_user']) ) ? $_POST['dni'] : "" ); ?>" 
-                    <?php echo ( ( ($dnie) ) ? "class='input_error'" : "" ); ?> required>
-            <?php echo ( ($dnie) ? "<div></div><span class='bloqueado'><b>Ya posees una cuenta registrada a este DNI</b></span>" : "" ); ?>
+                    <?php echo ( ( ($die || $dee) ) ? "class='input_error'" : "" ); ?> required>
+            <?php echo ( ($die) ? "<div></div><span class='bloqueado'><b>DNI inválido.</b></span>" : "" ); ?>
+            <?php echo ( ($dee) ? "<div></div><span class='bloqueado'><b>Ya posees una cuenta registrada a este DNI</b></span>" : "" ); ?>
         </div>
         <div class="col2">Telefono de contacto: <input type='text' name='telefono' value="<?php echo ( ( isset($_POST['add_user']) ) ? $_POST['telefono'] : "" ); ?>" required></div>
         <div class="col2">Email: <input type='email' name='email' value="<?php echo ( ( isset($_POST['add_user']) ) ? $_POST['email'] : "" ); ?>" required></div>
-        <input type='submit' value='Registrarse' name='add_user'>
+        <hr class="dashed"/>
+        <div class="pie_ficha">
+            <input type='submit' value='Registrarse' name='add_user' class="boton_sq aceptar">
+        </div>
     </form>
 </div>

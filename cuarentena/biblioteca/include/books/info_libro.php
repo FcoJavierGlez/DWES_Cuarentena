@@ -3,11 +3,11 @@
 </div>
 <div class="filtro">
     <form action=<?php echo $_SERVER['PHP_SELF']; ?> method="post">
-        Buscar por título o ISBN:  <input type="text" name="nombre_libro">
-        <input type="submit" value="Enviar" name="consulta">
-    </form>  |  <a href="add_libro.php"><button>Añadir libro</button></a>
+        Buscar libro:  <input type="text" name="nombre_libro">
+        <input type="submit" value="Buscar" name="consulta" class="boton_sq editar">
+    </form>  |  <a href="add_libro.php"><button class="boton_sq aceptar">Añadir libro</button></a>
 </div>
-<div class="listado">
+<div class="listado scroll">
     <?php
         if ( isset($_POST['consulta']) )
             imprimeInfoLibro( $_SESSION['libro']->get( limpiarDatos($_POST['nombre_libro']) ) );

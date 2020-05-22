@@ -26,12 +26,33 @@
                     $this->query = "SELECT * FROM bi_libros WHERE isbn = :isbn";
                     $this->parametros['isbn'] = $busqueda;
                 } else {
-                    $this->query = "SELECT * FROM bi_libros WHERE lower( titulo ) = :titulo";
-                    $this->parametros['titulo'] = strtolower( $busqueda );
+                    $this->query = "SELECT * FROM bi_libros 
+                    WHERE LOWER( titulo ) LIKE :filtro OR LOWER( autor ) LIKE :filtro OR anno_publicacion LIKE :filtro";
+                    $this->parametros['filtro'] = "%".$busqueda."%";
                 }
             }
             else
                 $this->query = "SELECT * FROM bi_libros";
+            
+            $this->get_results_from_query();
+            $this->close_connection();
+
+            return $this->rows;
+        }
+
+        public function getLibrosDiponibles ( $busqueda = '' ) {
+            if ( $busqueda !== '' ) {
+                if ( preg_match_all('/^(978-|979-)?\d{1,5}(-)\d{1,6}(\2)\d{1,6}(\2)\d$/',$busqueda) ) {
+                    $this->query = "SELECT * FROM bi_libros WHERE isbn = :isbn";
+                    $this->parametros['isbn'] = $busqueda;
+                } else {
+                    $this->query = "SELECT * FROM bi_libros 
+                    WHERE LOWER( titulo ) LIKE :filtro OR LOWER( autor ) LIKE :filtro OR anno_publicacion LIKE :filtro";
+                    $this->parametros['filtro'] = "%".$busqueda."%";
+                }
+            }
+            else
+                $this->query = "SELECT * FROM bi_libros WHERE id NOT IN (SELECT id_libro FROM bi_prestamos WHERE devuelto IS null)";
             
             $this->get_results_from_query();
             $this->close_connection();
@@ -56,16 +77,22 @@
         }
 
         public function set ( $book_data = array() ) {
-            $this->query = "INSERT INTO bi_libros (titulo,autor,isbn,editorial,anno_publicacion,img) 
+            if ( !$this->validarISBN( $book_data['isbn'] ) )
+                throw new IsbnInvalidException();
+            elseif ( sizeof( $this->get( $book_data['isbn'] ) ) == 1 )
+                throw new IsbnExistException();
+            else {
+                $this->query = "INSERT INTO bi_libros (titulo,autor,isbn,editorial,anno_publicacion,img) 
                                 VALUES (:titulo,:autor,:isbn,:editorial,:anno_publicacion,:img)";
-            $this->parametros['titulo'] = $book_data['titulo'];
-            $this->parametros['autor'] = $book_data['autor'];
-            $this->parametros['isbn'] = $book_data['isbn'];
-            $this->parametros['editorial'] = $book_data['editorial'];
-            $this->parametros['anno_publicacion'] = $book_data['anno_publicacion'];
-            $this->parametros['img'] = $book_data['img'];
-            $this->get_results_from_query();
-            $this->close_connection();
+                $this->parametros['titulo'] = $book_data['titulo'];
+                $this->parametros['autor'] = $book_data['autor'];
+                $this->parametros['isbn'] = $book_data['isbn'];
+                $this->parametros['editorial'] = $book_data['editorial'];
+                $this->parametros['anno_publicacion'] = $book_data['anno_publicacion'];
+                $this->parametros['img'] = $book_data['img'];
+                $this->get_results_from_query();
+                $this->close_connection();
+            }
         }
 
         public function edit ( $book_data = array() ) {
@@ -95,6 +122,17 @@
                 $this->close_connection();
             }
         }
+
+        /**
+         * Valida un código isbn
+         */
+        private function validarISBN( $isbn ) {
+            if ( preg_match_all('/^(978-|979-)?\d{1,5}(-)\d{1,6}(\2)\d{1,6}(\2)\d$/',$isbn) )
+                return strlen( str_replace("-","",$isbn) ) == 10 || strlen( str_replace("-","",$isbn) ) == 13;
+            return false;
+        }
+
+
     }
 
 ?>
