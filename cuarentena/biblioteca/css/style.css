@@ -404,6 +404,22 @@ p.mensaje_error {
     border-radius: 20px;
 }
 
+.h90 {
+    height: 90%;
+}
+
+.w55 {
+    width: 55%;
+}
+
+.dw55 {
+    width: 55%;
+}
+
+.dw55 div {
+    margin: 2px auto;
+}
+
 footer h4 {
     color: white;
     text-align: center;

@@ -14,6 +14,28 @@
         header('Location:index.php');
     }
 
+    $iie = false;
+    $iee = false;
+    $aok = false;
+    $eok = false;
+
+    if ( isset($_POST['add_libro']) ) {
+        try {
+            $book_data = array(
+                'titulo' => limpiarDatos($_POST['titulo']),
+                'autor' => limpiarDatos($_POST['autor']),
+                'isbn' => limpiarDatos($_POST['isbn']),
+                'editorial' => ( ($_POST['editorial'] == "") ? null : limpiarDatos($_POST['editorial']) ),
+                'anno_publicacion' => ( ($_POST['anno_publicacion'] == "") ? null : limpiarDatos($_POST['anno_publicacion']) ),
+                'img' => ( ($_POST['img'] == "") ? null : limpiarDatos($_POST['img']) ),
+            );
+            $_SESSION['libro']->set( $book_data );
+            $aok = true;
+        } 
+        catch (IsbnInvalidException $iie) {}
+        catch (IsbnExistException $iee) {}
+    }
+
     if ( isset($_POST['ed_libro']) ) {
         $book_data = array(
             'id' => limpiarDatos($_POST['id']),
@@ -25,6 +47,7 @@
             'img' => limpiarDatos($_POST['img']),
         );
         $_SESSION['libro']->edit( $book_data );
+        $eok = true;
     }
 
     if ( isset($_POST['delete_libro']) ) {
@@ -73,8 +96,23 @@
         <main>
             <div class="contenedor">
                 <?php 
-                    if ( $_SESSION['user']['perfil'] == "administrador" ) {
-                        if ( isset($_GET['edit']) )
+                    if ( $aok || $eok ) {
+                        echo "<div>";
+                            echo "<h3>".( ($aok) ? "Añadir libro" : "Editar libro" )."</h3>";
+                        echo "</div>";
+                        echo "<div class='filtro'>";
+
+                        echo "</div>";
+                        echo "<div class='add_editar'>";
+                            echo ($aok) ? 
+                            "<div><b>Libro añadido correctamente.</b>  <a href='libros.php'><button class='boton_sq editar'>Volver a libros</button></a> <a href='libros.php?add'><button class='boton_sq aceptar'>Añadir nuevo libro</button></a></div>" :
+                            "<div><b>Libro editado correctamente.</b>  <a href='libros.php'><button class='boton_sq aceptar'>Continuar</button></a></div>";
+                        echo "</div>";
+                    }
+                    elseif ( $_SESSION['user']['perfil'] == "administrador" ) {
+                        if ( isset($_GET['add']) )
+                            include "include/books/new_libro.php";
+                        elseif ( isset($_GET['edit']) )
                             include "include/books/edit_libro.php";
                         elseif( isset($_GET['del']) )
                             include "include/books/del_libro.php";
@@ -82,7 +120,8 @@
                             include "include/books/view_libro.php";
                         else
                             include "include/books/info_libro.php";
-                    } else {
+                    } 
+                    else {
                         include "include/books/res_libro.php";
                     }
                     

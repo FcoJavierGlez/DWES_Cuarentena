@@ -24,9 +24,8 @@
     }
 
     if ( isset($_POST['up_perfil']) ) {
-
+        $ok = true;
     }
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -47,7 +46,7 @@
         </div>
         <div class="login">
             <?php
-                if ( $_SESSION['user']['perfil'] == "invitado" ) //$_SESSION['perfil'] == "invitado"
+                if ( $_SESSION['user']['perfil'] == "invitado" )
                     include "include/login.php";
                 else 
                     include "include/exit.php";
@@ -57,7 +56,7 @@
     <div class="cuerpo">
         <nav>
             <?php
-                if ( $_SESSION['user']['perfil'] == "administrador" ) //$_SESSION['perfil'] == "administrador"
+                if ( $_SESSION['user']['perfil'] == "administrador" )
                     include "include/nav.php";
                 elseif ( $_SESSION['user']['perfil'] == "lector" )
                     include "include/nav_user.php";
@@ -66,19 +65,21 @@
         <main>
             <div class="contenedor">
                 <?php 
-                    if ( $ok ) {
+                    if ( isset( $_GET['edit'] ) )
+                        include "include/users/edit_user.php";
+                    elseif ( $ok ) {
                         echo "<div>";
-                            echo "<h3>Registrarse</h3>";
+                            echo "<h3>Mi perfil</h3>";
                         echo "</div>";
                         echo "<div class='center'>";
                             
                         echo "</div>";
                         echo "<div class='add_editar'>";
-                            echo "<div><b>Se ha registrado correctamente.</b>  <a href='index.php'><button>Continuar</button></a></div>";
+                            echo "<div><b>Su perfil se ha modificado con éxito.</b>  <a href='privado.php'><button class='boton_sq aceptar'>Continuar</button></a></div>";
                         echo "</div>";
                     }
                     else
-                        include "include/users/edit_user.php";
+                        include "include/users/own_user.php";
                 ?>
             </div>
         </main>

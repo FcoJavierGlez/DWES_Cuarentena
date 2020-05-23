@@ -8,7 +8,7 @@
     </form>
 </div>
 <div class="add_editar">
-    <form action="add_libro.php" method="post">
+    <form action="libros.php?add" method="post">
         <div class="col2">Portada: <input type='file' name='img'></div>
         <div class="col2">Título: <input type='text' name='titulo' value="<?php echo ( ( isset($_POST['add_libro']) ) ? $_POST['titulo'] : "" ); ?>" required></div>
         <div class="col2">Autor: <input type='text' name='autor' value="<?php echo ( ( isset($_POST['add_libro']) ) ? $_POST['autor'] : "" ); ?>" required></div>

@@ -20,6 +20,13 @@
         header('Location:index.php');
     }
 
+    function imprimePassCensurada( $pass ) {
+        $salida = "";
+        for ($i=0; $i < strlen($pass); $i++) 
+            $salida .= "*";
+        return $salida;
+    }
+
     /**
      * Imprime la información de cada libro
      */
