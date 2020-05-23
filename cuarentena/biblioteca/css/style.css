@@ -420,6 +420,15 @@ p.mensaje_error {
     margin: 2px auto;
 }
 
+.pergamino {
+    background-color: antiquewhite;
+}
+
+article {
+    margin: 15px;
+    width: 90%;
+}
+
 footer h4 {
     color: white;
     text-align: center;
