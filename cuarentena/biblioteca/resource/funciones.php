@@ -60,7 +60,7 @@
         if ( sizeof($users) == 0 ) echo "<b>No se obtuvo ningún resultado.</b>";
         else {
             echo "<table>";
-            echo "<th>ID</th><th>NICK</th><th>EMAIL</th><th>ESTADO</th><th>ACTIVAR</th><th>BLOQUEAR</th><th>ELIMINAR</th>";
+            echo "<th>ID</th><th>NICK</th><th>EMAIL</th><th>ESTADO</th><th>ACTIVAR</th><th>BLOQUEAR</th>";
                 foreach ($users as $user) {
                     echo "<tr>";
                         echo "<td>".$user['id_user']."</td>";
@@ -72,8 +72,6 @@
                             "<td><a href=".$_SERVER['PHP_SELF']."?aceptar=".$user['id_user']."><button class='boton_sq aceptar'>Activar</button></a></td>" : "<td>---</td>" );
                         echo ( ( $user['estado'] == "activo" ) ? 
                             "<td><a href=".$_SERVER['PHP_SELF']."?bloquear=".$user['id_user']."><button class='boton_sq cancelar'>Bloquear</button></a></td>" : "<td>---</td>" );
-                        echo ( (  $user['perfil'] !== "administrador"  ) ? 
-                            "<td><a href=".$_SERVER['PHP_SELF']."?borrar=".$user['id_user']."><button class='boton_sq cancelar'>Eliminar</button></a></td>" : "<td>---</td>" );
                     echo "</tr>";
                 }
             echo "</table>";
@@ -118,7 +116,7 @@
                     echo "</div>";
                     if ( $prestamo['devuelto'] == null ) {
                         echo "<div class='pie_ficha c2'>";
-                            echo "<div><a href="."".$prestamo['id_user']."><button class='boton_sq aceptar'>Contactar lector</button></a></div>";
+                            echo "<div><a href="."usuarios.php?contactar=".$prestamo['id_user']."><button class='boton_sq aceptar'>Contactar lector</button></a></div>";
                             echo "<div><a href="."usuarios.php?bloquear=".$prestamo['id_user']."><button class='boton_sq cancelar'>Bloquear lector</button></a></div>";
                         echo "</div>";
                     }
@@ -142,8 +140,8 @@
                             echo "<div><b>Título:</b></div> <div>".$libro['titulo']."</div>";
                             echo "<div><b>Autor:</b></div> <div>".$libro['autor']."</div>";
                             echo "<div><b>ISBN:</b></div> <div>".$libro['isbn']."</div>";
-                            echo "<div><b>Editorial:</b></div> <div>".$libro['editorial']."</div>";
-                            echo "<div><b>Publicado:</b></div> <div>".$libro['anno_publicacion']."</div>";
+                            echo "<div><b>Editorial:</b></div> <div>".( ($libro['editorial'] == null) ? "N/D" : $libro['editorial'] )."</div>";
+                            echo "<div><b>Publicado:</b></div> <div>".( ($libro['anno_publicacion'] == null) ? "N/D" : $libro['anno_publicacion'] )."</div>";
                         echo "</div>";
                     echo "</div>";
                     echo "<div class='pie_ficha'>";

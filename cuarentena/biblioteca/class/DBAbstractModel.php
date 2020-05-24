@@ -33,7 +33,7 @@
                                         array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
                 return $this->conn;
             } catch (PDOException $e) {
-                printf("Conexión fallida: \n", $e->getMenssage());
+                printf("Conexión fallida: \n", $e->getMessage());
                 exit();
             }
         }

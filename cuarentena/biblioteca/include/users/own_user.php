@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="pie_ficha">
-            <a href="privado.php?edit=true"><button class="boton_sq editar">Editar</button></a>
+            <a href="privado.php?edit"><button class="boton_sq editar">Editar</button></a>
         </div>
     </div>
     

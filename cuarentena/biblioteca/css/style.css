@@ -357,6 +357,18 @@ div.info_contenido {
     box-shadow: 2px 1px 1px rgb(85, 85, 85);
 }
 
+.pass {
+    background-color: rgb(255, 145, 0);
+    width: 75%;
+    justify-self: center;
+}
+
+.pass:hover {
+    color: black;
+    background-color: rgb(255, 174, 0);
+    box-shadow: 2px 1px 1px rgb(85, 85, 85);
+}
+
 table tr td,th {
     border: 1px solid black;
     padding: 3px;
