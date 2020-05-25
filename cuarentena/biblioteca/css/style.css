@@ -432,6 +432,11 @@ p.mensaje_error {
     margin: 2px auto;
 }
 
+.align_center {
+    display: grid;
+    align-items: center;
+}
+
 .pergamino {
     background-color: antiquewhite;
 }

@@ -13,6 +13,8 @@
         $_SESSION['usuario'] = Usuario::singleton();
         $_SESSION['prestamo'] = Prestamo::singleton();
 
+        $_SESSION['id_libro'] = null;
+
         $_SESSION['user'] = array(
             'perfil' => "invitado"
         );

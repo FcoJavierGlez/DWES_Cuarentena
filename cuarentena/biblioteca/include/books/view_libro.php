@@ -18,8 +18,8 @@
                 <div><b>Título:</b></div> <div> <?php echo $libro[0]['titulo'] ?> </div>
                 <div><b>Autor:</b></div> <div> <?php echo $libro[0]['autor'] ?> </div>
                 <div><b>ISBN:</b></div> <div> <?php echo $libro[0]['isbn'] ?> </div>
-                <div><b>Editorial:</b></div> <div> <?php echo $libro[0]['editorial'] ?> </div>
-                <div><b>Año publicación:</b></div> <div> <?php echo ( ($libro[0]['anno_publicacion'] == null) ? "N/D" : $libro[0]['anno_publicacion']) ?> </div>
+                <div><b>Editorial:</b></div> <div> <?php echo ( $libro[0]['editorial'] == null ? "N/D" : $libro[0]['editorial']) ?> </div>
+                <div><b>Año publicación:</b></div> <div> <?php echo ( $libro[0]['anno_publicacion'] == null ? "N/D" : $libro[0]['anno_publicacion']) ?> </div>
             </div>
         </div>
         <div><a href="<?php echo "libros.php?del=".$libro[0]['id'] ?>"><button class="boton_sq cancelar">Eliminar libro</button></a></div>

@@ -6,21 +6,25 @@
 </div>
 <div class="add_editar">
     <div class="ficha_prestamo h90">
-        <img src="<?php echo "img/users/".( ( $_SESSION['user']['img'] == NULL ) ? "0.png" : $_SESSION['user']['img'] ) ?>" class="img_perfil">
+        <img src="<?php echo "img/users/".( $_SESSION['user']['img'] == NULL ? "0.png" : $_SESSION['user']['img'] ) ?>" class="img_perfil">
         <form action="privado.php" method="post" class="w55">
             <div class="col2">Cambiar foto: <input type='file' name='img'></div>
             <div class="col2">
-                Nick: <input type='text' name='user' value="<?php echo ( ( isset($_POST['up_perfil']) ) ? $_POST['user'] : $_SESSION['user']['user'] ); ?>"
-                        <?php echo ( ( ($uee) ) ? "class='input_error'" : "" ); ?> disabled>
-                <?php echo ( ($uee) ? "<div></div><span class='bloqueado'><b>El nick no está disponible</b></span>" : "" ); ?>
+                Nick: <input type='text' name='user' value="<?php echo ( isset($_POST['up_perfil']) ? $_POST['user'] : $_SESSION['user']['user'] ); ?>"
+                        class="<?php echo ( $uee ? "input_error" : "" ); ?>" disabled>
+                <div></div><span class='bloqueado'><b>
+                    <?php echo ( $uee ? "El nick no está disponible" : "" ); ?>
+                </b></span>
             </div>
-            <div class="col2">Nombre: <input type='text' name='nombre' value="<?php echo ( ( isset($_POST['up_perfil']) ) ? $_POST['nombre'] : $_SESSION['user']['nombre'] ); ?>" required></div>
-            <div class="col2">Apellidos: <input type='text' name='apellidos' value="<?php echo ( ( isset($_POST['up_perfil']) ) ? $_POST['apellidos'] : $_SESSION['user']['apellidos'] ); ?>" required></div>
+            <div class="col2">Nombre: <input type='text' name='nombre' value="<?php echo ( isset($_POST['up_perfil']) ? $_POST['nombre'] : $_SESSION['user']['nombre'] ); ?>" required></div>
+            <div class="col2">Apellidos: <input type='text' name='apellidos' value="<?php echo ( isset($_POST['up_perfil']) ? $_POST['apellidos'] : $_SESSION['user']['apellidos'] ); ?>" required></div>
             <div class="col2">
-                DNI: <input type='text' name='dni' value="<?php echo ( ( isset($_POST['up_perfil']) ) ? $_POST['dni'] : $_SESSION['user']['dni'] ); ?>" 
-                        <?php echo ( ( ($die || $dee) ) ? "class='input_error'" : "" ); ?> required>
-                <?php echo ( ($die) ? "<div></div><span class='bloqueado'><b>DNI inválido.</b></span>" : "" ); ?>
-                <?php echo ( ($dee) ? "<div></div><span class='bloqueado'><b>Ya posees una cuenta registrada a este DNI</b></span>" : "" ); ?>
+                DNI: <input type='text' name='dni' value="<?php echo ( isset($_POST['up_perfil']) ? $_POST['dni'] : $_SESSION['user']['dni'] ); ?>" 
+                        class="<?php echo ( $die || $dee ? "input_error" : "" ); ?>" required>
+                <div></div><span class='bloqueado'><b>
+                    <?php echo ( $die ? "DNI inválido." : "" ); ?>
+                    <?php echo ( $dee ? "Ya posees una cuenta registrada a este DNI" : "" ); ?>
+                </b></span>
             </div>
             <div class="col2">Telefono de contacto: <input type='text' name='telefono' value="<?php echo ( ( isset($_POST['up_perfil']) ) ? $_POST['telefono'] : $_SESSION['user']['telefono'] ); ?>" required></div>
             <div class="col2">Email: <input type='email' name='email' value="<?php echo ( ( isset($_POST['up_perfil']) ) ? $_POST['email'] : $_SESSION['user']['email'] ); ?>" required></div>

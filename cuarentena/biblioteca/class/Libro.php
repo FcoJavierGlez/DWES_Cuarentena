@@ -96,22 +96,28 @@
         }
 
         public function edit ( $book_data = array() ) {
-            if ( $book_data['img'] == '' ) {
-                $this->query = "UPDATE bi_libros SET titulo = :titulo, autor = :autor, isbn = :isbn,
-                                editorial = :editorial, anno_publicacion = :anno_publicacion WHERE id = :id";
-            } else {
-                $this->query = "UPDATE bi_libros SET titulo = :titulo, autor = :autor, isbn = :isbn,
-                                editorial = :editorial, anno_publicacion = :anno_publicacion, img = :img WHERE id = :id";
+            if ( !$this->validarISBN( $book_data['isbn'] ) )
+                throw new IsbnInvalidException();
+            elseif ( $this->getID($book_data['id'])[0]['isbn'] !== $book_data['isbn'] && sizeof( $this->get( $book_data['isbn'] ) ) )
+                throw new IsbnExistException();
+            else {
+                if ( $book_data['img'] == '' ) 
+                    $this->query = "UPDATE bi_libros SET titulo = :titulo, autor = :autor, isbn = :isbn,
+                                    editorial = :editorial, anno_publicacion = :anno_publicacion WHERE id = :id";
+                else 
+                    $this->query = "UPDATE bi_libros SET titulo = :titulo, autor = :autor, isbn = :isbn,
+                                    editorial = :editorial, anno_publicacion = :anno_publicacion, img = :img WHERE id = :id";
+                
+                $this->parametros['id'] = $book_data['id'];
+                $this->parametros['titulo'] = $book_data['titulo'];
+                $this->parametros['autor'] = $book_data['autor'];
+                $this->parametros['isbn'] = $book_data['isbn'];
+                $this->parametros['editorial'] = $book_data['editorial'];
+                $this->parametros['anno_publicacion'] = $book_data['anno_publicacion'];
                 $this->parametros['img'] = $book_data['img'];
+                $this->get_results_from_query();
+                $this->close_connection();
             }
-            $this->parametros['titulo'] = $book_data['titulo'];
-            $this->parametros['autor'] = $book_data['autor'];
-            $this->parametros['isbn'] = $book_data['isbn'];
-            $this->parametros['editorial'] = $book_data['editorial'];
-            $this->parametros['anno_publicacion'] = $book_data['anno_publicacion'];
-            $this->parametros['id'] = $book_data['id'];
-            $this->get_results_from_query();
-            $this->close_connection();
         }
 
         public function del ( $id = '' ) {

@@ -14,10 +14,12 @@
         header('Location:index.php');
     }
 
-    $iie = false;
-    $iee = false;
-    $aok = false;
-    $eok = false;
+    $aiie = false;      //ISBN no cumple con el formato de ISBN10 ó ISBN13 al añadir libro
+    $aiee = false;      //ISBN ya está registrado en la BD al añadir libro
+    $eiie = false;      //ISBN no cumple con el formato de ISBN10 ó ISBN13 al editar libro
+    $eiee = false;      //ISBN ya está registrado en la BD al editar libro
+    $aok = false;       //Todo OK al añadir libro
+    $eok = false;       //Todo OK al editar libro
 
     if ( isset($_POST['add_libro']) ) {
         try {
@@ -32,22 +34,26 @@
             $_SESSION['libro']->set( $book_data );
             $aok = true;
         } 
-        catch (IsbnInvalidException $iie) {}
-        catch (IsbnExistException $iee) {}
+        catch (IsbnInvalidException $aiie) {}
+        catch (IsbnExistException $aiee) {}
     }
 
     if ( isset($_POST['ed_libro']) ) {
-        $book_data = array(
-            'id' => limpiarDatos($_POST['id']),
-            'titulo' => limpiarDatos($_POST['titulo']),
-            'autor' => limpiarDatos($_POST['autor']),
-            'isbn' => limpiarDatos($_POST['isbn']),
-            'editorial' => limpiarDatos($_POST['editorial']),
-            'anno_publicacion' => limpiarDatos($_POST['anno_publicacion']),
-            'img' => limpiarDatos($_POST['img']),
-        );
-        $_SESSION['libro']->edit( $book_data );
-        $eok = true;
+        try {
+            $book_data = array(
+                'id' => limpiarDatos($_POST['id']),
+                'titulo' => limpiarDatos($_POST['titulo']),
+                'autor' => limpiarDatos($_POST['autor']),
+                'isbn' => limpiarDatos($_POST['isbn']),
+                'editorial' => limpiarDatos($_POST['editorial']),
+                'anno_publicacion' => limpiarDatos($_POST['anno_publicacion']),
+                'img' => limpiarDatos($_POST['img']),
+            );
+            $_SESSION['libro']->edit( $book_data );
+            $eok = true;
+        }
+        catch (IsbnInvalidException $eiie) {}
+        catch (IsbnExistException $eiee) {}
     }
 
     if ( isset($_POST['delete_libro']) ) {
@@ -110,9 +116,9 @@
                         echo "</div>";
                     }
                     elseif ( $_SESSION['user']['perfil'] == "administrador" ) {
-                        if ( isset($_GET['add']) )
+                        if ( isset($_GET['add']) || $aiie || $aiee )
                             include "include/books/new_libro.php";
-                        elseif ( isset($_GET['edit']) )
+                        elseif ( isset($_GET['edit']) || $eiie || $eiee )
                             include "include/books/edit_libro.php";
                         elseif( isset($_GET['del']) )
                             include "include/books/del_libro.php";

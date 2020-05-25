@@ -70,7 +70,7 @@
                                 "<td class='bloqueado'>".$user['estado']."</td>" : "<td>".$user['estado']."</td>" );
                         echo ( ( ( $user['estado'] == "pendiente" || $user['estado'] == "bloqueado" )  && $user['perfil'] !== "administrador" ) ? 
                             "<td><a href=".$_SERVER['PHP_SELF']."?aceptar=".$user['id_user']."><button class='boton_sq aceptar'>Activar</button></a></td>" : "<td>---</td>" );
-                        echo ( ( $user['estado'] == "activo" ) ? 
+                        echo ( ( $user['estado'] == "activo" && $user['perfil'] == "lector" ) ? 
                             "<td><a href=".$_SERVER['PHP_SELF']."?bloquear=".$user['id_user']."><button class='boton_sq cancelar'>Bloquear</button></a></td>" : "<td>---</td>" );
                     echo "</tr>";
                 }
@@ -145,7 +145,7 @@
                         echo "</div>";
                     echo "</div>";
                     echo "<div class='pie_ficha'>";
-                        if ( $libro['disponible'] == 1 )
+                        if ( $libro['disponible'] )
                             echo "<div><a href="."prestamos.php?solicitar=".$libro['id']."><button class='boton_sq aceptar'>Solicitar préstamo</button></a></div>";
                         else
                             echo "<div class='bloqueado'>Actualmente en préstamo</div>";
