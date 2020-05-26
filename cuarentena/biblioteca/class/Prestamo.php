@@ -122,12 +122,5 @@
 
             return $this->rows;
         }
-
-        //SELECT * FROM bi_libros WHERE id NOT IN (SELECT id_libro FROM bi_prestamos WHERE devuelto IS null)
-
-        //CREATE TRIGGER libroPrestado AFTER INSERT ON bi_prestamos FOR EACH ROW UPDATE bi_libros SET disponible = 0 WHERE id = NEW.id_libro
-        //CREATE TRIGGER libroDisponible AFTER UPDATE ON bi_prestamos FOR EACH ROW UPDATE bi_libros SET disponible = 1 WHERE id = OLD.id_libro
-
     }
-
 ?>
