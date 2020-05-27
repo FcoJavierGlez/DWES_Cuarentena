@@ -1,0 +1,463 @@
+:root {
+    --php_color: rgb(127, 102, 151);
+}
+
+@font-face {
+    font-family: "Old Book";
+    src: url(../font/Olde\ English\ Regular.ttf);
+}
+
+body {
+    margin: 0;
+}
+
+header, footer {
+    height: 10vh;
+    background-color: black;
+}
+
+header {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+
+.title_header {
+    display: grid;
+    align-items: center;
+}
+
+h1 {
+    font-family: "Old Book";
+    font-weight: lighter;
+    font-size: 50px;
+}
+
+h1, h2 {
+    margin: 0;
+    color: white;
+    text-align: center;
+}
+
+h1 a {
+    color: white;
+    text-decoration: none;
+}
+
+h1 a:active {
+    color: white;
+    text-decoration: none;
+}
+
+.github, .login {
+    text-align: right;
+}
+
+.login {
+    display: grid;
+    align-items: flex-end;
+    color: white;
+    align-content: flex-end;
+    margin: 8px;
+    font-size: 16px;
+}
+
+.login input {
+    width: 100px;
+}
+
+.login a {
+    color: orange;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.cuerpo {
+    background-image: url(../img/fondo_libros.webp);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 80vh;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 5% 95%;
+}
+
+nav {
+    background-color: rgb(88, 88, 88);
+    color: white;
+}
+
+nav ul {
+    margin: 10px auto;
+    padding: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline-block;
+    list-style: none;
+}
+
+nav a {
+    display: block;
+    text-decoration: none;
+    color: white;
+    margin: 0 100px;
+}
+
+nav a:hover {
+    color: orange;
+}
+
+main {
+   display: grid;
+}
+
+.contenedor {
+    display: grid;
+    grid-template-rows: 10% 15% auto;
+    align-items: center;
+    justify-self: center;
+    align-self: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    height: 90%;
+    width: 85%;
+    overflow-x: hidden;
+}
+
+.contenedor h3 {
+    text-align: center;
+    margin: 5px auto;
+}
+
+.filtro {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    column-gap: 15px;
+    grid-template-columns: repeat(3,auto);
+}
+
+.listado {
+    height: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    justify-items: center;
+    *row-gap: 25px;
+}
+
+.add_editar {
+    height: 100%;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+}
+
+.scroll {
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.col2 {
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(2,1fr);
+    text-align: center;
+}
+
+.info_libro {
+    width: 90%;
+    height: max-content;
+    display: grid;
+    grid-template-columns: 15% 85%;
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    border: 2px solid black;
+}
+
+.info_libro:hover {
+    *border: 2px solid black;
+}
+
+.info_libro img {
+    justify-self: center;
+    align-self: center;
+    padding: 5px;
+    width: 80%;
+}
+
+.ficha_prestamo {
+    display: grid;
+    height: max-content;
+    background-color: white;
+    width: 60%;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    justify-items: center;
+    padding: 10px;
+    border: 2px solid black;
+}
+
+.ficha_prestamo h3 {
+    background-color: bisque;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 2px 5px;
+    width: 50%;
+}
+
+.ficha_pres_libro {
+    display: grid;
+    grid-template-columns: 25% 75%;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+}
+
+.ficha_pres_libro img {
+    width: 80%;
+}
+
+.info_prestamo {
+    display: grid;
+    grid-template-columns: 25% 75%;
+}
+
+.w90 {
+    width: 90%;
+}
+
+.w100 {
+    width: 100%;
+}
+
+.pie_ficha {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    margin-top: 10px;
+    width: 95%;
+}
+
+.c2 {
+    grid-template-columns: repeat(2,1fr);
+}
+
+.c3 {
+    grid-template-columns: repeat(2,40%) 20%;
+}
+
+hr {
+    width: 90%;
+    border: 2px solid black;
+}
+
+.dashed {
+    border: 1px dashed;
+}
+
+div.contenido {
+    display: grid;
+    width: 90%;
+    justify-content: stretch;
+    padding: 5px;
+}
+
+.columna {
+    grid-template-columns: 1fr;
+}
+
+div.info_contenido {
+    display: grid;
+    grid-template-rows: 70% 30%;
+    padding: 5px;
+    align-items: center;
+}
+
+.info {
+    display: grid;
+    grid-template-columns: 65% 35%;
+}
+
+.info_enlaces {
+    text-align: right;
+    padding: 5px;
+}
+
+.portada {
+    height: 100px;
+}
+
+.alert {
+    background-color: white;
+    border: 3px solid red;
+    border-radius: 15px;
+    display: grid;
+    padding: 15px;
+    row-gap: 5px;
+}
+
+.opciones {
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    justify-self: center;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.boton {
+    color: white;
+    border-radius: 50%;
+    
+}
+
+.boton_sq {
+    color: white;
+    border: 0;
+    padding: 5px 10px;
+}
+
+.aceptar {
+    background-color: rgb(0, 185, 31);
+}
+
+.aceptar:hover {
+    color: black;
+    background-color: rgb(37, 223, 0);
+    box-shadow: 2px 1px 1px rgb(85, 85, 85);
+}
+
+.cancelar {
+    background-color: rgb(255, 29, 29);
+}
+
+.cancelar:hover {
+    color: black;
+    background-color: rgb(255, 0, 0);
+    box-shadow: 2px 1px 1px rgb(85, 85, 85);
+}
+
+.editar {
+    background-color: rgb(0, 117, 185);
+}
+
+.editar:hover {
+    color: black;
+    background-color: rgb(0, 160, 223);
+    box-shadow: 2px 1px 1px rgb(85, 85, 85);
+}
+
+.pass {
+    background-color: rgb(255, 145, 0);
+    width: 75%;
+    justify-self: center;
+}
+
+.pass:hover {
+    color: black;
+    background-color: rgb(255, 174, 0);
+    box-shadow: 2px 1px 1px rgb(85, 85, 85);
+}
+
+table tr td,th {
+    border: 1px solid black;
+    padding: 3px;
+    text-align: center;
+    background-color: white;
+}
+
+th {
+    background-color: lightblue;
+}
+
+.bloqueado {
+    color: red;
+}
+
+h2.bloqueado {
+    font-size: 50px;
+}
+
+p.mensaje_error {
+    color: red;
+    text-align: center;
+}
+
+.img_perfil {
+    display: grid;
+    justify-self: start;
+    margin: 0 20px;
+    height: 150px;
+}
+
+.input_error {
+    border: 2px solid red;
+    background-color: rgba(255, 0, 0, 0.35);
+}
+
+.fixed {
+    position: fixed;
+}
+
+.registro {
+    background-color: white;
+    padding: 25px;
+    border: 2px solid black;
+    border-radius: 20px;
+}
+
+.h90 {
+    height: 90%;
+}
+
+.w55 {
+    width: 55%;
+}
+
+.dw55 {
+    width: 55%;
+}
+
+.dw55 div {
+    margin: 2px auto;
+}
+
+.align_center {
+    display: grid;
+    align-items: center;
+}
+
+.pergamino {
+    background-color: antiquewhite;
+}
+
+article {
+    margin: 15px;
+    width: 90%;
+}
+
+footer h4 {
+    color: white;
+    text-align: center;
+    margin: 1px;
+}
+
+footer img {
+    height: 50px;
+}
+
+footer {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
