@@ -20,37 +20,45 @@
             trigger_error('La clonación no es permitida.', E_USER_ERROR);
         }
 
-        public function prueba() {
-            echo "Hola";
-        }
-
-        public function get ( $busqueda = '' ) {
+        /* public function getUsers ( $busqueda = '' ) {
             if ( $busqueda !== '' ) {
                 if ( is_numeric($busqueda) ) {
-                    $this->query = "SELECT * FROM bi_users WHERE id_user = :id_user";
-                    $this->parametros['id_user'] = $busqueda;
+                    $this->query = "SELECT * FROM sevi_usuarios WHERE id = :id";
+                    $this->parametros['id'] = $busqueda;
                 } elseif( $busqueda == '*' ) {
-                    $this->query = "SELECT * FROM bi_users";
+                    $this->query = "SELECT * FROM sevi_usuarios";
                 } else {
-                    $this->query = "SELECT * FROM bi_users WHERE lower( user ) = :user";
-                    $this->parametros['user'] = strtolower( $busqueda );
+                    $this->query = "SELECT * FROM sevi_usuarios WHERE lower( nick ) = :nick";
+                    $this->parametros['nick'] = strtolower( $busqueda );
                 }
             }
             else {
-                $this->query = "SELECT * FROM bi_users WHERE perfil = :perfil";
-                $this->parametros['perfil'] = "lector";
+                $this->query = "SELECT * FROM sevi_usuarios WHERE perfil = :perfil";
+                $this->parametros['perfil'] = "user";
             }
             
             $this->get_results_from_query();
             $this->close_connection();
 
             return $this->rows;
+        } */
+
+        public function getUserByNick ( $busqueda = '' ) {
+            if ( $busqueda !== '' ) {
+                $this->query = "SELECT * FROM sevi_usuarios WHERE lower( nick ) = :nick";
+                $this->parametros['nick'] = strtolower( $busqueda );
+
+                $this->get_results_from_query();
+                $this->close_connection();
+            }
+
+            return $this->rows;
         }
 
-        public function getDNI ( $dni = '' ) {
-            $this->query = "SELECT * FROM bi_users WHERE dni = :dni";
+        public function getUserByEmail ( $email = '' ) {
+            $this->query = "SELECT * FROM sevi_usuarios WHERE email = :email";
 
-            $this->parametros['dni'] = $dni;
+            $this->parametros['email'] = $email;
             
             $this->get_results_from_query();
             $this->close_connection();
@@ -58,12 +66,12 @@
             return $this->rows;
         }
 
-        public function set ( $user_data = array() ) {
-            if ( sizeof( $this->get( $user_data['user'] ) ) )      //Si existe ese nick invalidamos el registro
+        /* public function setUser ( $user_data = array() ) {
+            if ( sizeof( $this->getUsers( $user_data['user'] ) ) )      //Si existe ese nick invalidamos el registro
                 throw new UserExistException();
             elseif ( !$this->validaDni($user_data['dni']) )
                 throw new DniInvalidException();
-            elseif ( sizeof( $this->getDNI( strtoupper( preg_replace('/(-|\s)/',"",$user_data['dni']) ) ) ) == 1 )
+            elseif ( sizeof( $this->getUserByEmail( strtoupper( preg_replace('/(-|\s)/',"",$user_data['dni']) ) ) ) == 1 )
                 throw new DniExistException();
             else {
                 $this->query = "INSERT INTO bi_users (user,pass,perfil,estado,nombre,apellidos,dni,telefono,email,img) 
@@ -83,10 +91,10 @@
                 $this->get_results_from_query();
                 $this->close_connection();
             }
-        }
+        } */
 
-        public function editPass ( $user_data = array() ) {
-            if ( $this->get( $user_data['id_user'] )[0]['pass'] !== $user_data['old_pass'] )      //Si la contraseña vieja no coincide con la alamacenada
+        /* public function editPass ( $user_data = array() ) {
+            if ( $this->getUsers( $user_data['id_user'] )[0]['pass'] !== $user_data['old_pass'] )      //Si la contraseña vieja no coincide con la alamacenada
                 throw new CheckOldPassException();
             elseif ( $user_data['new_pass'] !== $user_data['new_pass2'])
                 throw new PassCheckException();
@@ -99,13 +107,13 @@
                 $this->get_results_from_query();
                 $this->close_connection();
             }
-        }
+        } */
 
-        public function editUser ( $user_data = array() ) {
+        /* public function editUser ( $user_data = array() ) {
             if ( !$this->validaDni($user_data['dni']) )
                 throw new DniInvalidException();
             elseif ( $this->get($user_data['id_user'])[0]['dni'] !== strtoupper( preg_replace('/(-|\s)/',"",$user_data['dni']) ) &&
-                        sizeof( $this->getDNI( strtoupper( preg_replace('/(-|\s)/',"",$user_data['dni']) ) ) ) )
+                        sizeof( $this->getUserByEmail( strtoupper( preg_replace('/(-|\s)/',"",$user_data['dni']) ) ) ) )
                 throw new DniExistException();
             else {
                 if ( $user_data['img'] == '' )
@@ -126,12 +134,12 @@
                 $this->get_results_from_query();
                 $this->close_connection();
             }
-        }
+        } */
 
         public function editEstado ( $user_data = array() ) {
-            $this->query = "UPDATE bi_users SET estado = :estado WHERE id_user = :id_user";
+            $this->query = "UPDATE sevi_usuarios SET estado = :estado WHERE id = :id";
             $this->parametros['estado'] = $user_data['estado'];
-            $this->parametros['id_user'] = $user_data['id_user'];
+            $this->parametros['id'] = $user_data['id'];
             $this->get_results_from_query();
             $this->close_connection();
         }
