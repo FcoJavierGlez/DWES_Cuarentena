@@ -66,32 +66,32 @@
             return $this->rows;
         }
 
-        /* public function setUser ( $user_data = array() ) {
-            if ( sizeof( $this->getUsers( $user_data['user'] ) ) )      //Si existe ese nick invalidamos el registro
+        public function setUser ( $user_data = array() ) {
+            if ( sizeof( $this->getUserByNick( $user_data['nick'] ) ) )      //Si existe ese nick invalidamos el registro
                 throw new UserExistException();
-            elseif ( !$this->validaDni($user_data['dni']) )
-                throw new DniInvalidException();
-            elseif ( sizeof( $this->getUserByEmail( strtoupper( preg_replace('/(-|\s)/',"",$user_data['dni']) ) ) ) == 1 )
-                throw new DniExistException();
+            /* elseif ( sizeof( $this->getUserByEmail( strtoupper( $user_data['dni'] ) ) ) )
+                throw new DniExistException(); // VERIFICAR EMAIL */
+            elseif ( $user_data['pass'] !== $user_data['pass2'])
+                throw new PassCheckException();
             else {
-                $this->query = "INSERT INTO bi_users (user,pass,perfil,estado,nombre,apellidos,dni,telefono,email,img) 
-                                VALUES (:user,:pass,:perfil,:estado,:nombre,:apellidos,:dni,:telefono,:email,:img)";
+                $this->query = "INSERT INTO sevi_usuarios (nick,pass,perfil,estado,nombre,apellidos,email) 
+                                VALUES (:nick,:pass,:perfil,:estado,:nombre,:apellidos,:email)";
 
-                $this->parametros['user'] = $user_data['user'];
+                $this->parametros['nick'] = $user_data['nick'];
                 $this->parametros['pass'] = $user_data['pass'];
-                $this->parametros['perfil'] = $user_data['perfil'];
-                $this->parametros['estado'] = $user_data['estado'];
+                $this->parametros['perfil'] = "user";
+                $this->parametros['estado'] = "pendiente";
                 $this->parametros['nombre'] = $user_data['nombre'];
                 $this->parametros['apellidos'] = $user_data['apellidos'];
-                $this->parametros['dni'] = strtoupper( preg_replace('/(-|\s)/',"",$user_data['dni']) );
-                $this->parametros['telefono'] = $user_data['telefono'];
                 $this->parametros['email'] = $user_data['email'];
-                $this->parametros['img'] = $user_data['img'];
+                //$this->parametros['dni'] = strtoupper( preg_replace('/(-|\s)/',"",$user_data['dni']) );
+                //$this->parametros['telefono'] = $user_data['telefono'];
+                //$this->parametros['img'] = $user_data['img'];
 
                 $this->get_results_from_query();
                 $this->close_connection();
             }
-        } */
+        }
 
         /* public function editPass ( $user_data = array() ) {
             if ( $this->getUsers( $user_data['id_user'] )[0]['pass'] !== $user_data['old_pass'] )      //Si la contraseña vieja no coincide con la alamacenada

@@ -410,6 +410,8 @@ p.mensaje_error {
 }
 
 .registro {
+    display: grid;
+    align-items: center;
     background-color: white;
     padding: 25px;
     border: 2px solid black;
@@ -418,6 +420,10 @@ p.mensaje_error {
 
 .h90 {
     height: 90%;
+}
+
+.h70 {
+    height: 70%;
 }
 
 .w55 {

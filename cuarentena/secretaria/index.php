@@ -2,18 +2,24 @@
     include "config/config_dev.php";
     include "resource/funciones.php";
     include "class/DBAbstractModel.php";
-    include "class/Libro.php";
     include "class/Usuario.php";
-    include "class/Prestamo.php";
+    include "class/error/UserExistException.php";
+    include "class/error/PassCheckException.php";
 
     session_start();
 
-    if ( !isset($_SESSION['user']) ) { 
-        $_SESSION['libro'] = Libro::singleton();
-        $_SESSION['usuario'] = Usuario::singleton();
-        $_SESSION['prestamo'] = Prestamo::singleton();
+    $addNickExist = false;      //Al añadir usuario, el nick está registrado
+    $checkPassError = false;    //Al verificar pass y su validación
+    $die = false;
+    $dee = false;
 
-        $_SESSION['id_libro'] = null;
+
+    $newUser = false;
+
+    if ( !isset($_SESSION['user']) ) { 
+        $_SESSION['usuario'] = Usuario::singleton();
+
+        //$_SESSION['id_libro'] = null;
 
         $_SESSION['user'] = array(
             'perfil' => "invitado"
@@ -21,13 +27,35 @@
     }
     
     if ( isset($_POST['login']) ) {
-        $usuario = $_SESSION['usuario']->get( limpiarDatos($_POST['user']) );
-        if ( sizeof($usuario)== 1 && $usuario[0]['pass'] == limpiarDatos($_POST['pswd']) ) 
+        $usuario = $_SESSION['usuario']->getUserByNick( limpiarDatos($_POST['user']) );
+        if ( sizeof($usuario) && $usuario[0]['pass'] == limpiarDatos($_POST['pswd']) ) 
             $_SESSION['user'] = $usuario[0];
+        /* echo "<pre>";
+            print_r( $_SESSION['user'] );
+        echo "</pre>"; */
     }
 
     if (isset($_POST['cerrar'])) {
         cerrarSesion();
+    }
+
+    if ( isset($_POST['add_user']) ) {
+        $user_data = array (
+            'nick' => limpiarDatos($_POST['nick']),
+            'pass' => limpiarDatos($_POST['pass']),
+            'pass2' => limpiarDatos($_POST['pass2']),
+            'nombre' => limpiarDatos($_POST['nombre']),
+            'apellidos' => limpiarDatos($_POST['apellidos']),
+            'email' => limpiarDatos($_POST['email']),
+        );
+
+        try {
+            $_SESSION['usuario']->setUser( $user_data );
+            $newUser = true;
+        }
+        catch (UserExistException $addNickExist) {}
+        catch (PassCheckException $checkPassError) {}
+
     }
 ?>
 <!DOCTYPE html>
@@ -45,7 +73,7 @@
             
         </div>
         <div class="title_header">
-            <h1><a href="index.php">Biblioteca</a></h1>
+            <h1><a href="index.php">Secretaría Virtual</a></h1>
         </div>
         <div class="login">
             <?php
@@ -59,7 +87,7 @@
     <div class="cuerpo">
         <nav>
             <?php
-                if ( $_SESSION['user']['perfil'] == "administrador" ) 
+                if ( $_SESSION['user']['perfil'] == "admin" ) 
                     include "include/nav.php";
                 elseif ( $_SESSION['user']['perfil'] == "lector" && $_SESSION['user']['estado'] == "activo" )
                     include "include/nav_user.php";
@@ -68,7 +96,13 @@
         <main>
             <div class="contenedor">
                 <?php
-                    include "include/main.php";
+                    if ( isset($_GET['register']) ) {
+                        if ( $newUser )
+                            include "include/users/new_user_ok.php";
+                        else
+                            include "include/users/new_user.php";
+                    } else
+                        include "include/main.php";
                 ?>
             </div>
         </main>
