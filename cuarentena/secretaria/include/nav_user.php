@@ -4,16 +4,16 @@
             "enlace" => "index.php",
             "nombre" => "Home"
         ),
-        array(
+        /* array(
             "enlace" => "libros.php",
             "nombre" => "Libros"
-        ),
+        ),*/
         array(
-            "enlace" => "prestamos.php",
-            "nombre" => "Mis préstamos"
-        ),
+            "enlace" => "index.php?documentos",
+            "nombre" => "Mis documentos"
+        ), 
         array(
-            "enlace" => "privado.php",
+            "enlace" => "index.php?perfil",
             "nombre" => "Mi perfil"
         ),
     );

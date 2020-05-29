@@ -110,6 +110,10 @@
                     } 
                     elseif ( isset($_GET['usuarios']) )                   //Acceder a usuarios
                         include "include/users/info_user.php";
+                    elseif ( isset($_GET['documentos']) )                 //Documentos
+                        include "include/documents/own_documents.php";
+                    elseif ( isset($_GET['perfil']) )                     //Perfil
+                        include "include/users/own_user.php";
                     else
                         include "include/main.php";
                 ?>
