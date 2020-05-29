@@ -4,20 +4,20 @@
             "enlace" => "index.php",
             "nombre" => "Home"
         ),
-        array(
+        /* array(
             "enlace" => "libros.php",
             "nombre" => "Libros"
         ),
         array(
             "enlace" => "prestamos.php",
             "nombre" => "Préstamos"
-        ),
+        ), */
         array(
-            "enlace" => "usuarios.php",
+            "enlace" => "index.php?usuarios",
             "nombre" => "Usuarios"
         ),
         array(
-            "enlace" => "privado.php",
+            "enlace" => "index.php?perfil",
             "nombre" => "Mi perfil"
         ),
     );

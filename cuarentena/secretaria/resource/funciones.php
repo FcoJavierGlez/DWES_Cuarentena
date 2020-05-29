@@ -60,18 +60,18 @@
         if ( sizeof($users) == 0 ) echo "<b>No se obtuvo ningún resultado.</b>";
         else {
             echo "<table>";
-            echo "<th>ID</th><th>NICK</th><th>EMAIL</th><th>ESTADO</th><th>ACTIVAR</th><th>BLOQUEAR</th>";
+            echo "<th>NOMBRE</th><th>APELLIDOS</th><th>EMAIL</th><th>ESTADO</th><th>ACTIVAR</th><th>BLOQUEAR</th>";
                 foreach ($users as $user) {
                     echo "<tr>";
-                        echo "<td>".$user['id_user']."</td>";
-                        echo "<td>".$user['user']."</td>";
+                        echo "<td>".$user['nombre']."</td>";
+                        echo "<td>".$user['apellidos']."</td>";
                         echo "<td>".$user['email']."</td>";
                         echo ( ( $user['estado'] == "bloqueado" ) ? 
                                 "<td class='bloqueado'>".$user['estado']."</td>" : "<td>".$user['estado']."</td>" );
                         echo ( ( ( $user['estado'] == "pendiente" || $user['estado'] == "bloqueado" )  && $user['perfil'] !== "administrador" ) ? 
-                            "<td><a href=".$_SERVER['PHP_SELF']."?aceptar=".$user['id_user']."><button class='boton_sq aceptar'>Activar</button></a></td>" : "<td>---</td>" );
-                        echo ( ( $user['estado'] == "activo" && $user['perfil'] == "lector" ) ? 
-                            "<td><a href=".$_SERVER['PHP_SELF']."?bloquear=".$user['id_user']."><button class='boton_sq cancelar'>Bloquear</button></a></td>" : "<td>---</td>" );
+                            "<td><a href="."index.php?activar=".$user['id']."><button class='boton_sq aceptar'>Activar</button></a></td>" : "<td>---</td>" );
+                        echo ( ( $user['estado'] == "activo" && $user['perfil'] == "user" ) ? 
+                            "<td><a href="."index.php?bloquear=".$user['id']."><button class='boton_sq cancelar'>Bloquear</button></a></td>" : "<td>---</td>" );
                     echo "</tr>";
                 }
             echo "</table>";

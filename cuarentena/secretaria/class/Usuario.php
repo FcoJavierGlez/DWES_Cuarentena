@@ -2,18 +2,18 @@
 
     class Usuario extends DBAbstractModel {
 
-        private static $instancia;
+        private static $_instancia;
 
         public function __construct() {
 
         }
         
         public static function singleton() {
-            if (!isset(self::$instancia)) {
+            if (!isset(self::$_instancia)) {
                 $miClase = __CLASS__;
-                self::$instancia = new $miClase;
+                self::$_instancia = new $miClase;
             }
-            return self::$instancia;
+            return self::$_instancia;
         }
 
         public function __clone() {
@@ -43,6 +43,40 @@
             return $this->rows;
         } */
 
+        /**
+         * Devuelve todos los usuarios de la tabla usuarios
+         */
+        public function getAllUsers () {
+            $this->query = "SELECT * FROM sevi_usuarios";
+
+            $this->get_results_from_query();
+            $this->close_connection();
+            
+            return $this->rows;
+        }
+
+        /**
+         * Devuelve un usuario cuya búsqueda tenga semejanza al nombre o 
+         * el apellido o el mail del usuario
+         */
+        public function getUser ( $busqueda = '' ) {
+            if ( $busqueda !== '' ) {
+                $this->query = "SELECT * FROM sevi_usuarios 
+                WHERE nombre LIKE :filtro 
+                OR apellidos LIKE :filtro 
+                OR email LIKE :filtro";
+                $this->parametros['filtro'] = "%".$busqueda."%";
+
+                $this->get_results_from_query();
+                $this->close_connection();
+            }
+
+            return $this->rows;
+        }
+
+        /**
+         * Busca usuario por nick
+         */
         public function getUserByNick ( $busqueda = '' ) {
             if ( $busqueda !== '' ) {
                 $this->query = "SELECT * FROM sevi_usuarios WHERE lower( nick ) = :nick";
@@ -55,6 +89,9 @@
             return $this->rows;
         }
 
+        /**
+         * Busca un usuario por email
+         */
         public function getUserByEmail ( $email = '' ) {
             $this->query = "SELECT * FROM sevi_usuarios WHERE email = :email";
 
@@ -62,6 +99,21 @@
             
             $this->get_results_from_query();
             $this->close_connection();
+
+            return $this->rows;
+        }
+
+        /**
+         * Busca un usuario por id
+         */
+        public function getUserById ( $id = '' ) {
+            if ( $id !== '' ) {
+                $this->query = "SELECT * FROM sevi_usuarios WHERE id = :id";
+                $this->parametros['id'] = $id;
+
+                $this->get_results_from_query();
+                $this->close_connection();
+            }
 
             return $this->rows;
         }
@@ -137,11 +189,43 @@
         } */
 
         public function editEstado ( $user_data = array() ) {
-            $this->query = "UPDATE sevi_usuarios SET estado = :estado WHERE id = :id";
+            $this->query = "UPDATE sevi_usuarios SET estado = :estado, directorio = :directorio WHERE id = :id";
             $this->parametros['estado'] = $user_data['estado'];
+            $this->parametros['directorio'] = $user_data['directorio'];
             $this->parametros['id'] = $user_data['id'];
             $this->get_results_from_query();
             $this->close_connection();
+        }
+
+        public function activarPerfil( $id ) {
+            //Generar nombre único para carpeta
+            $usuario = $this->getUserById( $id )[0];
+            $nombreDirectorio = $this->getDirectoryNameUser( $usuario['nombre'], $usuario['apellidos'] );
+            
+            if ( !file_exists("users/".$nombreDirectorio) )//crear carpeta con permisos
+                mkdir("users/".$nombreDirectorio,0777,true);
+            
+            //actualizamos perfil a activo y guardarmos el nombre de la carpeta generada
+            $user_data = array(
+                'id' => $id,
+                'estado' => "activo",
+                'directorio' => $nombreDirectorio
+            );
+            $this->editEstado( $user_data );
+        }
+        
+        private function getDirectoryNameUser($nombre,$apellidos) {
+            $cadena = $apellidos." ".$nombre;
+            
+            return substr($this->normalizaCadena( explode(" ",$cadena)[0]),0,2 ).
+                    substr($this->normalizaCadena( explode(" ",$cadena)[1]),0,2 ).
+                    substr($this->normalizaCadena( explode(" ",$cadena)[2]),0,2 ).date("HisdmY");
+        }
+    
+        private function normalizaCadena($cadena) {
+            $acentos = array("á","é","í","ó","ú","Á","É","Í","Ó","Ú","Ñ","ñ");
+            $letras = array("a","e","i","o","u","a","e","i","o","u","n","n");
+            return strtolower(str_replace($acentos, $letras, $cadena));
         }
 
         private function validaDni( $dni ) {

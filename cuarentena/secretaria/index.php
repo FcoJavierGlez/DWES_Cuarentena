@@ -3,8 +3,12 @@
     include "resource/funciones.php";
     include "class/DBAbstractModel.php";
     include "class/Usuario.php";
+    include "class/Clave.php";
+    include "class/Mail.php";
     include "class/error/UserExistException.php";
     include "class/error/PassCheckException.php";
+
+    header('Content-Type: text/html; charset=utf-8');
 
     session_start();
 
@@ -18,8 +22,10 @@
 
     if ( !isset($_SESSION['user']) ) { 
         $_SESSION['usuario'] = Usuario::singleton();
+        $_SESSION['clave'] = Clave::singleton();
+        $_SESSION['mail'] = new Mail();
 
-        //$_SESSION['id_libro'] = null;
+        $_SESSION['mail']->enviarMail();
 
         $_SESSION['user'] = array(
             'perfil' => "invitado"
@@ -30,12 +36,9 @@
         $usuario = $_SESSION['usuario']->getUserByNick( limpiarDatos($_POST['user']) );
         if ( sizeof($usuario) && $usuario[0]['pass'] == limpiarDatos($_POST['pswd']) ) 
             $_SESSION['user'] = $usuario[0];
-        /* echo "<pre>";
-            print_r( $_SESSION['user'] );
-        echo "</pre>"; */
     }
 
-    if (isset($_POST['cerrar'])) {
+    if ( isset($_POST['cerrar']) ) {
         cerrarSesion();
     }
 
@@ -55,7 +58,10 @@
         }
         catch (UserExistException $addNickExist) {}
         catch (PassCheckException $checkPassError) {}
+    }
 
+    if ( isset( $_GET['activar'] ) ) {
+        include "include/users/active_user.php";
     }
 ?>
 <!DOCTYPE html>
@@ -89,19 +95,22 @@
             <?php
                 if ( $_SESSION['user']['perfil'] == "admin" ) 
                     include "include/nav.php";
-                elseif ( $_SESSION['user']['perfil'] == "lector" && $_SESSION['user']['estado'] == "activo" )
+                elseif ( $_SESSION['user']['perfil'] == "user" && $_SESSION['user']['estado'] == "activo" )
                     include "include/nav_user.php";
             ?>
         </nav>
         <main>
             <div class="contenedor">
                 <?php
-                    if ( isset($_GET['register']) ) {
+                    if ( isset($_GET['register']) ) {                     //Si se accede al registro
                         if ( $newUser )
                             include "include/users/new_user_ok.php";
                         else
                             include "include/users/new_user.php";
-                    } else
+                    } 
+                    elseif ( isset($_GET['usuarios']) )                   //Acceder a usuarios
+                        include "include/users/info_user.php";
+                    else
                         include "include/main.php";
                 ?>
             </div>
