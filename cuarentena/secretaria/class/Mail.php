@@ -10,7 +10,7 @@
         private $_mail      = NULL;
 
         public function __construct() {
-            $this->_mail = new PHPMailer;
+            $this->_mail = new PHPMailer();
         }
 
         /**

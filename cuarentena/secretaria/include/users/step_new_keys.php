@@ -1,16 +1,21 @@
 <?php
     if ( $_GET['step'] == 2 && $_SESSION['clave']->getCodGenNewKey() == "" ) {  //Generación y envío del código a validar
         $_SESSION['clave']->createCodGenNewKey();
+        
         //Mandar correo con el código de validación
-        $mail = $_SESSION['mail']->enviarMail(
-            $_SESSION['user']['email'],
-            $_SESSION['user']['nombre'],
-            "developerdaw86@gmail.com",
-            "Administración Secretaría Virtual",
-            "Solicitud de nuevo juego de claves",
+        $_SESSION['mailer']           = NULL;
 
+        $_SESSION['mailer']           = new PHPMailer();
+        $_SESSION['mailer']->CharSet  = "utf-8";
+        $_SESSION['mailer']->From     = "developerdaw86@gmail.com";
+        $_SESSION['mailer']->FromName = "Administración Secretaría Virtual";
+
+        $_SESSION['mailer']->Subject  = "Solicitud de nuevo juego de claves";
+
+        $_SESSION['mailer']->addAddress( $_SESSION['user']['email'], $_SESSION['user']['nombre'] );
+        $_SESSION['mailer']->msgHTML( 
             "<h1 style='text-align: center;'>Solicitud de nuevo juego de claves</h1>
-            
+
             <p style='text-align: justify;'>Estimado/a ".$_SESSION['user']['nombre']." ".$_SESSION['user']['apellidos'].", 
             ha solicitado la generación de un nuevo juego de claves para la plataforma de la Secretaría Virtual. Ingrese
             el código mostrado a continuación antes de 5 minutos para proceder a generar un nuevo juego de claves:</p>
@@ -19,10 +24,9 @@
                 width: 150px;font-size: 30px;text-align: center;'>".$_SESSION['clave']->getCodGenNewKey()."</p>
 
             <p style='text-align: justify;'><b>Si por el contrario no reconoce esta acción:</b> elimine este correo 
-            y cambie inmediatamente la contraseña de acceso a su cuenta de la Secretaría Virtual.</p>",
+            y cambie inmediatamente la contraseña de acceso a su cuenta de la Secretaría Virtual.</p>" );
 
-            NULL    //No hay archivo adjunto en este correo
-        );
+        $_SESSION['mailer']->send();
     }
 ?>
 <div>

@@ -12,15 +12,6 @@
     $edit_pass_ok   = false;        //Cambio de contraseña correcto
 
     $signInvalid    = false;        //Firma invalida
-
-    if ( !isset($_SESSION['user']) ) { 
-        $_SESSION['usuario']    = Usuario::singleton();
-        $_SESSION['clave']      = Clave::singleton();
-        $_SESSION['documento']  = Documento::singleton();
-        $_SESSION['mail']       = new Mail();
-
-        $_SESSION['user']       = array( 'perfil' => "invitado" );
-    }
     
     if ( isset($_POST['login']) ) {
         $usuario = $_SESSION['usuario']->getUserByNick( limpiarDatos($_POST['user']) );
@@ -126,7 +117,7 @@
 
     if ( isset( $_POST['acept_del'] ) ) {
         $_SESSION['documento']->borrarFichero( $_SESSION['user'], $_POST['id'] );
-        //header('Location:index.php?documentos');
+        header('Location:index.php?documentos');
     }
 
     if ( isset( $_POST['cancel_del'] ) ) {

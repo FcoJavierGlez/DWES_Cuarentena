@@ -5,15 +5,25 @@
     include "class/Usuario.php";
     include "class/Clave.php";
     include "class/Documento.php";
-    include "class/Mail.php";
     include "class/error/UserExistException.php";
     include "class/error/PassCheckException.php";
     include "class/error/CheckOldPassException.php";
     include "class/error/MailInvalidException.php";
     include "class/error/MailExistException.php";
     include "class/error/TimeLimitException.php";
+    require "phpmailer/class.phpmailer.php";
 
     session_start();
+
+    if ( !isset($_SESSION['user']) ) { 
+        $_SESSION['usuario']          = Usuario::singleton();
+        $_SESSION['clave']            = Clave::singleton();
+        $_SESSION['documento']        = Documento::singleton();
+
+        $_SESSION['mailer']           = NULL;
+
+        $_SESSION['user']             = array( 'perfil' => "invitado" );
+    }
 
     include "include/procesa.php";
     
