@@ -155,7 +155,7 @@
         }
 
         /**
-         * Sube un nuevo documento al directorio del usuario y lo añade a la BD
+         * Elimina el documento especificado de su propietario tanto del servidor como de su registro en la BD
          */
         public function borrarFichero( $user, $idFichero ) {
 
