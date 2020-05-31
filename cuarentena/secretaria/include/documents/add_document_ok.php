@@ -4,7 +4,7 @@
     }
 ?>
 <div>
-    <h3>Mis documentos</h3>
+    <h3>Nuevo documento</h3>
 </div>
 <div class="filtro">
     <form action="index.php?documentos" method="POST">
@@ -13,10 +13,9 @@
     </form>  |  <a href="index.php?add_document"><button class="boton_sq aceptar">Nuevo documento</button></a>
 </div>
 <div class="add_editar scroll">
-    <?php
-        if ( isset($_POST['consulta']) && $_POST['nombre_documento'] !== '' )
-            imprimeInfoDocument( $_SESSION['documento']->getDocumentByUser( $_SESSION['user']['id'], limpiarDatos($_POST['nombre_documento']) ) );
-        else
-            imprimeInfoDocument( $_SESSION['documento']->getAllDocumentsByUser( $_SESSION['user']['id'] ) );
-    ?>
+    <div>
+        Documento añadido con éxito. ¿Qué desea hacer ahora?
+    <a href="index.php?documentos"><button class="boton_sq editar">Continuar</button></a>
+    <a href="index.php?add_document"><button class="boton_sq aceptar">Nuevo Documento</button></a>
+    </div>
 </div>

@@ -6,23 +6,25 @@
 </div>
 <div class="add_editar">
     <div class="ficha_prestamo h90">
-        <img src="<?php echo "img/users/".( $_SESSION['user']['img'] == NULL ? "0.png" : $_SESSION['user']['img'] ) ?>" class="img_perfil">
-        <form action="privado.php" method="post" class="w55">
+        <div class="foto_claves">
+            <img src="img/users/0.png" class="img_perfil">
+            <div></div>
+        </div>
+        <form action="index.php" method="post" class="w55">
             <div class="col2">
-                Inserte la contraseña actual: <input type='password' name='old_pass' value="" class="<?php echo ( $ope || $cve ? "input_error" : "" ); ?>" >
+                Inserte la contraseña actual: <input type='password' name='old_pass' value="" class="<?php echo ( $oldPassError ? "input_error" : "" ); ?>" >
                 <div></div><span class='bloqueado'><b>
-                    <?php echo ( $ope ? "Contraseña incorrecta" : "" ) ?>
+                    <?php echo ( $oldPassError ? "Contraseña incorrecta" : "" ) ?>
                 </b></span>
             </div>
             <div class="col2">
-                Inserte la nueva contraseña: <input type='password' name='new_pass' value="" class="<?php echo ( $cpe || $cve ? "input_error" : "" ) ?>" >
+                Inserte la nueva contraseña: <input type='password' name='new_pass' value="" class="<?php echo ( $checkPassError ? "input_error" : "" ) ?>" >
             </div>
             <div class="col2">
                 Repita la nueva contraseña: <input type='password' name='new_pass2' value=""
-                        <?php echo ( $cpe || $cve ? "class='input_error'" : "" ); ?> >
+                        <?php echo ( $checkPassError ? "class='input_error'" : "" ); ?> >
                 <div></div><span class='bloqueado'><b>
-                    <?php echo ( $cpe ? "La nueva contraseña y su validación no coinciden." : "" ); ?>
-                    <?php echo ( $cve ? "No pueden haber campos vacíos." : "" ); ?>
+                    <?php echo ( $checkPassError ? "La nueva contraseña y su validación no coinciden." : "" ); ?>
                 </b></span>
             </div>
             <hr class="dashed"/>

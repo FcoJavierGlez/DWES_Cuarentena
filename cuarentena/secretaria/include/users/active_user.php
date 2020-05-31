@@ -22,10 +22,16 @@
         "developerdaw86@gmail.com",
         "Administración Secretaría Virtual",
         "Solicitud de registro aceptada",
-        "Estimado/a ".$usuario['nombre']." ".$usuario['apellidos'].", le informamos 
-        que su solicitud de registro en la secretaría virtual ha sido aceptada y su perfil dado de alta.
-        Por favor conserve el fichero adjunto para la validación de sus firmas digitales, en caso de perderlo
-        o considerar que sus claves están comprometidas podrá solicitar un nuevo juego de claves a la administración.",
+
+        "<h1 style='text-align: center;'>Solicitud de registro aceptada</h1>
+        
+        <p style='text-align: justify;'>Estimado/a ".$usuario['nombre']." ".$usuario['apellidos'].", le informamos 
+        que su solicitud de registro en la secretaría virtual ha sido aceptada y su perfil dado de alta.</p>
+        
+        <p style='text-align: justify;'><b>Por favor conserve el fichero adjunto para la validación de sus firmas digitales</b>, 
+        en caso de perderlo o considerar que sus claves están comprometidas <u>podrá solicitar un nuevo juego de claves desde su perfil 
+        de la Secretaría Virtual</u>.</p>",
+        
         "users/".$usuario['directorio']."/clave.txt"
     );
 

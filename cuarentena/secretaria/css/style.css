@@ -27,9 +27,9 @@ header {
 }
 
 h1 {
-    font-family: "Old Book";
+    /* font-family: "Old Book";
     font-weight: lighter;
-    font-size: 50px;
+    font-size: 50px; */
 }
 
 h1, h2 {
@@ -72,11 +72,12 @@ h1 a:active {
 }
 
 .cuerpo {
-    background-image: url(../img/fondo_libros.webp);
+    /* background-image: url(../img/fondo_libros.webp);
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
-    background-size: cover;
+    background-size: cover; */
+    background-color: #a4c0e0;
     height: 80vh;
     width: 100%;
     display: grid;
@@ -171,6 +172,14 @@ main {
     align-items: center;
     grid-template-columns: repeat(2,1fr);
     text-align: center;
+}
+
+.col3 {
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(3,auto);
+    text-align: center;
+    column-gap: 10px;
 }
 
 .info_libro {
@@ -295,6 +304,18 @@ div.info_contenido {
 
 .portada {
     height: 100px;
+}
+
+.foto_claves {
+    display: grid;
+    grid-template-columns: repeat(2,50%);
+    align-items: center;
+    width: 100%;
+    justify-items: end;
+}
+
+.foto_claves a {
+    margin: 0 20px;
 }
 
 .alert {

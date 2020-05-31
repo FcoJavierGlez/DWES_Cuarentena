@@ -4,65 +4,19 @@
     include "class/DBAbstractModel.php";
     include "class/Usuario.php";
     include "class/Clave.php";
+    include "class/Documento.php";
     include "class/Mail.php";
     include "class/error/UserExistException.php";
     include "class/error/PassCheckException.php";
-
-    header('Content-Type: text/html; charset=utf-8');
+    include "class/error/CheckOldPassException.php";
+    include "class/error/MailInvalidException.php";
+    include "class/error/MailExistException.php";
+    include "class/error/TimeLimitException.php";
 
     session_start();
 
-    $addNickExist = false;      //Al añadir usuario, el nick está registrado
-    $checkPassError = false;    //Al verificar pass y su validación
-    $die = false;
-    $dee = false;
-
-
-    $newUser = false;
-
-    if ( !isset($_SESSION['user']) ) { 
-        $_SESSION['usuario'] = Usuario::singleton();
-        $_SESSION['clave'] = Clave::singleton();
-        $_SESSION['mail'] = new Mail();
-
-        $_SESSION['mail']->enviarMail();
-
-        $_SESSION['user'] = array(
-            'perfil' => "invitado"
-        );
-    }
+    include "include/procesa.php";
     
-    if ( isset($_POST['login']) ) {
-        $usuario = $_SESSION['usuario']->getUserByNick( limpiarDatos($_POST['user']) );
-        if ( sizeof($usuario) && $usuario[0]['pass'] == limpiarDatos($_POST['pswd']) ) 
-            $_SESSION['user'] = $usuario[0];
-    }
-
-    if ( isset($_POST['cerrar']) ) {
-        cerrarSesion();
-    }
-
-    if ( isset($_POST['add_user']) ) {
-        $user_data = array (
-            'nick' => limpiarDatos($_POST['nick']),
-            'pass' => limpiarDatos($_POST['pass']),
-            'pass2' => limpiarDatos($_POST['pass2']),
-            'nombre' => limpiarDatos($_POST['nombre']),
-            'apellidos' => limpiarDatos($_POST['apellidos']),
-            'email' => limpiarDatos($_POST['email']),
-        );
-
-        try {
-            $_SESSION['usuario']->setUser( $user_data );
-            $newUser = true;
-        }
-        catch (UserExistException $addNickExist) {}
-        catch (PassCheckException $checkPassError) {}
-    }
-
-    if ( isset( $_GET['activar'] ) ) {
-        include "include/users/active_user.php";
-    }
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -102,20 +56,7 @@
         <main>
             <div class="contenedor">
                 <?php
-                    if ( isset($_GET['register']) ) {                     //Si se accede al registro
-                        if ( $newUser )
-                            include "include/users/new_user_ok.php";
-                        else
-                            include "include/users/new_user.php";
-                    } 
-                    elseif ( isset($_GET['usuarios']) )                   //Acceder a usuarios
-                        include "include/users/info_user.php";
-                    elseif ( isset($_GET['documentos']) )                 //Documentos
-                        include "include/documents/own_documents.php";
-                    elseif ( isset($_GET['perfil']) )                     //Perfil
-                        include "include/users/own_user.php";
-                    else
-                        include "include/main.php";
+                    include "include/controller.php";
                 ?>
             </div>
         </main>

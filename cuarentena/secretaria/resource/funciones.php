@@ -27,6 +27,27 @@
         return $salida;
     }
 
+    function getLetterFromRow( $fila ) {
+        switch ($fila) {
+            case 0:
+                return "A";
+            case 1:
+                return "B";
+            case 2:
+                return "C";
+            case 3:
+                return "D";
+            case 4:
+                return "E";
+            case 5:
+                return "F";
+            case 6:
+                return "G";
+            case 7:
+                return "H";
+        }
+    }
+
     /**
      * Imprime la información de cada libro
      */
@@ -79,76 +100,64 @@
     }
 
     /**
-     * Imprime la ficha de cada préstamo para el administrador
+     * Imprime una tabla con los usuarios en el sistema
      */
-    function imprimeFichaPrestamos( $prestamos ) {
-        if ( sizeof($prestamos) == 0 ) echo "<b>No se obtuvo ningún resultado.</b>";
-        else 
-            foreach ($prestamos as $prestamo) {
-                echo "<div class='ficha_prestamo'>";
+    function imprimeInfoDocument( $documents ) {
+        if ( sizeof($documents) == 0 ) echo "<b>No se obtuvo ningún resultado.</b>";
+        else {
+            echo "<table>";
+            echo "<th>DESCRIPCIÓN</th><th>ESTADO</th><th>FECHA FIRMA</th><th>FIRMAR</th><th>ELIMINAR</th><th>DESCARGAR</th>";
+                foreach ($documents as $document) {
+                    echo "<tr>";
+                        echo "<td>".$document['descripcion']."</td>";
+                        echo "<td>".$document['estado']."</td>";
+                        echo "<td>".( $document['fechaFirma'] == NULL ? "---" : $document['fechaFirma'] )."</td>";
+                        echo "<td>".( $document['fechaFirma'] == NULL ? 
+                            "<a href="."index.php?firmar=".$document['id']."><button class='boton_sq aceptar'>Firmar</button></a>" : "---" )."</td>";
+                        echo "<td><a href="."index.php?delete=".$document['id']."><button class='boton_sq cancelar'>Eliminar</button></a></td>";
+                        echo "<td><a href="."users/".$document['directorio']."/".$document['fichero']." download><button class='boton_sq editar'>Descargar</button></a></td>";
+                    echo "</tr>";
+                }
+            echo "</table>";
+        }
+    }
 
-                    echo "<h3>Ficha de préstamo: ".$prestamo['id_pres']."</h3>";
-                    echo "<div class='ficha_pres_libro'>";
-                        echo "<img src="."img/books/".( ($prestamo['img'] == null) ? "0.png" : $prestamo['img'] ).">";
-                        echo "<div class='info_prestamo w100'>";
-                            echo "<div><b>Título:</b></div> <div>".$prestamo['titulo']."</div>";
-                            echo "<div><b>Autor:</b></div> <div>".$prestamo['autor']."</div>";
-                            echo "<div><b>ISBN:</b></div> <div>".$prestamo['isbn']."</div>";
-                            echo "<div><b>Editorial:</b></div> <div>".$prestamo['editorial']."</div>";
-                        echo "</div>";
-                    echo "</div>";
-                    echo "<div class='pie_ficha c3'>";
-                        echo "<div><b>Prestado: </b>".$prestamo['prestado']."</div>";
-                        echo "<div>".( ($prestamo['devuelto'] == null) ? 
-                            "<a href="."prestamos.php?devolver=".$prestamo['id_pres']."><button class='boton_sq aceptar'>Devuelto</button></a>" : "<b>Devuelto: </b>".$prestamo['devuelto'] )."</div>";
-                        echo "<div><a href="."libros.php?view=".$prestamo['id']."><button class='boton_sq editar'>Ficha libro</button></a></div>";
-                    echo "</div>";
-
-                    echo "<hr>";
-
-                    echo "<h3>Prestado a:</h3>";
-                    echo "<div class='info_prestamo w90'>";
-                        echo "<div><b>Nombre: </b></div> <div>".$prestamo['nombre']."</div>";
-                        echo "<div><b>Apellidos: </b></div> <div>".$prestamo['apellidos']."</div>";
-                        echo "<div><b>DNI: </b></div> <div>".$prestamo['dni']."</div>";
-                        echo "<div><b>Teléfono: </b></div> <div>".$prestamo['telefono']."</div>";
-                        echo "<div><b>Email: </b></div> <div>".$prestamo['email']."</div>";
-                    echo "</div>";
-                    if ( $prestamo['devuelto'] == null ) {
-                        echo "<div class='pie_ficha c2'>";
-                            echo "<div><a href="."usuarios.php?contactar=".$prestamo['id_user']."><button class='boton_sq aceptar'>Contactar lector</button></a></div>";
-                            echo "<div><a href="."usuarios.php?bloquear=".$prestamo['id_user']."><button class='boton_sq cancelar'>Bloquear lector</button></a></div>";
-                        echo "</div>";
-                    }
-
-                echo "</div>";
-            }
+    /**
+     * Imprime una tabla con los usuarios en el sistema
+     */
+    function imprimeInfoDocumentToDel( $documents ) {
+        if ( sizeof($documents) == 0 ) echo "<b>No se obtuvo ningún resultado.</b>";
+        else {
+            echo "<table>";
+            echo "<th>DESCRIPCIÓN</th><th>ESTADO</th><th>FECHA FIRMA</th>";
+                foreach ($documents as $document) {
+                    echo "<tr>";
+                        echo "<td>".$document['descripcion']."</td>";
+                        echo "<td>".$document['estado']."</td>";
+                        echo "<td>".( $document['fechaFirma'] == NULL ? "---" : $document['fechaFirma'] )."</td>";
+                    echo "</tr>";
+                }
+            echo "</table>";
+        }
     }
 
     /**
      * Imprime la ficha de cada libro
      */
-    function imprimeFichaLibros( $libros ) {
-        if ( sizeof($libros) == 0 ) echo "<b>No se obtuvo ningún resultado.</b>";
+    function imprimeFichaDocumento( $documentos ) {
+        if ( sizeof($documentos) == 0 ) echo "<b>No se obtuvo ningún resultado.</b>";
         else 
-            foreach ($libros as $libro) {
+            foreach ($documentos as $documento) {
                 echo "<div class='ficha_prestamo'>";
-                    echo "<h3>Ficha de libro</h3>";
-                    echo "<div class='ficha_pres_libro'>";
-                        echo "<img src="."img/books/".( ($libro['img'] == null) ? "0.png" : $libro['img'] ).">";
+                    echo "<h3>Ficha de documento</h3>";
+                    echo "<div class='w90'>";
+                        //echo "<img src="."img/books/".( ($documento['img'] == null) ? "0.png" : $documento['img'] ).">";
                         echo "<div class='info_prestamo w100'>";
-                            echo "<div><b>Título:</b></div> <div>".$libro['titulo']."</div>";
-                            echo "<div><b>Autor:</b></div> <div>".$libro['autor']."</div>";
-                            echo "<div><b>ISBN:</b></div> <div>".$libro['isbn']."</div>";
-                            echo "<div><b>Editorial:</b></div> <div>".( ($libro['editorial'] == null) ? "N/D" : $libro['editorial'] )."</div>";
-                            echo "<div><b>Publicado:</b></div> <div>".( ($libro['anno_publicacion'] == null) ? "N/D" : $libro['anno_publicacion'] )."</div>";
+                            echo "<div><b>Descripción:</b></div> <div>".$documento['descripcion']."</div>";
+                            echo "<div><b>Popietario/a:</b></div> <div>".$documento['apellidos'].",".$documento['nombre']."</div>";
+                            echo "<div><b>Fecha:</b></div> <div>".date("H:i:s d/m/Y")."</div>";
+                            echo "<div><b>Estado actual:</b></div> <div>Pendiente</div>";
                         echo "</div>";
-                    echo "</div>";
-                    echo "<div class='pie_ficha'>";
-                        if ( $libro['disponible'] )
-                            echo "<div><a href="."prestamos.php?solicitar=".$libro['id']."><button class='boton_sq aceptar'>Solicitar préstamo</button></a></div>";
-                        else
-                            echo "<div class='bloqueado'>Actualmente en préstamo</div>";
                     echo "</div>";
                 echo "</div>";
             }

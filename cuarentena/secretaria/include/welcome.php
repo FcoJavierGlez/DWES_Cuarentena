@@ -1,5 +1,5 @@
 <div>
-    <h3>Bienvenido/a al registro municipal de bibliotecas</h3>
+    <h3>Bienvenido/a a la secretaría virtual</h3>
 </div>
 <div class='filtro'>
     
