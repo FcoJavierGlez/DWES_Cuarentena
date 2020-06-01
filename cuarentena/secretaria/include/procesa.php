@@ -12,16 +12,6 @@
     $edit_pass_ok   = false;        //Cambio de contraseña correcto
 
     $signInvalid    = false;        //Firma invalida
-    
-    if ( isset($_POST['login']) ) {
-        $usuario = $_SESSION['usuario']->getUserByNick( limpiarDatos($_POST['user']) );
-        if ( sizeof($usuario) && $usuario[0]['pass'] == limpiarDatos($_POST['pswd']) ) 
-            $_SESSION['user'] = $usuario[0];
-    }
-
-    if ( isset($_POST['cerrar']) ) {
-        cerrarSesion();
-    }
 
     if ( isset($_POST['add_user']) ) {
         $user_data = array (
