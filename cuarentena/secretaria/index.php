@@ -25,6 +25,16 @@
         $_SESSION['user']             = array( 'perfil' => "invitado" );
     }
 
+    if ( isset($_POST['login']) ) {
+        $usuario = $_SESSION['usuario']->getUserByNick( limpiarDatos($_POST['user']) );
+        if ( sizeof($usuario) && $usuario[0]['pass'] == limpiarDatos($_POST['pswd']) ) 
+            $_SESSION['user'] = $usuario[0];
+    }
+
+    if ( isset($_POST['cerrar']) ) {
+        cerrarSesion();
+    }
+
     include "include/procesa.php";
     
 ?>
