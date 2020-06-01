@@ -80,6 +80,10 @@
         include "include/users/active_user.php";
     }
 
+    if ( isset( $_GET['bloquear'] ) ) {             //Bloquear un usuario
+        include "include/users/block_user.php";
+    }
+
     if ( isset($_POST['add_document']) ) {          //Añadir un documento
         $newFile = $_SESSION['documento']->subirFichero( $_SESSION['user'], $_FILES['fichero'], $_POST['descripcion']);
     }

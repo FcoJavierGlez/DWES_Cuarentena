@@ -153,8 +153,8 @@
             $usuario = $this->getUserById( $id )[0];
             $nombreDirectorio = $this->getDirectoryNameUser( $usuario['nombre'], $usuario['apellidos'] );
             
-            if ( !file_exists("users/".$nombreDirectorio) )//crear carpeta con permisos
-            mkdir("users/".$nombreDirectorio,0777,true);
+            if ( !file_exists("users/".$nombreDirectorio) )     //crear carpeta con permisos
+                mkdir("users/".$nombreDirectorio,0777,true);
             
             //actualizamos perfil a activo y guardarmos el nombre de la carpeta generada
             $user_data = array(
