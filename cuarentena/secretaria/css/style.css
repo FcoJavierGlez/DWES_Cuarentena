@@ -464,6 +464,11 @@ p.mensaje_error {
     align-items: center;
 }
 
+.justify_center {
+    display: grid;
+    justify-items: center;
+}
+
 .pergamino {
     background-color: antiquewhite;
 }
